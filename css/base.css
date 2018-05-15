@@ -1,0 +1,230 @@
+@charset "UTF-8";
+
+html, body {
+ margin  : 0px;
+ padding : 0px;
+ text-align  : left;
+ font-size   : 12px;
+ font-family : sans-serif;
+ color       : #554411;
+ font-weight : normal;
+}
+
+.bold {
+ font-weight : bold;
+}
+
+.nowrap {
+ white-space : nowrap;
+}
+
+.margin20 {
+ margin : 20px;
+}
+
+.margin-left-20 {
+ margin-left : 20px;
+}
+
+.margin-right-20 {
+ margin-right : 20px;
+}
+
+span.black {
+ color : #303030;
+}
+
+span.gray {
+ color : #808080;
+}
+
+span.red {
+ color : #ff3333;
+}
+
+a:link    {color: #6060ff; text-decoration:none;}
+a:visited {color: #6060ff; text-decoration:none;}
+a:active  {color: #ff60ff; text-decoration:none;}
+a:hover   {color: #ff60ff; text-decoration:none;}
+
+h1, h2, h3, h4, h5, h6 {
+ font-weight : bold;
+}
+
+img {
+ border : none;
+}
+
+ul, ol {
+ list-style-type : disc;
+}
+
+table {
+ border         : none;
+ border-spacing : 0px;
+}
+
+td.left {
+ text-align : left;
+}
+
+td.center {
+ text-align : center;
+}
+
+td.right {
+ text-align : right;
+}
+
+label {
+ cursor : pointer;
+}
+
+.onclick_node {
+ cursor : pointer;
+ color: #6060ff;
+}
+
+.onclick_node:hover {
+ color: #ff60ff;
+}
+
+input[type=text], input[type=password], textarea {
+ border-radius : 6px;
+ 
+ box-shadow         : inset 0 2px 2px #ccc, 0 1px 0 #fff;
+
+ background-color : #ffffff;
+ border           : 1px solid #a0a0a0;
+ font-size        : 12px;
+ color            : #303030;
+ 
+ margin-left  : 2px;
+ margin-right : 2px;
+}
+
+select {
+ background-color : #ffffff;
+ border           : 1px solid #a0a0a0;
+ font-size        : 12px;
+ color            : #303030;
+ 
+ margin-left  : 2px;
+ margin-right : 2px;
+}
+
+input[type=radio].hidden {
+ display : none;
+}
+
+input[type=number] {
+ width : 40px;
+}
+
+input[type=file], input[type=number] {
+ box-shadow         : inset 0 2px 2px #ccc, 0 1px 0 #fff;
+
+ background-color : #ffffff;
+ border           : 1px solid #a0a0a0;
+ font-size        : 12px;
+ color            : #303030;
+ 
+ margin-left  : 2px;
+ margin-right : 2px;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=file]:focus, input[type=number]:focus, select:focus, textarea:focus, input[type=date]:focus {
+ outline : none;
+ border  : 1px solid #996644;
+ box-shadow         : inset 0 2px 2px 0 #ccc, 0 0 10px 0 #996644;
+}
+
+input.disable, select.disable, textarea.disable {
+ background-color : #e0e0e0;
+ color            : #a0a0a0;
+}
+
+button.enable, input.enable[type=submit] {
+ border-radius         : 6px;
+ 
+ background-color : #e0e0e0;
+ border-top       : 1px solid #ffffff;
+ border-right     : 1px solid #a0a0a0;
+ border-bottom    : 1px solid #a0a0a0;
+ border-left      : 1px solid #ffffff;
+ font-size        : 12px;
+ color            : #303030;
+ 
+ padding-left  : 8px;
+ padding-right : 8px;
+ 
+ cursor : pointer;
+}
+
+button.enable:focus, input.enable[type=submit]:focus {
+ outline : none;
+ box-shadow         : inset 0 2px 2px 0 #ccc, 0 0 10px 0 #996644;
+}
+
+button.disable, input.disable[type=submit] {
+ border-radius         : 6px;
+ 
+ background-color : #f0f0f0;
+ border-top       : 1px solid #ffffff;
+ border-right     : 1px solid #c0c0c0;
+ border-bottom    : 1px solid #c0c0c0;
+ border-left      : 1px solid #ffffff;
+ font-size        : 12px;
+ color            : #a0a0a0;
+ 
+ padding-left  : 8px;
+ padding-right : 8px;
+ 
+ cursor : not-allowed;
+}
+
+button.disable:focus, input.disable[type=submit]:focus {
+ outline : none;
+}
+
+
+input[type=checkbox] {
+ display : none;
+}
+
+label.checkbox1 {
+ display : inline;
+ margin-left  : 2px;
+ margin-right : 2px;
+}
+
+input[type=checkbox] + label.checkbox1 {
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 5px;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+    color: #303030;
+}
+
+input[type=checkbox] + label.checkbox1:active {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+input[type=checkbox]:checked + label.checkbox1 {
+    background-color: #e9ecee;
+    border: 1px solid #adb8c0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px 12px rgba(255,255,255,0.1);
+    color: #899197;
+}
+  
+input[type=checkbox]:checked + label.checkbox1:after {
+    content: '\2714';
+    font-size: 12px;
+    position: absolute;
+    top: 0px;
+    left: 3px;
+    color: #899197;
+}

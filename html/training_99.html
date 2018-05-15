@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+<meta charset='UTF-8'>
+<link rel='stylesheet' href='css/base.css' type='text/css'>
+<link rel='stylesheet' href='css/training.css' type='text/css'>
+<link rel='shortcut icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<link rel='icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<title>Telnetman2</title>
+</head>
+<body>
+<header class='training_headline'>
+<h1>Telnetman&nbsp;Training&nbsp;補足</h1>
+</header>
+<section class='section_zone'>
+ <h2>データ移行</h2>
+ <article>
+  <h3>やりたいこと</h3>
+  <p><span class='normal_font'>違うTelnetman&nbsp;とTelnetman&nbsp;Work&nbsp;Flow&nbsp;にデータを移したい時、例えば、開発環境から商用環境にデータを移す時の方法を解説する。</span></p>
+ </article>
+ <article>
+  <h3>Telnetman&nbsp;Work&nbsp;Flow</h3>
+  <p><span class='large_font'>移行元</span></p>
+  <p class='float_left'><img src='img/training/training-99-01-01-a.png' width='300' height='240' alt='Telnetman Work Flow データダウンロード'></p>
+  <p class='float_left'><span class='normal_font'>編集画面で、ダウンロードのアイコンをクリックしてデータファイルをダウンロード。</span><br><span class='normal_font'>ファイル名は「TelnetmanWF_&lt;フロータイトル&gt;.zip」</span></p>
+  <div class='clear_both'>
+   <p><span class='large_font'>移行先</span></p>
+   <p class='float_left'><img src='img/training/training-99-01-01-b.png' width='700' height='380' alt='Telnetman Work Flow データ取り込み'></p>
+   <p class='float_left'><span class='normal_font'>データファイルをトップページにドラッグ&amp;ドロップ。</span></p>
+  </div>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-99-01-01-c.png' width='552' height='300' alt='Telnetman Work Flow データ取り込み'></p>
+   <p class='float_left'><span class='normal_font'>新規作成か、同じものがある場合は上書きも選択可。</span><br><span class='normal_font'>上書きしてもタスクに変更は無い。</span></p>
+  </div>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-99-01-01-d.png' width='300' height='232' alt='enable password 一括変更'></p>
+   <p class='float_left'><span class='normal_font'>必要があれば、編集画面で特権モード移行パスワードを変更する。</span><br><span class='normal_font'>一括変更機能を使えばenable&nbsp;password&nbsp;の項目に記入がある全てのwork&nbsp;とStart&nbsp;に変更をかけられる。</span></p>
+  </div>
+ </article>
+ <article>
+  <h3>Telnetman</h3>
+  <p><span class='large_font'>移行元</span></p>
+  <p><img src='img/07_download.png' width='80' height='80' alt='データ入出力'></p>
+  <p class='float_left'><img src='img/training/training-99-01-02-a.png' width='300' height='400' alt='Export'></p>
+  <p class='float_left'><span class='normal_font'>[登録内容&nbsp;抽出]をクリックすると、command,&nbsp;action,&nbsp;ping&nbsp;のデータをダウンロードできる。</span><br><span class='normal_font'>上の検索欄に何も入れないと流れ図にあるものが対象となる。</span></p>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-99-01-02-b.png' width='400' height='32' alt='検索キーワード'></p>
+   <p class='float_left'><span class='normal_font'>command,&nbsp;action,&nbsp;ping&nbsp;を作成するとき、検索キーワードを設定すると良い。</span><br><span class='normal_font'>検索キーワードは前方一致で検索されるので、Work&nbsp;Flow&nbsp;単位で接頭語を決めると良い。</span><br><span class='normal_font'>接頭語で検索すると1回のExport&nbsp;で必要な全てのcommand,&nbsp;action,&nbsp;ping&nbsp;のデータを抽出できる。</span><br><span class='normal_font'>左は「versionup」を接頭語にした例。</span></p>
+  </div>
+  <div class='clear_both'>
+   <p><span class='large_font'>移行先</span></p>
+   <p><img src='img/training/training-99-01-02-c.png' width='768' height='276' alt='Import'></p>
+   <p><span class='normal_font'>抽出データファイル「Telnetman2_Exports_****.txt」をドラッグ&amp;ドロップして[一括登録]を押す。</span></p>
+  </div>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-99-01-02-d.png' width='640' height='240' alt='Import 結果'></p>
+   <p class='float_left'><span class='normal_font'>左のような「新規登録&nbsp;完了」「更新&nbsp;完了」以外の</span><br><span class='normal_font'>メッセージが出なければImport&nbsp;成功。</span></p>
+  </div>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-99-01-02-e.png' width='348' height='248' alt='流れ図欠損'></p>
+   <p class='float_left'><span class='normal_font'>念の為の確認として、流れ図データを取り込んでみて</span><br><span class='normal_font'>左のような灰色のマス目が無ければcommand,&nbsp;action,&nbsp;ping&nbsp;に欠落は無い。</span></p>
+  </div>
+ </article>
+</section>
+</body>
+</html>

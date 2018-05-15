@@ -1,0 +1,131 @@
+@charset "UTF-8";
+
+html, body {
+ background-color : #fffae0;
+}
+
+header, nav, aside, section, footer, article {
+ display : block;
+}
+
+div#header_zone{
+ height : 172px;
+ border-bottom : 16px solid #996644;
+}
+
+div#section_zone{
+ min-height :600px;
+ 
+ width : 1000px;
+ margin : 0 auto;
+}
+
+header {
+ background-image : -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.7)), to(#ffffff)),
+                    url(../img/telnet_x_1.png);
+		    
+ background-image : -moz-linear-gradient(top, rgba(255, 255, 255, 0.7), #ffffff),
+                    url(../img/telnet_x_1.png);
+
+ background-image : linear-gradient(to bottom, rgba(255, 255, 255, 0.7), #ffffff),
+                    url(../img/telnet_x_1.png);
+}
+
+
+
+div#headline_area {
+ position : relative;
+ margin : 0px;
+ height : 32px;
+ background-color : #996644;
+}
+
+div#headline_area h1 {
+ margin : 0px;
+ padding : 0px;
+ 
+ width : 240px;
+ height : 14px;
+ 
+ position : absolute;
+ top : 10px;
+ left: 16%;
+ 
+ font-weight : normal;
+ color     : #fffae0;
+ font-size : 12px;
+ letter-spacing : 0.6em;
+}
+
+
+div#headline_area nav {
+ position : absolute;
+ top : 7px;
+ right : 4%;
+}
+
+div#headline_area nav ul {
+ margin : 0px;
+ padding : 0px;
+ list-style-type : none;
+}
+
+div#headline_area nav ul li {
+ position : relative;
+ float : left;
+ 
+ margin-left : 16px;
+}
+
+div#headline_area nav ul li a {
+ font-size : 14px;
+ color: #fffae0;
+ text-decoration:none;
+ letter-spacing : 0.2em;
+}
+
+div#headline_area nav ul li a:active  {color: #eee8c0;}
+div#headline_area nav ul li a:hover   {color: #eee8c0;}
+
+
+
+
+div#menu_area {
+ margin : 0px;
+ width : 90%;
+ height : 140px;
+ 
+ margin : 0 auto;
+ position : relative;
+}
+
+div#menu_area p {
+ position : absolute;
+ bottom : 4px;
+ right: 16%;
+ 
+ margin : 0px;
+ width : 360px;
+ height : 30px;
+ 
+ text-align : center;
+}
+
+span#title_string {
+ font-weight : normal;
+ font-size : 28px;
+ letter-spacing : 0.2em;
+ 
+ color : #ffffff;
+ text-shadow : 1px 1px 0px #996644,
+              -1px 1px 0px #996644,
+	       1px -1px 0px #996644,
+	      -1px -1px 0px #996644,
+	       2px 2px 2px #996644;
+}
+
+img#png_telnetman {
+ position : absolute;
+ bottom : 8px;
+ left: 4px;
+}

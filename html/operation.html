@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+<meta charset='UTF-8'>
+<link rel='stylesheet' href='css/base.css' type='text/css'>
+<link rel='stylesheet' href='css/common_layout1.css' type='text/css'>
+<link rel='stylesheet' href='css/telnetman_login.css' type='text/css'>
+<link rel='stylesheet' href='css/telnetman_session.css' type='text/css'>
+<link rel='stylesheet' href='css/telnetmanAuth.css' type='text/css'>
+<link rel='stylesheet' href='css/parameter.css' type='text/css'>
+<link rel='stylesheet' href='css/handsontable.css' type='text/css'>
+<link rel='stylesheet' href='css/flowchart.css' type='text/css'>
+<link rel='stylesheet' href='css/symbol.css' type='text/css'>
+<link rel='stylesheet' href='css/action.css' type='text/css'>
+<link rel='stylesheet' href='css/telnetman_exportImport.css' type='text/css'>
+<link rel='shortcut icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<link rel='icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<script type='text/javascript' charset='UTF-8' src='js/json2.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/jquery.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/jquery-ui.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/jquery.contextmenu.r2.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/handsontable.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/layoutFunctions.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/commonFunctions.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/controleStorage.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/telnetmanLogin.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/telnetmanSession.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/telnetmanAuth.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/parameter.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/flowchart.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/command.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/action.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/parameterSheetA.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/parameterSheetB.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/ping.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/conversionScript.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/exportImport.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/telnetmanHelp.js'></script>
+<title>Telnetman2</title>
+</head>
+<body onload='objLayoutFunctions.addTitleEffect(); objLayoutFunctions.checkLoginAndSession();' onresize='objParameter.adjustHansontableWidth();' ondragover='event.preventDefault();' ondrop='event.preventDefault();'>
+
+<div id='header_zone'>
+<header>
+<div id='headline_area'>
+<h1>汎用的telnet&nbsp;ツール</h1>
+<nav>
+<ul>
+<li><img src='img/help.png' width='16' height='16' alt='help' class='onclick_node' onclick='objTelnetmanHelp.help("overview");'></li>
+<li><a href='index.html'>トップ</a></li>
+<li><a href='#' onclick='objLayoutFunctions.changeSession();'>セッション切替</a></li>
+<li><a href='#' onclick='objLayoutFunctions.logout();'>ログアウト</a></li>
+</ul>
+</nav>
+</div>
+
+<div id='menu_area'>
+<img id='png_telnetman' src='img/Telnetman.png' width='364' height='52' alt='telnetman'>
+<nav>
+<ul>
+<li><img class='change_page_icon' src='img/01_exec.png'      width='80' height='80' alt='変数設定&nbsp;&amp;&nbsp;実行' onclick="objParameter.print();        objLayoutFunctions.changeTitle();"></li>
+<li><img class='change_page_icon' src='img/02_flowchart.png' width='80' height='80' alt='流れ図作成'                    onclick="objFlowchart.print();        objLayoutFunctions.changeTitle();"></li>
+<li><img class='change_page_icon' src='img/03_command.png'   width='80' height='80' alt='コマンド'                      onclick="objCommand.print();          objLayoutFunctions.changeTitle();"></li>
+<li><img class='change_page_icon' src='img/04_action.png'    width='80' height='80' alt='アクション'                    onclick="objAction.print();           objLayoutFunctions.changeTitle();"></li>
+<li><img class='change_page_icon' src='img/05_ping.png'      width='80' height='80' alt='ping'                          onclick="objPing.print();             objLayoutFunctions.changeTitle();"></li>
+<li><img class='change_page_icon' src='img/06_script.png'    width='80' height='80' alt='変換スクリプト'                onclick="objConversionScript.print(); objLayoutFunctions.changeTitle();"></li>
+<li><img class='change_page_icon' src='img/07_download.png'  width='80' height='80' alt='データ入出力'                  onclick="objExportImport.print();     objLayoutFunctions.changeTitle();"></li>
+</ul>
+</nav>
+<p><span id='title_string'></span></p>
+</div>
+</header>
+</div>
+
+<div id='section_zone'>
+<section id='object_area'></section>
+<section id='build_area'></section>
+</div>
+
+<footer></footer>
+</body>
+</html>

@@ -1,0 +1,541 @@
+@charset "UTF-8";
+
+html, body {
+ background-color : #fffae0;
+}
+
+header, nav, aside, section, footer, article {
+ display : block;
+}
+
+div.margin2 {
+ margin-bottom : 2px;
+}
+
+div#header_zone{
+ height : 172px;
+ border-bottom : 16px solid #996644;
+}
+
+div#section_zone{
+ min-height :600px;
+ 
+ width : 1000px;
+ margin : 0 auto;
+}
+
+header {
+ background-image : -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.7)), to(#ffffff)),
+                    url(../img/telnet_x_1.png);
+		    
+ background-image : -moz-linear-gradient(top, rgba(255, 255, 255, 0.7), #ffffff),
+                    url(../img/telnet_x_1.png);
+
+ background-image : linear-gradient(to bottom, rgba(255, 255, 255, 0.7), #ffffff),
+                    url(../img/telnet_x_1.png);
+}
+
+
+
+div#headline_area {
+ position : relative;
+ margin : 0px;
+ height : 32px;
+ background-color : #996644;
+}
+
+div#headline_area h1 {
+ margin : 0px;
+ padding : 0px;
+ 
+ width : 240px;
+ height : 14px;
+ 
+ position : absolute;
+ top : 10px;
+ left: 16%;
+ 
+ font-weight : normal;
+ color     : #fffae0;
+ font-size : 12px;
+ letter-spacing : 0.6em;
+}
+
+
+div#headline_area nav {
+ position : absolute;
+ top : 7px;
+ right : 4%;
+}
+
+div#headline_area nav ul {
+ margin : 0px;
+ padding : 0px;
+ list-style-type : none;
+}
+
+div#headline_area nav ul li {
+ position : relative;
+ float : left;
+ 
+ margin-left : 16px;
+}
+
+div#headline_area nav ul li a {
+ font-size : 14px;
+ color: #fffae0;
+ text-decoration: none;
+ letter-spacing : 0.2em;
+}
+
+div#headline_area nav ul li a:active  {color: #eee8c0;}
+div#headline_area nav ul li a:hover   {color: #eee8c0;}
+
+
+
+
+div#menu_area {
+ margin : 0px;
+ width : 90%;
+ height : 140px;
+ 
+ margin : 0 auto;
+ position : relative;
+}
+
+div#menu_area p {
+ position : absolute;
+ bottom : 4px;
+ right: 16%;
+ 
+ margin : 0px;
+ width : 360px;
+ height : 30px;
+ 
+ text-align : center;
+}
+
+span#title_string {
+ font-weight : normal;
+ font-size : 28px;
+ letter-spacing : 0.2em;
+ 
+ color : #ffffff;
+ text-shadow : 1px 1px 0px #996644,
+              -1px 1px 0px #996644,
+	       1px -1px 0px #996644,
+	      -1px -1px 0px #996644,
+	       2px 2px 2px #996644;
+ 
+ display:none;
+}
+
+img#png_telnetman {
+ position : absolute;
+ bottom : 8px;
+ left: 4px;
+}
+
+/*-------*/
+/* menue */
+/*-------*/
+div#menu_area nav {
+ position : absolute;
+ top : 0px;
+ right: 0px;
+ 
+ width  : 568px;
+ height : 81px;
+ 
+ background-color : #e0e0e0;
+}
+
+div#menu_area nav ul {
+ margin : 0px;
+ padding : 0px;
+ list-style-type : none;
+}
+
+div#menu_area nav ul li {
+ position : relative;
+ float : left;
+}
+
+div#menu_area nav ul li:last-of-type{
+ border-right : 1px solid #eeeeee;
+}
+
+img.change_page_icon {
+ position : relative;
+ border-left : 1px solid #eeeeee;
+ border-bottom : 1px solid #eeeeee;
+ 
+ cursor : pointer;
+}
+
+
+
+section#object_area {
+ width : 280px;
+ min-height :600px;
+ text-align : left;
+ 
+ position : relative;
+ float : left;
+}
+
+section#build_area {
+ width : 720px;
+ min-height :600px;
+ text-align : left;
+ 
+ position : relative;
+ float : left;
+}
+
+table.telnetman_item_build_table {
+ margin : 20px;
+}
+
+table.telnetman_item_build_table th {
+ padding-top    : 6px;
+ padding-bottom : 6px;
+ padding-left   : 8px;
+ padding-right  : 8px;
+ white-space : nowrap;
+ text-align : center;
+ font-weight : bold;
+ font-size : 14px;
+ color     : #996644;
+}
+
+table.telnetman_item_build_table td {
+ padding-top    : 3px;
+ padding-bottom : 3px;
+ padding-left   : 5px;
+ padding-right  : 5px;
+ white-space : nowrap;
+ overflow : visible;
+}
+
+span.telnetman_build_table_span1 {
+ font-weight : bold;
+ font-size : 14px;
+ color     : #996644;
+}
+
+span.telnetman_build_table_span0 {
+ font-weight : bold;
+ font-size : 14px;
+ color     : #ddaa99;
+}
+
+
+
+/* --------------- */
+/* item view table */
+/* --------------- */
+table.telnetman_item_viewer {
+ display : none;
+
+ min-width : 596px;
+
+ position : relative;
+ top : 100px;
+ margin : 0 auto;
+ 
+ border-spacing : 1px;
+ 
+ background-color : #ddaa99;
+ border-radius : 12px 12px 4px 4px / 8px 8px 4px 4px;
+ box-shadow : 0px 0px 9px 1px rgba(0,0,0,0.4);
+}
+
+table.telnetman_item_viewer th {
+ padding : 8px;
+ 
+ background-color : #996644;
+ border-radius : 12px 12px 4px 4px / 8px 8px 4px 4px;
+}
+
+table.telnetman_item_viewer th div {
+ position : relative;
+ min-width : 580px;
+ height : 20px;
+ text-align : center;
+}
+
+table.telnetman_item_viewer th div span {
+ color : #ffffff;
+ font-size : 18px;
+ font-weight : bold;
+ letter-spacing : 0.2em;
+}
+
+table.telnetman_item_viewer th div img {
+ position : absolute;
+ top  : 2px;
+ right : 4px;
+ cursor : pointer;
+}
+
+table.telnetman_item_viewer td {
+ padding : 8px;
+ background-color : #fffae0;
+ border-radius : 4px;
+ white-space: nowrap;
+}
+
+td.telnetman_item_viewer_td1 {
+ width : 150px;
+}
+
+span.telnetman_item_viewer_span1 {
+ color : #775522;
+ font-size : 14px;
+ font-weight : bold;
+}
+
+span.telnetman_item_viewer_span2 {
+ color : #554411;
+ font-size : 14px;
+ font-weight : normal;
+}
+
+div.telnetman_item_viewer_condition_list {
+ width : 402px;
+ overflow : auto;
+}
+
+div.telnetman_item_viewer_condition_list span {
+ color : #554411;
+ margin : 4px;
+}
+
+div.telnetman_item_viewer_condition_list span.and_or {
+ font-size : 11px;
+}
+
+
+/* ------------------------ */
+/* upload conversion script */
+/* ------------------------ */
+div.upload_script_area {
+ border-radius : 8px;
+ border : 2px dashed #a0a0a0;
+ background-color : #ffffff;
+ 
+ width  : 218px;
+ height : 320px;
+ 
+ padding : 8px;
+ margin  : 4px;
+ 
+ overflow : hidden;
+}
+
+div.upload_script_area span {
+ font-size : 11px;
+ color : #a0a0a0;
+ letter-spacing : 0.1em;
+ 
+ white-space : nowrap;
+}
+
+
+/* -------------------------------------- */
+/* upload Telnetman Light parameter sheet */
+/* -------------------------------------- */
+div.upload_parameter_sheet_area {
+ border-radius : 8px;
+ border : 2px dashed #a0a0a0;
+ background-color : #ffffff;
+ 
+ width : 400px;
+ height : 40px;
+ 
+ padding : 8px;
+ margin : 4px;
+ 
+ overflow : hidden;
+}
+
+div.upload_parameter_sheet_area span {
+ font-size : 11px;
+ color : #a0a0a0;
+ letter-spacing : 0.1em;
+ 
+ white-space : nowrap;
+}
+
+
+/* ----------------- */
+/* script view table */
+/* ----------------- */
+table.telnetman_script_viewer {
+ display : none;
+ width : 768px;
+ position : relative;
+ top : 40px;
+ margin : 0 auto;
+}
+
+table.telnetman_script_viewer th {
+ padding : 4px;
+}
+
+table.telnetman_script_viewer th div {
+ position : relative;
+ width : 760px;
+ height : 20px;
+ text-align : center;
+}
+
+table.telnetman_script_viewer th div span {
+ color : #ffffff;
+ font-size : 18px;
+ font-weight : bold;
+ letter-spacing : 0.2em;
+ 
+ text-shadow : 1px 1px 0px #cccccc,
+              -1px 1px 0px #cccccc,
+	       1px -1px 0px #cccccc,
+	      -1px -1px 0px #cccccc,
+	       2px 2px 2px #cccccc;
+}
+
+table.telnetman_script_viewer th div img {
+ position : absolute;
+ top  : 2px;
+ right : 4px;
+ cursor : pointer;
+}
+
+table.telnetman_script_viewer td {
+ padding : 8px;
+ text-align : center;
+}
+
+
+/*--------------------*/
+/*little radio buntton*/
+/*--------------------*/
+span.little_radio_buntton {
+ margin-left  : 4px;
+ margin-right : 4px;
+}
+
+span.little_radio_buntton input[type="radio"] {
+ display: none;
+}
+
+span.little_radio_buntton label{
+ margin: 0;
+ padding: 1px 2px 1px 2px;
+ border-top : 1px solid transparent;
+ border-right : 1px solid #ffffff;
+ border-bottom : 1px solid transparent;
+ border-left : 1px solid transparent;
+ background-color : #e0c0b0;
+ color: #ffffff;
+ font-size: 11px;
+ text-align: center;
+ transition: .2s;
+}
+
+span.little_radio_buntton label:first-of-type{
+ border-radius: 3px 0 0 3px;
+}
+
+span.little_radio_buntton label:last-of-type{
+ border-right: 1px solid transparent;
+ border-radius: 0 3px 3px 0;
+}
+
+span.little_radio_buntton input[type="radio"]:checked + label {
+ background-color: #996644;
+ color: #fffae0;
+}
+
+
+
+/*--------------------*/
+/*middle radio buntton*/
+/*--------------------*/
+span.middle_radio_buntton {
+ margin-left  : 6px;
+ margin-right : 6px;
+}
+
+span.middle_radio_buntton input[type="radio"] {
+ display: none;
+}
+
+span.middle_radio_buntton label{
+ margin: 0;
+ padding: 2px 4px 2px 4px;
+ border-top : 1px solid transparent;
+ border-right : 1px solid #ffffff;
+ border-bottom : 1px solid transparent;
+ border-left : 1px solid transparent;
+ background-color : #e0c0b0;
+ color: #ffffff;
+ font-size: 12px;
+ text-align: center;
+ transition: .2s;
+}
+
+span.middle_radio_buntton label:first-of-type{
+ border-radius: 5px 0 0 5px;
+}
+
+span.middle_radio_buntton label:last-of-type{
+ border-right: 1px solid transparent;
+ border-radius: 0 5px 5px 0;
+}
+
+span.middle_radio_buntton input[type="radio"]:checked + label {
+ background-color: #996644;
+ color: #fffae0;
+}
+
+
+
+/*-------------------------------*/
+/*Telentman parameter description*/
+/*-------------------------------*/
+span.desc_green {
+ color : #00b050;
+ font-weight : bold;
+ font-size : 14px;
+}
+
+span.desc_blue {
+ color : #0070c0;
+ font-weight : bold;
+ font-size : 14px;
+}
+
+span.desc_black {
+ color : #404040;
+ font-weight : bold;
+ font-size : 14px;
+}
+
+span.desc_grey {
+ color : #808080;
+ font-weight : normal;
+ font-size : 14px;
+}
+
+span.desc_comment {
+ color : #808080;
+ font-weight : normal;
+ font-size : 12px;
+}
+
+span.desc_red {
+ color : #c00000;
+ font-weight : bold;
+ font-size : 14px;
+}

@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+div.telnetman_exportInport_button_area {
+ margin : 0px auto;
+}
+
+div.telnetman_exportInport_button_zone {
+ margin : 0px;
+ padding-top : 20px;
+ padding-bottom : 20px;
+ 
+ border-top : 1px solid #ffffff;
+ border-bottom : 1px solid #886644;
+}
+
+div.telnetman_exportInport_button_zone:first-child {
+ border-top : 1px solid transparent;
+}
+
+div.telnetman_exportInport_button_zone:last-child {
+ border-bottom : 1px solid transparent;
+}
+
+div.telnetman_exportInport_button_zone h1 {
+ margin : 8px;
+ padding : 0px;
+ 
+ color : #775533;
+ font-weight : bold;
+ font-size : 16px;
+ text-shadow : 1px 1px 0 #ffffff;
+}
+
+div.telnetman_exportInport_button_zone p {
+ margin : 4px;
+ padding : 0px;
+ min-height : 16px;
+}
+
+div.telnetman_exportInport_d_and_d_area {
+ border-radius : 8px;
+ border : 2px dashed #a0a0a0;
+ background-color : #ffffff;
+ 
+ width : 200px;
+ height : 40px;
+ 
+ padding : 8px;
+ margin : 4px;
+ 
+ overflow : hidden;
+}
+
+div.telnetman_exportInport_d_and_d_area span {
+ font-size : 11px;
+ color : #a0a0a0;
+ letter-spacing : 0.1em;
+ 
+ white-space : nowrap;
+}
+
+div.telnetman_exportImport_comment_div {
+ width : 440px;
+ height : 32px;
+ border : 1px solid #transparent;
+ 
+ margin : 4px;
+ 
+ position : relative;
+ float : left;
+}

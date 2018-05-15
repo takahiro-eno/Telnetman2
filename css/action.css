@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+div.pattern_match_element_frame {
+ border: 1px solid transparent;
+ margin-bottom : 2px;
+ position : relative;
+ width: 480px;
+ height : 190px;
+}
+
+div.pattern_match_element_box1 {
+ border: 1px solid transparent;
+ position : relative;
+ float : left;
+ width: 170px;
+ height : 60px;
+ text-align : right;
+}
+
+div.pattern_match_element_box1 span {
+ line-height : 56px;
+}
+
+div.pattern_match_element_box2 {
+ border: 1px solid transparent;
+ position : relative;
+ float : left;
+ width: 306px;
+ height : 60px;
+}
+
+p.pattern_match_element_border {
+ height : 20px;
+ margin : 0px;
+ padding : 0px;
+ clear : both;
+ text-align : left;
+}
+
+div.pattern_match_element_box3{
+ border: 1px solid transparent;
+ clear : both;
+ width: 478px;
+ height : 106px;
+}
+
+div.pattern_match_button_area {
+ margin-bottom : 2px; 
+ text-align : left;
+}
+
+div.pattern_match_test_area {
+ margin-bottom : 2px;
+}
+
+p.pattern_match_line_area {
+ height : 20px;
+ margin-left : 0px;
+ margin-top : 0px;
+ margin-right : 0px;
+ margin-bottom : 2px;
+}

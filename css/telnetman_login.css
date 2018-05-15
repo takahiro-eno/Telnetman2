@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+table.telnetman_login_table {
+ border  : 1px solid #a0a0a0;
+ background-color : #fafaf0;
+ text-align : right;
+ 
+ border-radius: 9px;
+ box-shadow : 0px 0px 9px 1px rgba(0,0,0,0.4);
+ 
+ position : relative;
+ top : 200px;
+ width : 320px;
+ margin : 0 auto;
+ 
+ display : none;
+}
+
+table.telnetman_login_table a {
+ font-size : 12px;
+ color: #303030;
+ text-decoration: none;
+ letter-spacing : 0.1em;
+}
+
+table.telnetman_login_table a:active  {color: #c0c0c0;}
+table.telnetman_login_table a:hover   {color: #c0c0c0;}
+
+table.telnetman_login_table span {
+ font-size : 12px;
+ color : #303030;
+}
+
+table.telnetman_login_table td {
+ padding : 10px 18px 10px 18px;
+}
+
+td.telnetman_login_left {
+ text-align : left;
+}
+
+td.telnetman_login_left span {
+ font-weight : bold;
+}
+
+td.telnetman_login_center {
+ text-align : center;
+}
+
+td.telnetman_login_right {
+ text-align : right;
+}

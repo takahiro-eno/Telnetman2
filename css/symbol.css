@@ -1,0 +1,731 @@
+@charset "UTF-8";
+
+@keyframes rotate_symbol1 {
+ 0% {transform: rotate(0deg);}
+ 70% {transform: rotate(7deg);}
+ 90% {transform: rotate(-5deg);}
+ 100% {transform: rotate(4deg);}
+}
+
+div.rotate_symbol {
+ animation-name: rotate_symbol1;
+ animation-duration: 1s;
+ animation-timing-function: ease;
+ animation-iteration-count: 1;
+ animation-fill-mode : forwards;
+}
+
+
+
+/*         */
+/* command */
+/*         */
+div.item_symbol_command_show_1 {
+ position : relative;
+ 
+ width  : 160px;
+ height : 32px;
+ margin : 4px auto;
+ 
+ border : solid 1px #409020;
+ 
+ cursor : pointer;
+ 
+ background-image    : url(../img/buchedenoel_32.png);
+ background-position : 0px 0px;
+ background-repeat   : no-repeat;
+ background-color    : #98c858;
+}
+
+p.item_title_command_show_1 {
+ position : absolute;
+ 
+ top     : 0px;
+ left    : 32px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+ 
+ color       : #f9fff9;
+ font-size   : 11px;
+ text-shadow : 1px 1px 1px #303030;
+
+ overflow    : hidden;
+ white-space : normal;
+}
+
+div.item_symbol_command_show_2 {
+ position : relative;
+ 
+ width : 160px;
+ height : 32px;
+ margin  : 4px auto;
+ 
+ border : solid 1px #80b040;
+ border-radius : 16px;
+ 
+ cursor : pointer;
+ 
+ background-image    : url(../img/christmaspudding_32.png);
+ background-position : 0px 0px;
+ background-repeat   : no-repeat;
+ background-color    : #c0d080;
+}
+
+p.item_title_command_show_2 {
+ position : absolute;
+ 
+ top     : 0px;
+ left    : 32px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+ 
+ color       : #305010;
+ font-size   : 11px;
+ text-shadow : 1px 1px 1px #ffffff;
+ 
+ overflow    : hidden;
+ white-space : normal;
+}
+
+div.item_symbol_command_conft_1 {
+ position : relative;
+ 
+ width  : 160px;
+ height : 32px;
+ margin : 4px auto;
+ 
+ border : solid 1px #aa7766;
+ 
+ cursor : pointer;
+ 
+ background-image    : url(../img/hotdog_32.png);
+ background-position : 0px 0px;
+ background-repeat   : no-repeat;
+ background-color    : #F4BD6B;
+}
+
+p.item_title_command_conft_1 {
+ position : absolute;
+ 
+ top     : 0px;
+ left    : 32px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+ 
+ color       : #fffff0;
+ font-size   : 11px;
+ text-shadow : 1px 1px 1px #303030;
+ 
+ overflow    : hidden;
+ white-space : normal;
+}
+
+div.item_symbol_command_conft_2 {
+ position : relative;
+ 
+ width : 160px;
+ height : 32px;
+ margin  : 4px auto;
+ 
+ border : solid 1px #ddaa88;
+ border-radius : 16px;
+ 
+ cursor : pointer;
+ 
+ background-image    : url(../img/hamburger_32.png);
+ background-position : 0px 0px;
+ background-repeat   : no-repeat;
+ background-color    : #F6E078;
+}
+
+p.item_title_command_conft_2 {
+ position : absolute;
+
+ top     : 0px;
+ left    : 32px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+ 
+ color       : #704020;
+ font-size   : 11px;
+ text-shadow : 1px 1px 1px #ffffff;
+ 
+ overflow    : hidden;
+ white-space : normal;
+}
+
+div.item_symbol_command_etc_1 {
+ position : relative;
+ 
+ width : 160px;
+ height : 32px;
+ margin  : 4px auto;
+ 
+ border : solid 1px #b0b0b0;
+ 
+ cursor : pointer;
+ 
+ background-image    : url(../img/3dango_32.png);
+ background-position : 0px 0px;
+ background-repeat   : no-repeat;
+ background-color    : #f9f9f9;
+}
+
+p.item_title_command_etc_1 {
+ position : absolute;
+ 
+ top     : 0px;
+ left    : 32px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+
+ color     : #808080;
+ font-size : 11px;
+ 
+ overflow    : hidden;
+ white-space : normal;
+}
+
+div.item_symbol_command_etc_2 {
+ position : relative;
+ 
+ width : 160px;
+ height : 32px;
+ margin  : 4px auto;
+ 
+ border : solid 1px #c0c0c0;
+ border-radius : 16px;
+ 
+ cursor : pointer;
+ 
+ background-image    : url(../img/mushipan_32.png);
+ background-position : 0px 0px;
+ background-repeat   : no-repeat;
+ background-color    : #fcfcfc;
+}
+
+p.item_title_command_etc_2 {
+ position : absolute;
+ 
+ top     : 0px;
+ left    : 32px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+ 
+ color : #808080;
+ font-size : 11px;
+ 
+ overflow    : hidden;
+ white-space : normal;
+}
+
+
+
+/*        */
+/* action */
+/*        */
+div.item_symbol_action_action_1 {
+ position : relative;
+ 
+ width  : 184px;
+ height : 56px;
+ margin : 4px auto;
+ 
+ border-top : solid 1px transparent;
+ border-bottom : solid 1px transparent;
+ border-left : solid 1px transparent;
+ border-right : solid 1px transparent;
+ 
+ cursor : pointer;
+ 
+ background-color: transparent;
+ 
+ background-image:
+  url(../img/cornet_32.png),
+  linear-gradient(163deg, transparent 48%, #402002 52%, #c0b088 0),
+  linear-gradient(-163deg, transparent 48%, #402002 52%, #c0b088 0),
+  linear-gradient(17deg, transparent 48%, #402002 52%, #c0b088 0),
+  linear-gradient(-17deg, transparent 48%, #402002 52%, #c0b088 0);
+
+ background-position:
+  10px 12px,
+  left top,
+  right top,
+  left bottom,
+  right bottom;
+
+ background-repeat:
+  no-repeat,
+  no-repeat,
+  no-repeat,
+  no-repeat,
+  no-repeat;
+  
+ background-size:
+  32px 32px,
+  92px 28px,
+  92px 28px,
+  92px 28px,
+  92px 28px;
+}
+
+p.item_title_action_action_1 {
+ position : absolute;
+ 
+ top     : 12px;
+ left    : 42px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+ 
+ color : #fffefd;
+ font-size : 11px;
+ text-shadow : 1px 1px 1px #303030;
+ 
+ overflow    : hidden;
+ white-space : normal;
+}
+
+div.item_symbol_action_action_2 {
+ position : relative;
+ 
+ width : 184px;
+ height : 56px;
+ margin  : 4px auto;
+ 
+ border-top : solid 1px transparent;
+ border-bottom : solid 1px transparent;
+ border-left : solid 1px transparent;
+ border-right : solid 1px transparent;
+ 
+ cursor : pointer;
+ 
+ background-color: transparent;
+ 
+ background-image:
+  url(../img/melonbread_32.png),
+  linear-gradient(163deg, transparent 48%, #608035 52%, #e8f4bf 0),
+  linear-gradient(-163deg, transparent 48%, #608035 52%, #e8f4bf 0),
+  linear-gradient(17deg, transparent 48%, #608035 52%, #e8f4bf 0),
+  linear-gradient(-17deg, transparent 48%, #608035 52%, #e8f4bf 0);
+
+ background-position:
+  10px 12px,
+  left top,
+  right top,
+  left bottom,
+  right bottom;
+
+ background-repeat:
+  no-repeat,
+  no-repeat,
+  no-repeat,
+  no-repeat,
+  no-repeat;
+  
+ background-size:
+  32px 32px,
+  92px 28px,
+  92px 28px,
+  92px 28px,
+  92px 28px;
+}
+
+p.item_title_action_action_2 {
+ position : absolute;
+ 
+ top     : 12px;
+ left    : 42px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+ 
+ color       : #405820;
+ font-size   : 11px;
+ text-shadow : 1px 1px 1px #ffffff;
+ 
+ overflow    : hidden;
+ white-space : normal;
+}
+
+
+
+/*            */
+/* subroutine */
+/*            */
+div.item_symbol_sub_sub_1 {
+ position : relative;
+ 
+ width : 184px;
+ height : 56px;
+ margin  : 4px auto;
+ 
+ border : solid 1px #b8b8c0;
+ 
+ cursor : pointer;
+ overflow:hidden;
+ 
+ background-image   : url(../img/americancoffee_32.png);
+ background-repeat  : no-repeat;
+ background-color   : #f6f6fa;
+ background-position: 10px 12px;
+}
+
+p.item_title_sub_sub_1 {
+ position : absolute;
+ 
+ top     : 12px;
+ left    : 42px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+ 
+ color : #402000;
+ font-size : 11px;
+ 
+ overflow    : hidden;
+ white-space : normal;
+}
+
+div.item_symbol_sub_sub_2 {
+ position : relative;
+ 
+ width : 184px;
+ height : 56px;
+ margin  : 4px auto;
+ 
+ border : solid 1px #b8b8c0;
+ border-radius : 16px;
+ 
+ cursor : pointer;
+ 
+ background-image   : url(../img/tea_32.png);
+ background-repeat  : no-repeat;
+ background-color   : #f6f6fa;
+ background-position: 10px 12px;
+}
+
+p.item_title_sub_sub_2 {
+ position : absolute;
+ 
+ top     : 12px;
+ left    : 42px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+ 
+ color : #805020;
+ font-size : 11px;
+ 
+ overflow    : hidden;
+ white-space : normal;
+}
+
+
+
+/*      */
+/* ping */
+/*      */
+div.item_symbol_ping_ping_1 {
+ position : relative;
+ 
+ width  : 180px;
+ height : 42px;
+ margin : 16px auto;
+ 
+ border-top : solid 2px #ee7777;
+ border-bottom : solid 2px #ee7777;
+ 
+ cursor : pointer;
+ 
+ background-color: transparent;
+ 
+ background-image:
+  url(../img/cakedonut_pink_32.png),
+  linear-gradient(0deg, #ffbbbb, #ffbbbb);
+
+ background-position:
+  10px 4px,
+  6px top;
+
+ background-repeat:
+  no-repeat,
+  no-repeat;
+  
+ background-size:
+  32px 32px,
+  168px 44px;
+}
+
+div.item_symbol_ping_ping_1:before, div.item_symbol_ping_ping_1:after{
+ content : '';
+ position : absolute;
+ top   : -8px;
+ width : 2px;
+ height : 58px;
+ background-color : #ee7777;
+}
+div.item_symbol_ping_ping_1:before {left : 6px;}
+div.item_symbol_ping_ping_1:after {right : 6px;}
+
+p.item_title_ping_ping_1 {
+ position : absolute;
+ 
+ top     : 4px;
+ left    : 42px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+ 
+ color : #fff9f9;
+ font-size : 11px;
+ text-shadow : 1px 1px 1px #303030;
+ 
+ overflow    : hidden;
+ white-space : normal;
+}
+
+div.item_symbol_ping_ping_2 {
+ position : relative;
+ 
+ width  : 164px;
+ height : 42px;
+ margin : 12px auto;
+ 
+ box-shadow: 0px 0px 0px 5px #ffdddd;
+ border : dashed 2px #ffaaaa;
+ border-radius: 5px;
+ 
+ cursor : pointer;
+ 
+ background-color : #ffdddd;
+ 
+ background-image    : url(../img/namast_32.png);
+ background-position : 2px 5px;
+ background-repeat   : no-repeat;
+ background-size     : 32px 32px;
+}
+
+p.item_title_ping_ping_2 {
+ position : absolute;
+ 
+ top     : 5px;
+ left    : 34px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+ 
+ color : #774444;
+ font-size : 11px;
+ text-shadow : 1px 1px 1px #ffffff;
+ 
+ overflow    : hidden;
+ white-space : normal;
+}
+
+
+
+
+/*        */
+/* Jumper */
+/*        */
+div.item_symbol_jumper_jumper_1 {
+ position : relative;
+ 
+ width : 160px;
+ height : 32px;
+ margin  : 4px 0 32px 4px;
+ 
+ border : solid 1px transparent;
+ background-color : transparent;
+ 
+ cursor : pointer;
+ overflow : visible;
+}
+
+p.item_title_jumper_jumper_1 {
+ position : absolute;
+ top : 0px;
+ left : 64px;
+ margin  : 0px;
+ padding : 0px;
+ z-index : 101;
+}
+
+
+div.item_symbol_jumper_jumper_2 {
+ position : relative;
+ 
+ width : 160px;
+ height : 32px;
+ margin  : 4px 0 32px 4px;
+ 
+ border : solid 1px transparent;
+ background-color : transparent;
+ 
+ cursor : pointer;
+ overflow : visible;
+}
+
+p.item_title_jumper_jumper_2 {
+ position : absolute;
+ top : 0px;
+ left : 0px;
+ margin  : 0px;
+ padding : 0px;
+ z-index : 101;
+}
+
+
+div.item_symbol_jumper_jumper_3 {
+ position : relative;
+ 
+ width : 160px;
+ height : 32px;
+ margin  : 4px 0 32px 4px;
+ 
+ border : solid 1px transparent;
+ background-color : transparent;
+ 
+ cursor : pointer;
+ overflow : visible;
+}
+
+p.item_title_jumper_jumper_3 {
+ position : absolute;
+ top : 0px;
+ left : 64px;
+ margin  : 0px;
+ padding : 0px;
+ z-index : 101;
+}
+
+
+div.item_symbol_jumper_jumper_4 {
+ position : relative;
+ 
+ width : 160px;
+ height : 32px;
+ margin  : 4px 0 32px 4px;
+ 
+ border : solid 1px transparent;
+ background-color : transparent;
+ 
+ cursor : pointer;
+ overflow : visible;
+}
+
+p.item_title_jumper_jumper_4 {
+ position : absolute;
+ top : 0px;
+ left : 0px;
+ margin  : 0px;
+ padding : 0px;
+ z-index : 101;
+}
+
+
+div.item_symbol_jumper_jumper_5 {
+ position : relative;
+ 
+ width : 160px;
+ height : 32px;
+ margin  : 4px 0 32px 4px;
+ 
+ border : solid 1px transparent;
+ background-color : transparent;
+ 
+ cursor : pointer;
+ overflow : visible;
+}
+
+p.item_title_jumper_jumper_5 {
+ position : absolute;
+ top : 0px;
+ left : 0px;
+ margin  : 0px;
+ padding : 0px;
+ z-index : 101;
+}
+
+
+div.item_symbol_jumper_jumper_6 {
+ position : relative;
+ 
+ width : 160px;
+ height : 32px;
+ margin  : 4px 0 32px 4px;
+ 
+ border : solid 1px transparent;
+ background-color : transparent;
+ 
+ cursor : pointer;
+ overflow : visible;
+}
+
+p.item_title_jumper_jumper_6 {
+ position : absolute;
+ top : 0px;
+ left : 0px;
+ margin  : 0px;
+ padding : 0px;
+ z-index : 101;
+}
+
+
+
+/*     */
+/* bug */
+/*     */
+div.command_symbol_bug_bug_1 {
+ position : relative;
+ 
+ width : 160px;
+ height : 32px;
+ margin  : 4px auto;
+ 
+ border : solid 1px #cc9999;
+ 
+ cursor : pointer;
+ 
+ background-image  : url(../img/bug.png);
+ background-position : 0px 0px;
+ background-repeat : no-repeat;
+ background-color  : #aa7777;
+}
+
+p.command_title_bug_bug_1 {
+ position : absolute;
+ 
+ top     : 0px;
+ left    : 32px;
+ width   : 128px;
+ height  : 32px;
+ margin  : 0px;
+ padding : 0px;
+ 
+ color : #e0f0f0;
+ font-size : 11px;
+ text-shadow : 1px 1px 1px #303030;
+
+ overflow    : hidden;
+ white-space: normal;
+}

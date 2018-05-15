@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+table.basic_summary {
+ background-color : #ffffff;
+ border-spacing : 1px;
+ 
+ border-radius : 4px;
+}
+
+table.basic_summary th {
+ padding-top    : 4px;
+ padding-bottom : 4px;
+ padding-left   : 16px;
+ padding-right  : 16px;
+ 
+ background-color : #996644;
+ text-align : center;
+ color : #fffae0;
+ font-weight : bold;
+ 
+ border-radius : 4px;
+}
+
+table.basic_summary td {
+ padding : 4px;
+ text-align  : right;
+ font-weight : normal;
+ 
+ border-radius : 4px;
+}
+
+table.basic_summary td img {
+ cursor : pointer;
+}
+
+table.basic_summary td.background0 {
+ background-color : #ffffff;
+}
+
+table.basic_summary td.background1 {
+ background-color : #efead0;
+}

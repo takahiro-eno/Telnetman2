@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+<meta charset='UTF-8'>
+<link rel='stylesheet' href='css/base.css' type='text/css'>
+<link rel='stylesheet' href='css/training.css' type='text/css'>
+<link rel='shortcut icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<link rel='icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<title>Telnetman2</title>
+</head>
+<body>
+<header class='training_headline'>
+<h1>Telnetman&nbsp;Training&nbsp;初級編</h1>
+</header>
+<section class='section_zone'>
+<h2>1.&nbsp;繰り返し型サブルーチン</h2>
+ <article>
+  <h3>前置き</h3>
+  <p><span class='normal_font'>インターフェース一覧を取得</span><br><span class='normal_font'>&darr;</span><br><span class='normal_font'>up&nbsp;になっているインターフェースのコンフィグを取得</span><br><br><span class='normal_font'>という流れ図を作成する。</span></p>
+  <p><span class='large_font'>準備</span></p>
+  <p class='float_left'><img src='img/training/training-02-01-00.png' width='592' height='584' alt='command インターフェース一覧'></p>
+  <p class='float_left'><span class='normal_font'>インターフェース一覧取得用</span><br><span class='normal_font'>コマンド&nbsp;:&nbsp;show ip interface brief</span><br><span class='normal_font'>を作成。</span></p>
+ </article>
+ <article>
+  <h3>1-1.&nbsp;繰り返し型action&nbsp;の作成</h3>
+  <p><img src='img/training/training-02-01-01-a.png' width='696' height='692' alt='繰り返し型action の作成'></p>
+  <p>
+   <span class='normal_font'>動作&nbsp;:&nbsp;繰り返し</span><br>
+   <span class='normal_font'>タイトル&nbsp;:&nbsp;何でも良い。</span><br>
+   <span class='normal_font'>抽出パターン&nbsp;:&nbsp;([^&yen;s]+)&yen;s+[^&yen;s]+&yen;s+[^&yen;s]+&yen;s+[^&yen;s]+&yen;s+up</span><br><span class='normal_font'>を作成。</span><br>
+   <span class='normal_font'>下記例の</span><span class='mono_font_red'>赤字</span><span class='normal_font'>の部分を抽出</span><br><br>
+   <span class='mono_font'>CSR1000v-01#show&nbsp;ip&nbsp;interface&nbsp;brief</span><br>
+   <span class='mono_font'>Interface&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IP-Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK?&nbsp;Method&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Protocol</span><br>
+   <span class='mono_font_red'>GigabitEthernet1</span><span class='mono_font'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.1.1.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font_red'>GigabitEthernet2</span><span class='mono_font'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.1.2.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font_red'>GigabitEthernet3</span><span class='mono_font'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.1.3.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>GigabitEthernet4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;administratively&nbsp;down&nbsp;down</span><br>
+   <span class='mono_font'>GigabitEthernet5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;administratively&nbsp;down&nbsp;down</span><br>
+   <span class='mono_font_red'>GigabitEthernet6</span><span class='mono_font'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;172.23.0.101&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+  </p>
+  <p class='float_left'><img src='img/training/training-02-01-01-b.png' width='252' height='188' alt='繰り返し型action の配置'></p>
+  <p class='float_left'><span class='normal_font'>準備で作成したインターフェース一覧command&nbsp;とともに流れ図に配置。</span></p>
+ </article>
+ <article>
+  <h3>1-2.&nbsp;繰り返し型サブルーチン用command&nbsp;の作成</h3>
+  <p class='float_left'><img src='img/training/training-02-01-02.png' width='592' height='592' alt='繰り返し型サブルーチン用command の作成'></p>
+  <p class='float_left'><span class='normal_font'>インターフェースのコンフィグを取得するcommand&nbsp;を作成する。</span><br><span class='normal_font'>{#*}&nbsp;には上記の</span><span class='mono_font_red'>赤字</span><span class='normal_font'>が入る。</span><br><br><span class='normal_font'>タイトル&nbsp;:&nbsp;何でも良い。</span><br><span class='normal_font'>コマンド&nbsp;:&nbsp;show&nbsp;running-config&nbsp;interface&nbsp;{#*}</span></p>
+ </article>
+ <article>
+  <h3>1-3.&nbsp;繰り返し型サブルーチンの作成</h3>
+  <p class='float_left'><img src='img/training/training-02-01-03.png' width='656' height='268' alt='繰り返し型サブルーチンの作成'></p>
+  <p class='float_left'><span class='normal_font'>1.&nbsp;サブルーチンの追加</span><br><span class='normal_font'>2.&nbsp;サブルーチンを繰り返し型に</span><br><span class='normal_font'>3.&nbsp;サブルーチンにタイトルを</span><br><span class='normal_font'>4.&nbsp;サブルーチン用command&nbsp;をサブルーチンの左上に配置</span></p>
+ </article>
+ <article>
+  <h3>1-4.&nbsp;サブルーチンの配置と実行</h3>
+  <p class='float_left'><img src='img/training/training-02-01-04.png' width='588' height='412' alt='サブルーチンの配置'></p>
+  <p class='float_left'><span class='normal_font'>1.&nbsp;メインルーチンのアイコンをクリック</span><br><span class='normal_font'>2.&nbsp;サブルーチンを配置</span><br><br><img src='img/training/training-01-01-03.png' width='376' height='192' alt='パラメーターシート'><br><span class='normal_font'>パラメーターシートはA列のみで、実行して想定通りに動くか確認する。</span></p>
+ </article>
+ <article>
+  <h3>実験</h3>
+  <p class='float_left'><img src='img/training/training-02-01-05.png' width='592' height='592' alt='コメント追加'></p>
+  <p class='float_left'><span class='normal_font'>「1-2.&nbsp;繰り返し型サブルーチン用command&nbsp;の作成」のcommand&nbsp;で</span><br><span class='normal_font'>コメントに{#*}&nbsp;を追加するとログがどうなるか確認する。</span></p>
+ </article>
+</section>
+<section class='section_zone'>
+<h2>2.&nbsp;繰り返し型メインルーチン</h2>
+ <article>
+  <h3>前置き</h3>
+  <p><span class='normal_font'>任意のインターフェースのdescription&nbsp;をパラメーターシートで定義た値で設定する流れ図を作成する。</span></p>
+ </article>
+ <article>
+  <h3>2-1.&nbsp;パラメーターシートのB行作成</h3>
+  <p class='float_left'><img src='img/training/training-02-02-01.png' width='640' height='352' alt='パラメーターシートのB行作成'></p>
+  <p class='float_left'><span class='normal_font'>B列に設定したいインターフェース名を記入してB行を作成する。</span><br><span class='normal_font'>変数description&nbsp;を定義してB行に値を入れる。</span><br><span class='normal_font'>C列以降であればどこでも良い。</span></p>
+ </article>
+ <article>
+  <h3>2-2.&nbsp;繰り返し型メインルーチン用command&nbsp;の作成</h3>
+  <p class='float_left'><img src='img/training/training-02-02-02.png' width='592' height='592' alt='繰り返し型メインルーチン用command の作成'></p>
+  <p class='float_left'><span class='normal_font'>インターフェースにdescription&nbsp;を設定するcommand&nbsp;を作成する。</span><br><br><span class='normal_font'>系統&nbsp;:&nbsp;conf&nbsp;t</span><br><span class='normal_font'>コマンド&nbsp;:</span><br><span class='normal_font'>interface&nbsp;{$B}</span><br><span class='normal_font'>description&nbsp;{*:description}</span></p>
+ </article>
+ <article>
+  <h3>2-3.&nbsp;繰り返し型メインルーチンの作成</h3>
+  <p class='float_left'><img src='img/training/training-02-02-03.png' width='656' height='268' alt='繰り返し型メインルーチンの作成'></p>
+  <p class='float_left'><span class='normal_font'>1.&nbsp;メインルーチンを繰り返し型に</span><br><span class='normal_font'>2.&nbsp;繰り返し型メインルーチン用command&nbsp;を配置</span><br><br><span class='normal_font'>実行して想定通りに動くか確認する。</span></p>
+ </article>
+</section>
+<section class='section_zone'>
+<h2>3.&nbsp;3つの流れ図の使い分け</h2>
+ <article>
+  <h3>前置き</h3>
+  <p><span class='normal_font'>「2.&nbsp;繰り返し型メインルーチン」の続き。</span><br><span class='normal_font'>設定変更前にホスト名の確認、設定変更後に設定保存を実行する流れ図を作成する。</span></p>
+  <p><span class='large_font'>準備</span></p>
+  <p class='float_left'><img src='img/training/training-02-03-00.png' width='592' height='592' alt='write memory'></p>
+  <p class='float_left'><span class='normal_font'>設定保存のcommand&nbsp;を作成する。</span><br><span class='normal_font'>コマンド&nbsp;:&nbsp;write memory</span></p>
+ </article>
+ <article>
+  <h3>3-1.&nbsp;パラメーターシートにA行B行を記入</h3>
+  <p class='float_left'><img src='img/training/training-02-03-01.png' width='552' height='352' alt='パラメーターシートにホスト名を記入'></p>
+  <p class='float_left'><span class='normal_font'>変数hostname&nbsp;を追加してホスト名をA行に記入する。</span></p>
+ </article>
+ <article>
+  <h3>3-2.&nbsp;事前作業用流れ図の作成</h3>
+  <p class='float_left'><img src='img/training/training-02-03-02.png' width='332' height='416' alt='事前作業用流れ図の作成'></p>
+  <p class='float_left'><span class='normal_font'>1.&nbsp;左の流れ図を開く</span><br><span class='normal_font'>&darr;</span><br><span class='normal_font'>入門編「3.&nbsp;OK,&nbsp;NG&nbsp;分岐」の流れ図データを取り込む。</span><br><br><span class='normal_font'>または</span><br><br><span class='normal_font'>1.&nbsp;左の流れ図を開く</span><br><span class='normal_font'>2.&nbsp;メインルーチンを1回のみに設定</span><br><span class='normal_font'>3.&nbsp;入門編「3.&nbsp;OK,&nbsp;NG&nbsp;分岐」で作成したホスト名確認のcommand&nbsp;とaction&nbsp;を配置</span></p>
+ </article>
+ <article>
+  <h3>3-3.&nbsp;事後作業用流れ図の作成</h3>
+  <p class='float_left'><img src='img/training/training-02-03-03.png' width='660' height='340' alt='事後作業用流れ図の作成'></p>
+  <p class='float_left'><span class='normal_font'>1.&nbsp;右の流れ図を開く</span><br><span class='normal_font'>2.&nbsp;メインルーチンを1回のみに設定</span><br><span class='normal_font'>3.&nbsp;準備で作成した設定保存のcommand&nbsp;を配置</span><br><br><span class='normal_font'>実行してみて、繰り返されるのが設定変更部分のみであることを確認する。</span></p>
+ </article>
+ <article>
+  <h3>実験</h3>
+  <p><span class='normal_font'>パラメーターシートのhostname&nbsp;を間違えると、設定変更前にNG&nbsp;終了することを確認する。</span></p>
+ </article>
+ <article>
+  <h3>開発ヒント</h3>
+  <p class='float_left'><img src='img/training/training-02-03-04.png' width='660' height='420' alt='開発中の流れ図'></p>
+  <p class='float_left'><span class='normal_font'>真ん中の流れ図の1行目を空にして実行すると</span><br><span class='normal_font'>この流れ図のコマンドだけ実行されないことを確認する。</span><br><span class='normal_font'>開発中に動作させたくない部分があるときは</span><br><span class='normal_font'>このように空行を入れると良い。</span><br><br><span class='normal_font'>右クリックすると行や列の操作ポップアップが表示される。</span></p>
+ </article>
+</section>
+</body>
+</html>

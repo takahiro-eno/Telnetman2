@@ -1,0 +1,273 @@
+@charset "UTF-8";
+
+/************/
+/* 一時停止 */
+/************/
+div.telnetman_parameter_node_1 {
+ position : relative;
+ 
+ width : 144px;
+ height : 22px;
+ 
+ margin : 4px;
+ 
+ border : 1px solid #cccccc;
+ border-radius : 4px;
+ 
+ overflow : hidden;
+ cursor : not-allowed;
+ 
+ background-image   : url(../img/control_pause.png);
+ background-repeat  : no-repeat;
+ background-color   : #eeeeee;
+ background-position: 4px 4px;
+}
+
+div.telnetman_parameter_node_1 span {
+ position : absolute;
+ top : 4px;
+ left : 24px;
+ 
+ color : #606060;
+ font-size : 14px;
+ letter-spacing : 0.1em;
+ white-space: normal;
+}
+
+/**********/
+/* 待機中 */
+/**********/
+div.telnetman_parameter_node_2 {
+ position : relative;
+ 
+ width : 144px;
+ height : 22px;
+ 
+ margin : 4px;
+ 
+ border : 1px solid #cccccc;
+ border-radius : 4px;
+ 
+ overflow : hidden;
+ cursor : wait;
+ 
+ background-image   : url(../img/hourglass.png);
+ background-repeat  : no-repeat;
+ background-color   : #eeeeee;
+ background-position: 4px 4px;
+}
+
+div.telnetman_parameter_node_2 span {
+ position : absolute;
+ top : 4px;
+ left : 24px;
+ 
+ color : #606060;
+ font-size : 14px;
+ letter-spacing : 0.1em;
+ white-space: normal;
+}
+
+/*************/
+/* telnet 中 */
+/*************/
+div.telnetman_parameter_node_3 {
+ position : relative;
+ 
+ width : 144px;
+ height : 22px;
+ 
+ margin : 4px;
+ 
+ border : 1px solid #cccccc;
+ border-radius : 4px;
+ 
+ overflow : hidden;
+ cursor : progress;
+ 
+ background-image   : url(../img/loading_16.gif);
+ background-repeat  : no-repeat;
+ background-color   : #eeeeee;
+ background-position: 4px 4px;
+}
+
+div.telnetman_parameter_node_3 span {
+ position : absolute;
+ top : 4px;
+ left : 24px;
+ 
+ color : #606060;
+ font-size : 14px;
+ letter-spacing : 0.1em;
+ white-space: normal;
+}
+
+/************/
+/* 正常終了 */
+/************/
+div.telnetman_parameter_node_4 {
+ position : relative;
+ 
+ width : 144px;
+ height : 22px;
+ 
+ margin : 4px;
+ 
+ border : 1px dashed #cccccc;
+ border-radius : 4px;
+ 
+ overflow : hidden;
+ cursor : pointer;
+ 
+ background-image   : url(../img/tick.png);
+ background-repeat  : no-repeat;
+ background-color   : #f9f9f9;
+ background-position: 4px 4px;
+}
+
+div.telnetman_parameter_node_4 span {
+ position : absolute;
+ top : 4px;
+ left : 24px;
+ 
+ color : #999999;
+ font-size : 14px;
+ letter-spacing : 0.1em;
+ white-space: normal;
+}
+
+/***********/
+/* NG 終了 */
+/***********/
+div.telnetman_parameter_node_5 {
+ position : relative;
+ 
+ width : 144px;
+ height : 22px;
+ 
+ margin : 4px;
+ 
+ border : 1px dashed #cccccc;
+ border-radius : 4px;
+ 
+ overflow : hidden;
+ cursor : pointer;
+ 
+ background-image   : url(../img/cross.png);
+ background-repeat  : no-repeat;
+ background-color   : #f9f9f9;
+ background-position: 4px 4px;
+}
+
+div.telnetman_parameter_node_5 span {
+ position : absolute;
+ top : 4px;
+ left : 24px;
+ 
+ color : #999999;
+ font-size : 14px;
+ letter-spacing : 0.1em;
+ white-space: normal;
+}
+
+/******************/
+/* NG 混在 OK終了 */
+/******************/
+div.telnetman_parameter_node_6 {
+ position : relative;
+ 
+ width : 144px;
+ height : 22px;
+ 
+ margin : 4px;
+ 
+ border : 1px dashed #cccccc;
+ border-radius : 4px;
+ 
+ overflow : hidden;
+ cursor : pointer;
+ 
+ background-image   : url(../img/question.png);
+ background-repeat  : no-repeat;
+ background-color   : #f9f9f9;
+ background-position: 4px 4px;
+}
+
+div.telnetman_parameter_node_6 span {
+ position : absolute;
+ top : 4px;
+ left : 24px;
+ 
+ color : #999999;
+ font-size : 14px;
+ letter-spacing : 0.1em;
+ white-space: normal;
+}
+
+/************/
+/* 強制終了 */
+/************/
+div.telnetman_parameter_node_7 {
+ position : relative;
+ 
+ width : 144px;
+ height : 22px;
+ 
+ margin : 4px;
+ 
+ border : 1px dashed #cccccc;
+ border-radius : 4px;
+ 
+ overflow : hidden;
+ cursor : pointer;
+ 
+ background-image   : url(../img/delete.png);
+ background-repeat  : no-repeat;
+ background-color   : #f9f9f9;
+ background-position: 4px 4px;
+}
+
+div.telnetman_parameter_node_7 span {
+ position : absolute;
+ top : 4px;
+ left : 24px;
+ 
+ color : #999999;
+ font-size : 14px;
+ letter-spacing : 0.1em;
+ white-space: normal;
+}
+
+/************/
+/* 異常終了 */
+/************/
+div.telnetman_parameter_node_8 {
+ position : relative;
+ 
+ width : 144px;
+ height : 22px;
+ 
+ margin : 4px;
+ 
+ border : 1px dashed #cccccc;
+ border-radius : 4px;
+ 
+ overflow : hidden;
+ cursor : pointer;
+ 
+ background-image   : url(../img/error.png);
+ background-repeat  : no-repeat;
+ background-color   : #f9f9f9;
+ background-position: 4px 4px;
+}
+
+div.telnetman_parameter_node_8 span {
+ position : absolute;
+ top : 4px;
+ left : 24px;
+ 
+ color : #999999;
+ font-size : 14px;
+ letter-spacing : 0.1em;
+ white-space: normal;
+}

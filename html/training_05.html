@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+<meta charset='UTF-8'>
+<link rel='stylesheet' href='css/base.css' type='text/css'>
+<link rel='stylesheet' href='css/training_wf.css' type='text/css'>
+<link rel='shortcut icon' href='img/favicon_wf.ico' type='image/vnd.microsoft.icon'>
+<link rel='icon' href='img/favicon_wf.ico' type='image/vnd.microsoft.icon'>
+<title>Telnetman Work Flow</title>
+</head>
+<body>
+<header class='training_headline'>
+<h1>Telnetman&nbsp;Training&nbsp;エリート編</h1>
+</header>
+<section class='section_zone'>
+ <h2>1.&nbsp;Work&nbsp;Flow&nbsp;の作成</h2>
+ <article>
+  <h3>はじめに</h3>
+  <p><span class='normal_font'>行程の長い作業を行うときはTelnetman&nbsp;Work&nbsp;Flow&nbsp;を使うと捗る。</span><br><span class='normal_font'>ここでは使い方のみを解説するので、入門編から上級編までに作成したTelnetman&nbsp;データを各自適当に使って操作方法を覚える。</span><br><span class='normal_font'>注意として、Work&nbsp;Flow&nbsp;の規模が大きくなるに従って開いた時の描画に時間がかかる。数分を要することもある。待っていれば開く。</span></p>
+ </article>
+ <article>
+  <h3>1-1.&nbsp;Work&nbsp;Flow&nbsp;の新規作成</h3>
+  <p><img src='img/training/training-05-01-01-a.png' width='800' height='100' alt='Work Flow の新規作成'></p>
+  <p><span class='normal_font'>Work&nbsp;Flow&nbsp;のタイトルと編集パスワード、Work&nbsp;Flow&nbsp;の実行パスワードを定義して[作成]を押す。</span></p>
+  <p><img src='img/training/training-05-01-01-b.png' width='992' height='92' alt='Work Flow の編集'></p>
+  <p><span class='normal_font'>編集パスワードを入力して[編集]ボタンを押す。</span></p>
+ </article>
+ <article>
+  <h3>1-2.&nbsp;Start&nbsp;の定義</h3>
+  <p><img src='img/training/training-05-01-02.png' width='728' height='548' alt='Start の定義'></p>
+  <p>
+   <span class='normal_font'>&#9312;&nbsp;Start&nbsp;をダブルクリック</span><br>
+   <span class='normal_font'>&#9313;&nbsp;「デフォルトのログイン情報」にTelnetman&nbsp;でダウンロードしたログイン情報のデータファイル「Telnetman2_loginInfo_****.json」をドラッグ&amp;ドロップ。</span><br>
+   <span class='normal_font'>&#9314;&nbsp;必要があれば「enable&nbsp;password」に特権モード移行パスワードを入力。</span>
+ </p>
+ <p><span class='normal_font'>[更新]を押して保存。</span></p>
+ </article>
+ <article>
+  <h3>1-3.&nbsp;work&nbsp;の作成</h3>
+  <p class='float_left'><img src='img/training/training-05-01-03-a.png' width='724' height='588' alt='work の作成'></p>
+  <p class='float_left'>
+   <span class='normal_font'>&#9312;&nbsp;[new&nbsp;work]をクリック</span><br>
+   <span class='normal_font'>&#9313;&nbsp;適宜ドラッグ&amp;ドロップで位置や線の屈折、接続を調整</span><br>
+   <span class='normal_font'>&#9314;&nbsp;タイトルを付ける</span><br>
+   <span class='normal_font'>&#9315;&nbsp;流れ図データファイルをドラッグ&amp;ドロップ</span><br>
+   <span class='normal_font'>&nbsp;&nbsp;&nbsp;「Telnetman2_flowchart_****.json」</span>
+  </p>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-05-01-03-b.png' width='292' height='456' alt='work の作成'></p>
+   <p class='float_left'>
+    <span class='normal_font'>個別ログイン情報&nbsp;:&nbsp;デフォルトのログイン情報を使わない場合は個別で設定する。</span><br>
+    <span class='normal_font'>syslog設定、diff設定、任意ログ設定も必要であればドラッグ&amp;ドロップ。</span><br><br>
+    <span class='normal_font'>Telnetman&nbsp;のaction&nbsp;の機能でパラメーターシートを編集できるが、</span><br>
+    <span class='normal_font'>この段階ではまだ元のパラメーターシートのファイルに書き込まれていない。</span><br>
+    <span class='normal_font'>編集分を破棄するか、書き込んで次に渡すかどうか選択できる。</span><br><br>
+    <span class='normal_font'>[更新]を押して設定保存。</span><br>
+    <span class='normal_font'>このとき配置データも保存される。</span>
+   </p>
+  </div>
+ </article>
+ <article>
+  <h3>1-4.&nbsp;Through</h3>
+  <p class='float_left'><img src='img/training/training-05-01-04.png' width='228' height='240' alt='Through'></p>
+  <p class='float_left'><span class='normal_font'>Through&nbsp;は流れ図実行を飛ばしたいとき、その飛ばし先を指定する。</span></p>
+ </article>
+ <article>
+  <h3>1-5.&nbsp;case&nbsp;の作成</h3>
+  <p class='float_left'><img src='img/training/training-05-01-05.png' width='580' height='720' alt='case の作成'></p>
+  <p class='float_left'><span class='normal_font'>パラメーターシートの内容で場合分けできる。</span><br><span class='normal_font'>書き方はTelnetman&nbsp;のaction&nbsp;-&nbsp;分岐条件と同じ。</span><br><span class='normal_font'>最後の分岐条件に「1」と書くとプログラムで言う「else」になる。</span><br><br><span class='normal_font'>領域が狭いときは左上の[拡張]を押す。</span></p>
+ </article>
+ <article>
+  <h3>1-6.&nbsp;terminal</h3>
+  <p class='float_left'><img src='img/training/training-05-01-06.png' width='752' height='388' alt='terminal'></p>
+  <p class='float_left'><span class='normal_font'>Goal&nbsp;以外で終了させたい所にはterminal&nbsp;を置く。</span></p>
+ </article>
+</section>
+<section class='section_zone'>
+ <h2>2.&nbsp;タスクの作成と実行</h2>
+ <article>
+  <h3>2-1.&nbsp;タスクの作成</h3>
+  <p><img src='img/training/training-05-02-01.png' width='980' height='220' alt='タスクの作成'></p>
+  <p><span class='normal_font'>対象Work&nbsp;Flow&nbsp;の右上のボタンを押してタスク一覧を表示する。</span><br><span class='normal_font'>新規タスクのタイトルを入れて[作成]を押す。</span></p>
+ </article>
+ <article>
+  <h3>2-2.&nbsp;タスクの実行</h3>
+  <p><img src='img/training/training-05-02-02.png' width='980' height='240' alt='タスクの実行'></p>
+  <p><span class='normal_font'>実行パスワードを入力して[実行]を押す。</span></p>
+ </article>
+ <article>
+  <h3>2-3.&nbsp;Start</h3>
+  <p class='float_left'><img src='img/training/training-05-02-03.png' width='716' height='456' alt='start'></p>
+  <p class='float_left'>
+   <span class='normal_font'>&#9312;&nbsp;Telnetman&nbsp;のログインIDとパスワードを入力</span><br>
+   <span class='normal_font'>&#9313;&nbsp;Start&nbsp;をダブルクリック</span><br>
+   <span class='normal_font'>&#9314;&nbsp;パラメーターシートをドラッグ&amp;ドロップ</span><br>
+   <span class='normal_font'>&nbsp;&nbsp;&nbsp;「Telnetman2_parameter_****.csv」</span><br><br>
+   <span class='normal_font'>[start]を押す。</span>
+  </p>
+ </article>
+ <article>
+  <h3>2-4.&nbsp;work&nbsp;の実行</h3>
+  <p class='float_left'><img src='img/training/training-05-02-04-a.png' width='592' height='440' alt='work の実行'></p>
+  <p class='float_left'>
+   <span class='normal_font'>&#9312;&nbsp;緑色で塗りつぶされている所がパラメーターシートのある所。</span><br>
+   <span class='normal_font'>&nbsp;&nbsp;&nbsp;ダブルクリック</span><br>
+   <span class='normal_font'>&#9313;&nbsp;流れ図実行対象に&#10004;</span><br>
+   <span class='normal_font'>&#9314;&nbsp;対象機器のログインIDとパスワードを入力</span><br><br>
+   <span class='normal_font'>[exec]を押すとTelnetman&nbsp;Work&nbsp;Flow&nbsp;が</span><br>
+   <span class='normal_font'>Telnetman&nbsp;にアクセスして流れ図を実行する。</span><br><br>
+   <span class='normal_font'>[through]を押すと&#10004;&nbsp;が入っていない機器のパラメーターシートが</span><br>
+   <span class='normal_font'>Through&nbsp;の矢印の方向に移動する。</span><br>
+   <span class='normal_font'>流れ図は実行されない。</span>
+  </p>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-05-02-04-b.png' width='300' height='144' alt='work の実行結果'></p>
+   <p class='float_left'>
+    <span class='normal_font'>実行後、</span><br>
+    <span class='normal_font'>-&nbsp;使用されたパラメーターシート</span><br>
+    <span class='normal_font'>-&nbsp;OK&nbsp;ログ</span><br>
+    <span class='normal_font'>-&nbsp;NG&nbsp;ログ</span><br>
+    <span class='normal_font'>-&nbsp;Error&nbsp;ログ</span><br>
+    <span class='normal_font'>-&nbsp;Diff&nbsp;ログ</span><br>
+    <span class='normal_font'>-&nbsp;Optional&nbsp;ログ</span><br>
+    <span class='normal_font'>をダウンロードできる。</span>
+   </p>
+  </div>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-05-02-04-c.png' width='240' height='320' alt='パラメーターシートの合成'></p>
+   <p class='float_left'><span class='normal_font'>既にパラメーターシートが存在する箱に新たにパラメーターシートを移動させるとどうなるか。</span><br><span class='normal_font'>&darr;</span><br><span class='normal_font'>パラメーターシートは上書きではなく合成される。</span></p>
+  </div>
+ </article>
+</section>
+<section class='section_zone'>
+ <h2>3.&nbsp;手動OK&nbsp;NG</h2>
+ <article>
+  <h3>3-1.&nbsp;空箱</h3>
+  <p><span class='large_font'>編集画面</span><br><img src='img/training/training-05-03-01-a.png' width='856' height='448' alt='空箱'></p>
+  <p><span class='normal_font'>流れ図データを入れないwork&nbsp;つまり、空箱を設置する。</span></p>
+  <p><span class='large_font'>実行画面</span><br><img src='img/training/training-05-03-01-b.png' width='860' height='272' alt='手動OK NG'></p>
+  <p><span class='normal_font'>手動でOK,&nbsp;NG&nbsp;を決められる。</span><br><span class='normal_font'>目視で状況を判断したいとき、別のツールでオペレーションをしたいときなどに使う。</span></p>
+ </article>
+</section>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+<meta charset='UTF-8'>
+<link rel='stylesheet' href='css/base.css' type='text/css'>
+<link rel='stylesheet' href='css/training.css' type='text/css'>
+<link rel='shortcut icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<link rel='icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<title>Telnetman2</title>
+</head>
+<body>
+<header class='training_headline'>
+<h1>Telnetman&nbsp;Training&nbsp;上級編</h1>
+</header>
+<section class='section_zone'>
+ <h2>1.&nbsp;パラメーターシートの動的編集とdiff</h2>
+ <article>
+  <h3>前置き</h3>
+  <p><span class='normal_font'>設定変更前後でコンフィグを取得してdiff&nbsp;を取る流れ図を作成する。</span><br><span class='normal_font'>流れ図実行中に、取得したコンフィグをパラメーターシートに追記し、終了後にdiff&nbsp;を取る。</span></p>
+ </article>
+ <article>
+  <h3>1-1.&nbsp;パラメーターシートのA行に追記するaction&nbsp;の作成</h3>
+  <p><img src='img/training/training-04-01-01-a.png' width='700' height='700' alt='事前コンフィグ保存'></p>
+  <p><span class='normal_font'>追加パラメーターシートA&nbsp;:&nbsp;{$node}&nbsp;&rarr;&nbsp;before&nbsp;config&nbsp;=&nbsp;{$1}</span><br><span class='normal_font'>パラメーターシートに変数before&nbsp;config&nbsp;を定義して{$1}&nbsp;を値にする。</span><br><span class='normal_font'>これを事前コンフィグ取得用にする。</span></p>
+  <p><img src='img/training/training-04-01-01-b.png' width='700' height='700' alt='事後コンフィグ保存'></p>
+  <p><span class='normal_font'>追加パラメーターシートA&nbsp;:&nbsp;{$node}&nbsp;&rarr;&nbsp;after&nbsp;config&nbsp;=&nbsp;{$1}</span><br><span class='normal_font'>パラメーターシートに変数after&nbsp;config&nbsp;を定義して{$1}&nbsp;を値にする。</span><br><span class='normal_font'>これを事後コンフィグ取得用にする。</span></p>
+ </article>
+ <article>
+  <h3>1-2.&nbsp;コンフィグ取得の流れ図作成</h3>
+  <p class='float_left'><img src='img/training/training-04-01-02-a.png' width='548' height='432' alt='事前コンフィグ取得の流れ図作成'></p>
+  <p class='float_left'><span class='normal_font'>左の流れ図に、</span><br><span class='normal_font'>「入門編1-1.&nbsp;command&nbsp;作成」で作成したコンフィグ取得のcommand&nbsp;と</span><br><span class='normal_font'>事前コンフィグ取得用action&nbsp;を配置。</span></p>
+  <div class='clear_both'>
+   <p><img src='img/training/training-04-01-02-b.png' width='940' height='428' alt='事後コンフィグ取得の流れ図作成'></p>
+   <p><span class='normal_font'>右の流れ図に、「入門編1-1.&nbsp;command&nbsp;作成」で作成したコンフィグ取得のcommand&nbsp;と事後コンフィグ取得用action&nbsp;を配置。</span></p>
+  </div>
+ </article>
+ <article>
+  <h3>準備</h3>
+  <p><img src='img/training/training-04-01-02-c.png' width='660' height='340' alt='設定変更の流れ図'></p>
+  <p><span class='normal_font'>真ん中の流れ図に何でも良いので設定変更をかけるcommand,&nbsp;action&nbsp;を配置する。</span><br><span class='normal_font'>「入門編2.&nbsp;繰り返し型メインルーチン」で作成した流れ図などを取り込む。</span><br><span class='normal_font'>パラメーターシートも適宜設定する。</span></p>
+ </article>
+ <article>
+  <h3>1-3.&nbsp;diff&nbsp;設定</h3>
+  <p><img src='img/01_exec.png' width='80' height='80' alt='変数設定&nbsp;&amp;&nbsp;実行'></p>
+  <p class='float_left'><img src='img/training/training-04-01-03.png' width='552' height='196' alt='diff 設定'></p>
+  <p class='float_left'><span class='normal_font'>値の欄の左に{before config}&nbsp;右に{after config}&nbsp;と記入する。</span><br><span class='normal_font'>タイトルは無くても良い。</span></p>
+ </article>
+ <article>
+  <h3>1-4.&nbsp;diff&nbsp;結果の確認</h3>
+  <p class='float_left'><img src='img/training/training-04-01-04.png' width='208' height='188' alt='diff 結果の確認'></p>
+  <p class='float_left'><span class='normal_font'>実行後、[zip&nbsp;log]&nbsp;ボタンを押すとログをまとめてダウンロードできる。</span><br><span class='normal_font'>その中にdiff&nbsp;結果もあるので確認する。</span></p>
+ </article>
+</section>
+<section class='section_zone'>
+ <h2>2.&nbsp;NG&nbsp;で止めない繰り返し</h2>
+ <article>
+  <h3>前置き</h3>
+  <p><span class='normal_font'>全インターフェースのdescription&nbsp;を読み取ってCSV&nbsp;にまとめる流れ図を作成する。</span><br><span class='normal_font'>description&nbsp;が無いインターフェースはNG&nbsp;とせず読み飛ばす動きにする。</span></p>
+  <p><span class='large_font'>準備1</span><br><span class='normal_font'>description&nbsp;を設定しないインターフェースをいくつか作っておく。</span></p>
+  <p><span class='large_font'>準備2</span><br><span class='normal_font'>例えば、show&nbsp;ip&nbsp;interface&nbsp;brief&nbsp;の結果が以下のような場合、</span></p>
+  <p>
+   <span class='mono_font'>MY130-001MA-11#show&nbsp;ip&nbsp;interface&nbsp;brief</span><br>
+   <span class='mono_font'>Load&nbsp;for&nbsp;five&nbsp;secs:&nbsp;34%/10%;&nbsp;one&nbsp;minute:&nbsp;35%;&nbsp;five&nbsp;minutes:&nbsp;34%</span><br>
+   <span class='mono_font'>Time&nbsp;source&nbsp;is&nbsp;NTP,&nbsp;10:54:37.508&nbsp;jst&nbsp;Fri&nbsp;Mar&nbsp;16&nbsp;2018</span><br><br>
+   <span class='mono_font'>Interface&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IP-Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK?&nbsp;Method&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Protocol</span><br>
+   <span class='mono_font'>Te0/0/0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.13.0.45&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>Te0/1/0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.13.0.42&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>GigabitEthernet0/2/0&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>GigabitEthernet0/2/1&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>GigabitEthernet0/2/2&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>GigabitEthernet0/2/3&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;administratively&nbsp;down&nbsp;down</span><br>
+   <span class='mono_font'>GigabitEthernet0/2/4&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;administratively&nbsp;down&nbsp;down</span><br>
+   <span class='mono_font'>GigabitEthernet0/2/5&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;administratively&nbsp;down&nbsp;down</span><br>
+   <span class='mono_font'>GigabitEthernet0/2/6&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;administratively&nbsp;down&nbsp;down</span><br>
+   <span class='mono_font'>GigabitEthernet0/2/7&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;administratively&nbsp;down&nbsp;down</span><br>
+   <span class='mono_font'>GigabitEthernet0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;administratively&nbsp;down&nbsp;down</span><br>
+   <span class='mono_font'>BDI801&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.13.42.53&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>BDI802&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.13.42.65&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>BDI816&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.13.26.141&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>BDI831&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.13.26.157&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>Loopback0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.77.65.20&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>Port-channel1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;unset&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>Port-channel2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;unset&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>Port-channel4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;unset&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>Tunnel0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.13.0.42&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;unset&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+  </p>
+  <p class='float_left'><img src='img/training/training-04-02-00-a.png' width='700' height='700' alt='インターフェース取得'></p>
+  <p class='float_left'>
+   <span class='mono_font'>Te*/*/*</span><br>
+   <span class='mono_font'>GigabitEthernet*/*/*</span><br>
+   <span class='mono_font'>GigabitEthernet*</span><br>
+   <span class='mono_font'>BDI***&nbsp;</span><br>
+   <span class='normal_font'>の4種類のインターフェースを拾い上げたいとき</span><br><br>
+   <span class='normal_font'>動作&nbsp;:&nbsp;繰り返し</span><br>
+   <span class='normal_font'>抽出パターン&nbsp;:</span><br>
+   <span class='normal_font'>Te[0-9]+/[0-9]+/[0-9]+</span><br>
+   <span class='normal_font'>GigabitEthernet[0-9]+/[0-9]+/[0-9]+</span><br>
+   <span class='normal_font'>(GigabitEthernet[0-9]+)&yen;s</span><br>
+   <span class='normal_font'>BDI[0-9]+</span><br><br>
+   <span class='normal_font'>のaction&nbsp;を作成する。</span><br>
+   <span class='normal_font'>抽出パターンの内容は状況に合わせる。</span>
+  </p>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-04-02-00-b.png' width='540' height='340' alt='流れ図'></p>
+   <p class='float_left'><span class='normal_font'>「入門編1-1.&nbsp;繰り返し型action の作成」と同様に</span><br><span class='normal_font'>show&nbsp;ip&nbsp;interface&nbsp;brief&nbsp;のcommand&nbsp;と作成したaction&nbsp;を流れ図に配置する。</span></p>
+  </div>
+  <div class='clear_both'>
+   <p><span class='large_font'>準備3</span></p>
+   <p class='float_left'><img src='img/training/training-04-02-00-c.png' width='652' height='272' alt='繰り返し型サブルーチンの作成'></p>
+   <p class='float_left'><span class='normal_font'>「入門編1-2.&nbsp;繰り返し型サブルーチン用command の作成」</span><br><span class='normal_font'>「入門編1-3.&nbsp;繰り返し型サブルーチンの作成」</span><br><span class='normal_font'>と同様に</span><br><span class='normal_font'>繰り返し型サブルーチンを追加して</span><br><span class='normal_font'>show&nbsp;running-config&nbsp;interface&nbsp;{#*}</span><br><span class='normal_font'>のcommand&nbsp;を配置する。</span></p>
+  </div>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-04-02-00-d.png' width='592' height='420' alt='繰り返し型サブルーチンの配置'></p>
+   <p class='float_left'><span class='normal_font'>「入門編1-4.&nbsp;サブルーチンの配置と実行」と同様に</span><br><span class='normal_font'>サブルーチンをメインルーチンに配置する。</span><br><br><img src='img/training/training-01-01-03.png' width='376' height='192' alt='パラメーターシート'><br><span class='normal_font'>パラメーターシートはA列のみで、いったん実行してみて動作するか確認する。</span></p>
+  </div>
+ </article>
+ <article>
+  <h3>2-1.&nbsp;パラメーターシートのB行に追加するaction&nbsp;の作成</h3>
+  <p><span class='normal_font'>下記インターフェースのコンフィグの例の、</span><span class='mono_font_red'>赤字</span><span class='normal_font'>の部分を抽出してパラメーターシートに追記するaction&nbsp;を作成する。</span></p>
+  <p>
+    <span class='mono_font'>MY130-001MA-11#show&nbsp;running-config&nbsp;interface&nbsp;GigabitEthernet0/2/0</span><br>
+    <span class='mono_font'>Load&nbsp;for&nbsp;five&nbsp;secs:&nbsp;64%/20%;&nbsp;one&nbsp;minute:&nbsp;51%;&nbsp;five&nbsp;minutes:&nbsp;48%</span><br>
+    <span class='mono_font'>Time&nbsp;source&nbsp;is&nbsp;NTP,&nbsp;14:41:12.439&nbsp;jst&nbsp;Fri&nbsp;Mar&nbsp;16&nbsp;2018</span><br>
+    <span class='mono_font'></span><br>
+    <span class='mono_font'>Building&nbsp;configuration...</span><br>
+    <span class='mono_font'></span><br>
+    <span class='mono_font'>Current&nbsp;configuration&nbsp;:&nbsp;243&nbsp;bytes</span><br>
+    <span class='mono_font'>!</span><br>
+    <span class='mono_font'>interface&nbsp;GigabitEthernet0/2/0</span><br>
+    <span class='mono_font'>&nbsp;description&nbsp;</span><span class='mono_font_red'>MY130-001PT-02[1/5]</span><br>
+    <span class='mono_font'>&nbsp;no&nbsp;ip&nbsp;address</span><br>
+    <span class='mono_font'>&nbsp;logging&nbsp;event&nbsp;link-status</span><br>
+    <span class='mono_font'>&nbsp;load-interval&nbsp;30</span><br>
+    <span class='mono_font'>&nbsp;carrier-delay&nbsp;down&nbsp;msec&nbsp;10</span><br>
+    <span class='mono_font'>&nbsp;negotiation&nbsp;auto</span><br>
+    <span class='mono_font'>&nbsp;service-policy&nbsp;output&nbsp;Output-Policy</span><br>
+    <span class='mono_font'>&nbsp;channel-group&nbsp;1&nbsp;mode&nbsp;active</span><br>
+    <span class='mono_font'>end</span><br>
+  </p>
+  <p><img src='img/training/training-04-02-01-a.png' width='700' height='700' alt='B行追加のaction'></p>
+  <p><span class='normal_font'>抽出パターン&nbsp;:&nbsp;description&nbsp;(.+)</span><br><span class='normal_font'>追加パラメーターシートB&nbsp;:&nbsp;{$node}&nbsp;&rarr;&nbsp;{#*}&nbsp;&rarr;&nbsp;description&nbsp;=&nbsp;{$1}</span><br><span class='normal_font'>パラメーターシートのB列に{#*}&nbsp;を記入し、変数description&nbsp;を定義して値を{$1}&nbsp;にする。</span></p>
+  <p class='float_left'><img src='img/training/training-04-02-01-b.png' width='600' height='340' alt='サブルーチンに配置'></p>
+  <p class='float_left'><span class='normal_font'>サブルーチンに配置する。</span></p>
+ </article>
+ <article>
+  <h3>2-2.&nbsp;青矢印</h3>
+  <p class='float_left'><img src='img/training/training-04-02-02.png' width='652' height='496' alt='青矢印'></p>
+  <p class='float_left'><span class='normal_font'>2-1&nbsp;のaction&nbsp;のNG&nbsp;位置に青矢印を配置する。</span></p>
+ </article>
+ <article>
+  <h3>2-3.&nbsp;任意ログ設定</h3>
+  <p><img src='img/01_exec.png' width='80' height='80' alt='変数設定&nbsp;&amp;&nbsp;実行'></p>
+  <p class='float_left'><img src='img/training/training-04-02-03.png' width='548' height='156' alt='任意ログ設定'></p>
+  <p class='float_left'><span class='normal_font'>ヘッダー&nbsp;:&nbsp;node,interface,description</span><br><span class='normal_font'>ログ&nbsp;:&nbsp;{$node},{$B},{*:description}</span><br><br><span class='normal_font'>を記入。ヘッダーは無くても良い。</span></p>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-04-01-04.png' width='208' height='188' alt='optional log の確認'></p>
+   <p class='float_left'><span class='normal_font'>実行後、ダウンロードしたログの中にoptional.log,&nbsp;optional_sjis.log&nbsp;があるので内容を確認する。</span><br><span class='normal_font'>IP&nbsp;Address,&nbsp;インターフェース名,&nbsp;description&nbsp;のCSV&nbsp;になっているはずである。</span></p>
+  </div>
+ </article>
+ <article>
+  <h3>実験1</h3>
+  <p class='float_left'><img src='img/training/training-04-02-04.png' width='436' height='288' alt='青矢印削除'></p>
+  <p class='float_left'><span class='normal_font'>青矢印を削除して実行すると、description&nbsp;の無いインターフェースでNG&nbsp;終了することを確認する。</span><br><span class='normal_font'>NG&nbsp;になったノードはoptional.log&nbsp;に反映されないことを確認する。</span></p>
+ </article>
+ <article>
+  <h3>実験2</h3>
+  <p><img src='img/training/training-04-02-05.png' width='700' height='700' alt='個数条件'></p>
+  <p><span class='normal_font'>個数条件を変更して{$n}&nbsp;=&nbsp;0&nbsp;の場合、つまり、description&nbsp;を検出できない場合も許容すると</span><br><span class='normal_font'>青矢印が無くてもOK&nbsp;終了することを確認する。</span><br><span class='normal_font'>追加パラメーターシートの欄に{$1},&nbsp;{$2},&nbsp;{$3},&hellip;,&nbsp;{$*}&nbsp;が書かれている、かつ、{$n}&nbsp;=&nbsp;0&nbsp;の場合は</span><br><span class='normal_font'>ここの処理は行われない。</span></p>
+ </article>
+</section>
+<section class='section_zone'>
+ <h2>3.&nbsp;CPU&nbsp;使用率の確認</h2>
+ <article>
+  <h3>課題</h3>
+  <p>
+   <img src='img/training/training-04-03-01-a.png' width='140' height='32' alt='wait'><br>
+   <span class='normal_font'>&#9312;&nbsp;wait&nbsp;機能を使って5秒待機</span><br>
+   <span class='normal_font'>&darr;</span><br>
+   <span class='normal_font'>&#9313;&nbsp;CPU&nbsp;使用率を確認するコマンド実行</span><br>
+   <span class='normal_font'>&darr;</span><br>
+   <span class='normal_font'>&#9313;&nbsp;CPU&nbsp;使用率を抽出しパラメーターシートの値と比較</span><br>
+   <span class='normal_font'>&darr;</span><br>
+   <span class='normal_font'>NG&nbsp;だった場合は&#9312;&nbsp;に戻って最大5回繰り返す。</span><br>
+   <span class='normal_font'>というサブルーチンを作成する。</span><br>
+   <span class='normal_font'>このサブルーチンはよく使うので作れるようになっておく。</span>
+  </p>
+  <p>
+   <span class='normal_font'>完成すると下のような配置になる。</span><br>
+   <img src='img/training/training-04-03-01-b.png' width='1032' height='520' alt='CPU使用率を確認するサブルーチン'>
+  </p>
+ </article>
+</section> 
+</body>
+</html>

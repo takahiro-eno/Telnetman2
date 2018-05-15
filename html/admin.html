@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+<meta charset='UTF-8'>
+<link rel='stylesheet' href='css/base.css' type='text/css'>
+<link rel='stylesheet' href='css/common_layout2.css' type='text/css'>
+<link rel='stylesheet' href='css/telnetmanAuth.css' type='text/css'>
+<link rel='stylesheet' href='css/basic_summary_table.css' type='text/css'>
+<link rel='stylesheet' href='css/admin.css' type='text/css'>
+<link rel='shortcut icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<link rel='icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<script type='text/javascript' charset='UTF-8' src='js/json2.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/jquery.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/commonFunctions.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/telnetmanAuth.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/authorizeUser.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/userGroup.js'></script>
+<script type='text/javascript' charset='UTF-8' src='js/userInfo.js'></script>
+<script type="text/javascript">
+<!--
+ var storageL = localStorage;
+ var storageS = sessionStorage;
+-->
+</script>
+<title>Telnetman&nbsp;ユーザー承認</title>
+</head>
+<body onload="objUserGroup.get(); objAuthorizeUser.get();">
+
+<div id='header_zone'>
+<header>
+<div id='headline_area'>
+<h1>汎用的telnet&nbsp;ツール</h1>
+<nav>
+<ul>
+<li><a href='index.html'>トップ</a></li>
+</ul>
+</nav>
+</div>
+
+<div id='menu_area'>
+<img id='png_telnetman' src='img/Telnetman.png' width='364' height='52' alt='telnetman'>
+<p><span id='title_string'>ユーザー管理</span></p>
+</div>
+</header>
+</div>
+
+<div id='section_zone'>
+<section class='telnetman_admin_zone'>
+<h1>グループ管理</h1>
+<p><span>グループ名</span><input type='text' spellcheck='false' size='24' id='telnetman_group_new_group_name' value=''><button class='enable' id='telnetman_group_new_group_button' onclick='objUserGroup.add();'>新規作成</button></p>
+<div>
+<table class='basic_summary' id='telnetman_group_list'>
+<tr><th>グループ名</th><th>-</th><th>-</th></tr>
+</table>
+</div>
+</section>
+
+<section class='telnetman_admin_zone'>
+<h1>ユーザー&nbsp;-&nbsp;グループ関連付け</h1>
+<p><span>ユーザーID</span><input type='text' spellcheck='false' size='16' id='telnetman_group_user_id' value=''><button class='enable' id='telnetman_group_get_button' onclick='objUserGroup.search();'>取得</button></p>
+<div class='telnetman_user_group_area'>
+<div class='telnetman_user_group_zone'>
+<table class='basic_summary'>
+<tr><th>未割り当てグループ</th></tr>
+<tr><td class='background0'><select size='6' multiple class='group_list' id='telnetman_group_unassigned'></select></td></tr>
+</table>
+</div>
+<div class='telnetman_user_group_zone telnetman_user_group_button'>
+<p><button class='enable' onclick='objUserGroup.allocate();'>&#8811;</button></p>
+<p><button class='enable' onclick='objUserGroup.unassign();'>&#8810;</button></p>
+</div>
+<div class='telnetman_user_group_zone'>
+<table class='basic_summary'>
+<tr><th>割り当てグループ</th></tr>
+<tr><td class='background0'><select size='6' multiple class='group_list' id='telnetman_group_allocated'></select></td></tr>
+</table>
+</div>
+<div class='telnetman_user_group_zone telnetman_user_group_button'>
+<p><button class='enable' onclick='objUserGroup.save();' id='telnetman_group_save_button'>保存</button></p>
+</div>
+</div>
+</section>
+
+<section class='telnetman_admin_zone'>
+<h1>ユーザー情報</h1>
+<p><span>ユーザーID,&nbsp;名前</span><input type='text' spellcheck='false' size='24' id='telnetman_user_search_word' value='' placeholder='部分一致'><button class='enable' id='telnetman_user_search_button' onclick='objUserInfo.search();'>検索</button></p>
+<table class='basic_summary' id='telnetman_user_list'>
+<tr><th>ユーザーID</th><th>ユーザー名</th><th>メールアドレス</th><th>パスワード</th><th>登録日時</th><th>最終アクセス日時</th><th>-</th><th>-</th></tr>
+</table>
+</section>
+
+<section class='telnetman_admin_zone'>
+<h1>未承認ユーザー</h1>
+<div id='user_list_area'></div>
+</section>
+</div>
+
+<footer></footer>
+
+</body>
+</html>

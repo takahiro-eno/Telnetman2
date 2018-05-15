@@ -1,0 +1,52 @@
+﻿@charset "UTF-8";
+
+
+section.telnetman_admin_zone {
+ margin : 0px;
+ padding-top : 20px;
+ padding-bottom : 20px;
+ 
+ border-top : 1px solid #ffffff;
+ border-bottom : 1px solid #886644;
+}
+
+section.telnetman_admin_zone:first-child {
+ border-top : 1px solid transparent;
+}
+
+section.telnetman_admin_zone:last-child {
+ border-bottom : 1px solid transparent;
+}
+
+section.telnetman_admin_zone h1 {
+ margin : 8px;
+ padding : 0px;
+ 
+ color : #775533;
+ font-weight : bold;
+ font-size : 16px;
+ text-shadow : 1px 1px 0 #ffffff;
+}
+
+section.telnetman_admin_zone p {
+ margin : 4px;
+ padding : 0px;
+ min-height : 16px;
+}
+
+div.telnetman_user_group_area {
+ height : 120px;
+}
+
+div.telnetman_user_group_zone {
+ position : relative;
+ float : left;
+}
+
+div.telnetman_user_group_button {
+ padding-top : 30px;
+}
+
+select.group_list {
+ width : 120px;
+}

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+<meta charset='UTF-8'>
+<link rel='stylesheet' href='css/base.css' type='text/css'>
+<link rel='stylesheet' href='css/training.css' type='text/css'>
+<link rel='shortcut icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<link rel='icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<title>Telnetman2</title>
+</head>
+<body>
+<header class='training_headline'>
+<h1>Telnetman&nbsp;Training&nbsp;中級編</h1>
+</header>
+<section class='section_zone'>
+<h2>1.&nbsp;「コマンド返り値を&nbsp;:&nbsp;破棄しない」action&nbsp;の使い方</h2>
+ <article>
+  <h3>前置き</h3>
+  <p class='float_left'><img src='img/training/training-03-01-00-a.png' width='340' height='380' alt='繰り返し型サブルーチン'></p>
+  <p class='float_left'><span class='normal_font'>初級編「1.&nbsp;繰り返し型サブルーチン」に特定ポートのstatus&nbsp;を確認するaction&nbsp;を加える。</span><br><span class='normal_font'>1つのコマンド返り値を複数のaction&nbsp;で使えるようにする。</span></p>
+  <div class='clear_both'>
+   <p><span class='large_font'>準備</span></p>
+   <p class='float_left'><img src='img/training/training-03-01-00-b.png' width='352' height='144' alt='パラメーターシート'></p>
+   <p class='float_left'><span class='normal_font'>パラメーターシートに変数up&nbsp;link&nbsp;を追加して、適当なup&nbsp;インターフェース名を値にする。</span><br><span class='normal_font'>このインターフェースのstatus&nbsp;を確認するaction&nbsp;を上図の</span><span class='mono_font_red'>赤丸</span><span class='normal_font'>部分に入れる。</span></p>
+  </div>
+ </article>
+ <article>
+  <h3>1-1.&nbsp;コマンド返り値を破棄しないaction&nbsp;の作成</h3>
+  <p><img src='img/training/training-03-01-01-a.png' width='700' height='692' alt='コマンド返り値を破棄しないaction の作成'></p>
+  <p><span class='normal_font'>タイトル&nbsp;:&nbsp;何でも良い。</span><br><span class='normal_font'>include&nbsp;:&nbsp;</span>{up&nbsp;link}<br><span class='normal_font'>抽出パターン&nbsp;:&nbsp;[^&yen;s]+&yen;s+[^&yen;s]+&yen;s+[^&yen;s]+&yen;s+[^&yen;s]+&yen;s+([^&yen;s]+&yen;s*[^&yen;s]+)+&yen;s+[^&yen;s]+</span><br><span class='normal_font'>分岐条件&nbsp;:&nbsp;&#39;{$1}&#39;&nbsp;eq&nbsp;&#39;up&#39;</span><br><span class='normal_font'>NG&nbsp;メッセージ&nbsp;:&nbsp;何でも良い。</span><br><span class='normal_font'>コマンド返り値を&nbsp;:&nbsp;保持する</span></p>
+  <p>
+   <span class='normal_font'>{up&nbsp;link}&nbsp;=&nbsp;GigabitEthernet3&nbsp;の場合</span><br>
+   <span class='normal_font'>下記例の</span><span class='mono_font_red'>赤字</span><span class='normal_font'>の部分を抽出</span><br><br>
+   <span class='mono_font'>CSR1000v-01#show&nbsp;ip&nbsp;interface&nbsp;brief</span><br>
+   <span class='mono_font'>Interface&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IP-Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK?&nbsp;Method&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Protocol</span><br>
+   <span class='mono_font'>GigabitEthernet1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.1.1.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>GigabitEthernet2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.1.2.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>GigabitEthernet3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.1.3.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;</span><span class='mono_font_red'>up</span><span class='mono_font'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
+   <span class='mono_font'>GigabitEthernet4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;administratively&nbsp;down&nbsp;down</span><br>
+   <span class='mono_font'>GigabitEthernet5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;administratively&nbsp;down&nbsp;down</span><br>
+   <span class='mono_font'>GigabitEthernet6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;172.23.0.101&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;NVRAM&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span>
+  </p>
+ </article>
+ <article>
+  <h3>開発ヒント</h3>
+  <p><span class='normal_font'>パターンマッチ試験が行える。</span></p>
+  <p class='float_left'><img src='img/training/training-03-01-01-b.png' width='608' height='452' alt='パターンマッチ試験'></p>
+  <p class='float_left'><span class='normal_font'>1.&nbsp;[&#9660;]&nbsp;ボタンを押して試験領域を表示</span><br><span class='normal_font'>2.&nbsp;コマンド返り値を記入</span><br><span class='normal_font'>3.&nbsp;include,&nbsp;exclude,&nbsp;begin&nbsp;用文字列を、Telnetman&nbsp;変数を値で埋めた形で記入</span><br><span class='normal_font'>4.&nbsp;[TEST]&nbsp;ボタンを押して試験</span></p>
+ </article>
+ <article>
+  <h3>1-2.&nbsp;1つのコマンド返り値を使い回す流れ図</h3>
+  <p class='float_left'><img src='img/training/training-03-01-02.png' width='540' height='480' alt='1つのコマンド返り値を使い回す流れ図'></p>
+  <p class='float_left'><span class='normal_font'>コマンド返り値を破棄しないaction&nbsp;を流れ図に組み込む。</span><br><br><span class='normal_font'>実行してみてOK&nbsp;終了することを確認する。</span><br><span class='normal_font'>{up&nbsp;link}&nbsp;のインターフェースをdown&nbsp;させて実行するとNG&nbsp;終了することを確認する。</span></p>
+ </article> 
+ <article>
+  <h3>実験</h3>
+  <p class='float_left'><img src='img/training/training-03-01-03.png' width='276' height='32' alt='返り値を破棄する'></p>
+  <p class='float_left'><span class='normal_font'>「コマンド返り値を&nbsp;:&nbsp;破棄する」に変更するとどう動くか確認する。</span></p>
+ </article>
+</section>
+<section class='section_zone'>
+<h2>2.&nbsp;「プロンプト多重確認&nbsp;:&nbsp;しない」command&nbsp;の使い所</h2>
+ <article>
+  <h3>前置き</h3>
+  <p><span class='normal_font'>Telnetman&nbsp;はコマンド実行後にプロンプトが返ってきたことを確実に確認するために複数回Enter&nbsp;を実行している。</span><br><span class='normal_font'>しかし、下記例のようなcisco&nbsp;の拡張ping&nbsp;はEnter&nbsp;だけで次の行程に進んでしまう。</span><br><span class='normal_font'>このような場合に対処する流れ図を作成する。</span><br></p>
+  <p>
+   <span class='normal_font'>CSR1000v-01#ping</span><br>
+   <span class='normal_font'>Protocol&nbsp;[ip]:</span><br>
+   <span class='normal_font'>Target&nbsp;IP&nbsp;address:&nbsp;10.1.1.2</span><br>
+   <span class='normal_font'>Repeat&nbsp;count&nbsp;[5]:&nbsp;100</span><br>
+   <span class='normal_font'>Datagram&nbsp;size&nbsp;[100]:</span><br>
+   <span class='normal_font'>Timeout&nbsp;in&nbsp;seconds&nbsp;[2]:</span><br>
+   <span class='normal_font'>Extended&nbsp;commands&nbsp;[n]:</span><br>
+   <span class='normal_font'>Sweep&nbsp;range&nbsp;of&nbsp;sizes&nbsp;[n]:</span><br>
+   <span class='normal_font'>Type&nbsp;escape&nbsp;sequence&nbsp;to&nbsp;abort.</span><br>
+   <span class='normal_font'>Sending&nbsp;100,&nbsp;100-byte&nbsp;ICMP&nbsp;Echos&nbsp;to&nbsp;10.1.1.2,&nbsp;timeout&nbsp;is&nbsp;2&nbsp;seconds:</span><br>
+   <span class='normal_font'>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><br>
+   <span class='normal_font'>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><br>
+   <span class='normal_font'>Success&nbsp;rate&nbsp;is&nbsp;100&nbsp;percent&nbsp;(100/100),&nbsp;round-trip&nbsp;min/avg/max&nbsp;=&nbsp;1/12/45&nbsp;ms</span>
+  </p>
+  <p><span class='large_font'>準備</span></p>
+  <p class='float_left'><img src='img/training/training-03-02-00.png' width='388' height='144' alt='パラメーターシート'></p>
+  <p class='float_left'><span class='normal_font'>パラメーターシートに変数ping&nbsp;target,&nbsp;ping&nbsp;count&nbsp;を追加する。</span><br><span class='normal_font'>値はそれぞれ拡張ping&nbsp;の対象と回数。</span></p>
+ </article>
+ <article>
+  <h3>2-1.&nbsp;「プロンプト多重確認&nbsp;:&nbsp;しない」command&nbsp;の作成</h3>
+  <p class='float_left'><img src='img/training/training-03-02-01-a.png' width='592' height='592' alt='プロンプト多重確認しないcommand'></p>
+  <p class='float_left'><span class='large_font'>ping</span><br><span class='normal_font'>系統&nbsp;:&nbsp;返り値なし</span><br><span class='normal_font'>タイトル&nbsp;:&nbsp;何でも良い</span><br><span class='normal_font'>コマンド&nbsp;:&nbsp;ping</span><br><span class='normal_font'>プロンプト多重確認&nbsp;:&nbsp;しない</span></p>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-03-02-01-b.png' width='592' height='592' alt='プロンプト多重確認しないcommand'></p>
+   <p class='float_left'><span class='large_font'>Enter</span><br><span class='normal_font'>系統&nbsp;:&nbsp;返り値なし</span><br><span class='normal_font'>タイトル&nbsp;:&nbsp;何でも良い</span><br><span class='normal_font'>コメント&nbsp;:&nbsp;空欄</span><br><span class='normal_font'>コマンド&nbsp;:&nbsp;_BLANK_</span><br><span class='normal_font'>プロンプト多重確認&nbsp;:&nbsp;しない</span></p>
+  </div>
+  <p class='float_left'><img src='img/training/training-03-02-01-c.png' width='592' height='592' alt='プロンプト多重確認しないcommand'></p>
+  <p class='float_left'><span class='large_font'>Target</span><br><span class='normal_font'>系統&nbsp;:&nbsp;返り値なし</span><br><span class='normal_font'>タイトル&nbsp;:&nbsp;何でも良い</span><br><span class='normal_font'>コメント&nbsp;:&nbsp;空欄</span><br><span class='normal_font'>コマンド&nbsp;:&nbsp;{ping&nbsp;target}</span><br><span class='normal_font'>プロンプト多重確認&nbsp;:&nbsp;しない</span></p>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-03-02-01-d.png' width='592' height='592' alt='プロンプト多重確認しないcommand'></p>
+   <p class='float_left'><span class='large_font'>Count</span><br><span class='normal_font'>系統&nbsp;:&nbsp;返り値なし</span><br><span class='normal_font'>タイトル&nbsp;:&nbsp;何でも良い</span><br><span class='normal_font'>コメント&nbsp;:&nbsp;空欄</span><br><span class='normal_font'>コマンド&nbsp;:&nbsp;{ping&nbsp;count}</span><br><span class='normal_font'>プロンプト多重確認&nbsp;:&nbsp;しない</span></p>
+  </div>
+ </article>
+ <article>
+  <h3>2-2.&nbsp;show&nbsp;系のEnter</h3>
+  <p class='float_left'><img src='img/training/training-03-02-02.png' width='592' height='592' alt='show 系のEnter'></p>
+  <p class='float_left'>
+   <span class='normal_font'>最後のEnter&nbsp;の後、結果をOK,&nbsp;NG&nbsp;判定したい場合はそれ用のEnter&nbsp;も作成する。</span><br>
+   <span class='normal_font'>下記の</span><span class='mono_font_red'>赤字</span><span class='normal_font'>のEnter&nbsp;用。</span><br><br>
+   <span class='normal_font'>系統&nbsp;:&nbsp;show</span><br>
+   <span class='normal_font'>タイトル&nbsp;:&nbsp;何でも良い</span><br>
+   <span class='normal_font'>コメント&nbsp;:&nbsp;空欄</span><br>
+   <span class='normal_font'>コマンド&nbsp;:&nbsp;_BLANK_</span><br>
+   <span class='normal_font'>プロンプト多重確認&nbsp;:&nbsp;通常型</span><br>
+   <span class='normal_font'>コマンド返り値を&nbsp;:&nbsp;溜める</span><br><br>
+   <span class='normal_font'>CSR1000v-01#ping</span><br>
+   <span class='normal_font'>Protocol&nbsp;[ip]:</span><br>
+   <span class='normal_font'>Target&nbsp;IP&nbsp;address:&nbsp;10.1.1.2</span><br>
+   <span class='normal_font'>Repeat&nbsp;count&nbsp;[5]:&nbsp;100</span><br>
+   <span class='normal_font'>Datagram&nbsp;size&nbsp;[100]:</span><br>
+   <span class='normal_font'>Timeout&nbsp;in&nbsp;seconds&nbsp;[2]:</span><br>
+   <span class='normal_font'>Extended&nbsp;commands&nbsp;[n]:</span><br>
+   <span class='normal_font'>Sweep&nbsp;range&nbsp;of&nbsp;sizes&nbsp;[n]:</span><span class='mono_font_red'>Enter</span><br>
+   <span class='normal_font'>Type&nbsp;escape&nbsp;sequence&nbsp;to&nbsp;abort.</span><br>
+   <span class='normal_font'>Sending&nbsp;100,&nbsp;100-byte&nbsp;ICMP&nbsp;Echos&nbsp;to&nbsp;10.1.1.2,&nbsp;timeout&nbsp;is&nbsp;2&nbsp;seconds:</span><br>
+   <span class='normal_font'>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><br>
+   <span class='normal_font'>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><br>
+   <span class='normal_font'>Success&nbsp;rate&nbsp;is&nbsp;100&nbsp;percent&nbsp;(100/100),&nbsp;round-trip&nbsp;min/avg/max&nbsp;=&nbsp;1/12/45&nbsp;ms</span>
+  </p>
+ </article>
+ <article>
+  <h3>2-3.&nbsp;流れ図の成作</h3>
+  <p class='float_left'><img src='img/training/training-03-02-03.png' width='556' height='788' alt='流れ図の成作'></p>
+  <p class='float_left'>
+   <span class='normal_font'>拡張ping&nbsp;に合わせてcommand&nbsp;を流れ図に配置する。</span><br><br>
+   <span class='normal_font'>CSR1000v-01#ping</span><span class='mono_font_red'>&#9312;</span><br>
+   <span class='normal_font'>Protocol&nbsp;[ip]:</span><span class='mono_font_red'>&#9313;</span><br>
+   <span class='normal_font'>Target&nbsp;IP&nbsp;address:&nbsp;10.1.1.2</span><span class='mono_font_red'>&#9314;</span><br>
+   <span class='normal_font'>Repeat&nbsp;count&nbsp;[5]:&nbsp;100</span><span class='mono_font_red'>&#9315;</span><br>
+   <span class='normal_font'>Datagram&nbsp;size&nbsp;[100]:</span><span class='mono_font_red'>&#9316;</span><br>
+   <span class='normal_font'>Timeout&nbsp;in&nbsp;seconds&nbsp;[2]:</span><span class='mono_font_red'>&#9317;</span><br>
+   <span class='normal_font'>Extended&nbsp;commands&nbsp;[n]:</span><span class='mono_font_red'>&#9318;</span><br>
+   <span class='normal_font'>Sweep&nbsp;range&nbsp;of&nbsp;sizes&nbsp;[n]:</span><span class='mono_font_red'>&#9319;</span><br>
+   <span class='normal_font'>Type&nbsp;escape&nbsp;sequence&nbsp;to&nbsp;abort.</span><br>
+   <span class='normal_font'>Sending&nbsp;100,&nbsp;100-byte&nbsp;ICMP&nbsp;Echos&nbsp;to&nbsp;10.1.1.2,&nbsp;timeout&nbsp;is&nbsp;2&nbsp;seconds:</span><br>
+   <span class='normal_font'>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><br>
+   <span class='normal_font'>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><br>
+   <span class='normal_font'>Success&nbsp;rate&nbsp;is&nbsp;100&nbsp;percent&nbsp;(100/100),&nbsp;round-trip&nbsp;min/avg/max&nbsp;=&nbsp;1/12/45&nbsp;ms</span>
+  </p>
+ </article>
+ <article>
+  <h3>2-4.&nbsp;プロンプトの正規表現の修正</h3>
+  <p class='float_left'><img src='img/training/training-03-02-04.png' width='480' height='372' alt='プロンプトの正規表現の修正'></p>
+  <p class='float_left'><span class='normal_font'>デフォルトのプロンプトの正規表現は</span><br><span class='normal_font'>.*(>|#|&yen;]|&yen;?)\s*$</span><br><span class='normal_font'>で「:」を検知できないので</span><br><span class='normal_font'>.*(>|#|&yen;]|&yen;?|:)\s*$</span><br><span class='normal_font'>のように「:」を加える。</span><br><span class='normal_font'>拡張ping&nbsp;の値入力待ちの行は「:」で終わっている。</span><br><br><span class='normal_font'>実行してみて拡張ping&nbsp;が行えていることを確認する。</span></p>
+ </article>
+ <article>
+  <h3>課題</h3>
+  <p class='float_left'><img src='img/training/training-03-02-05.png' width='536' height='840' alt='ping 結果の確認'></p>
+  <p class='float_left'><span class='normal_font'>ping&nbsp;結果でOK,&nbsp;NG&nbsp;判定するaction&nbsp;を作成して組み込んでみる。</span></p>
+ </article>
+ <article>
+  <h3>開発ヒント</h3>
+  <p class='float_left'><img src='img/training/training-03-02-06-a.png' width='500' height='780' alt='サブルーチンでスッキリ'></p>
+  <p class='float_left'><span class='large_font'>サブルーチンでスッキリ</span><br><span class='normal_font'>1回のみ型サブルーチンを作成して拡張ping&nbsp;のcommand,&nbsp;action&nbsp;を</span><br><span class='normal_font'>このサブルーチンに配置する。</span><br><br><span class='normal_font'>右上の</span><img src='img/download.png' width='16' height='16' alt='download' style='border : none;'><span class='normal_font'>をクリックするとサブルーチンデータをdownload&nbsp;できることを確認する。</span></p>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-03-02-06-b.png' width='548' height='272' alt='サブルーチンでスッキリ'></p>
+   <p class='float_left'><span class='normal_font'>メインルーチンにはこのサブルーチンを配置する。</span><br><span class='normal_font'>まとまり毎をサブルーチンで作ると配置換えが楽になる。</span></p>
+  </div>
+ </article>
+ <article>
+  <h3>実験</h3>
+  <p class='float_left'><img src='img/training/training-03-02-07-a.png' width='268' height='264' alt='最後のEnter'></p>
+  <p class='float_left'><span class='normal_font'>最後のEnter&nbsp;のプロンプト多重確認を「しない」に変更すると、</span><br><span class='normal_font'>プロンプト確認に失敗し正常動作しなくなることを確認する。</span><br><span class='normal_font'>下記のping&nbsp;実行中の表示の行末の「:」をプロンプトと誤判定する。</span><br><br><span class='normal_font'>Sending&nbsp;100,&nbsp;100-byte&nbsp;ICMP&nbsp;Echos&nbsp;to&nbsp;10.1.1.2,&nbsp;timeout&nbsp;is&nbsp;2&nbsp;seconds:</span></p>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-03-02-07-b.png' width='328' height='32' alt='プロンプト多重確認しない'></p>
+  </div>
+ </article>
+</section>
+<section class='section_zone'>
+ <h2>3.&nbsp;何も無いことの確認</h2>
+ <article>
+  <h3>前置き</h3>
+  <p><span class='normal_font'>以下のように、コマンドの返り値が無い場合をOK&nbsp;にしたい場合の流れ図を作成する。</span></p>
+  <p>
+   <span class='mono_font'>CSR1000v-01#show&nbsp;running-config&nbsp;|&nbsp;include&nbsp;XXXX</span><br>
+   <span class='mono_font'>CSR1000v-01#</span><br>
+   <span class='mono_font'>CSR1000v-01#</span>
+  </p>
+  <p><span class='large_font'>準備</span></p>
+  <p class='float_left'><img src='img/training/training-03-03-00.png' width='592' height='592' alt='何も結果が出ないコマンド'></p>
+  <p class='float_left'><span class='normal_font'>なんでも良いので何も返り値が無いcommand&nbsp;を作成する。</span></p>
+ </article>
+ <article>
+  <h3>3-1.&nbsp;何も無いことを確認するaction&nbsp;の作成</h3>
+  <p class='float_left'><img src='img/training/training-03-03-01-a.png' width='700' height='700' alt='何も無いことを確認するaction'></p>
+  <p class='float_left'><span class='normal_font'>抽出パターン&nbsp;:&nbsp;.+</span><br><span class='normal_font'>個数条件&nbsp;:&nbsp;{$n}&nbsp;==&nbsp;0</span></p>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-03-03-01-b.png' width='592' height='340' alt='流れ図に配置'></p>
+   <p class='float_left'><span class='normal_font'>返り値の無いcommand&nbsp;とともに流れ図に配置する。</span><br><br><span class='normal_font'>実行してみてOK&nbsp;終了することを確認する。</span></p>
+  </div>
+ </article>
+ <article>
+  <h3>実験</h3>
+  <p class='float_left'><img src='img/training/training-03-03-02.png' width='700' height='700' alt='抽出パターンが空'></p>
+  <p class='float_left'><span class='normal_font'>抽出パターン&nbsp;:&nbsp;空欄</span><br><span class='normal_font'>NG&nbsp;メッセージ&nbsp;:&nbsp;{$n}&nbsp;がわかる内容</span><br><br><span class='normal_font'>に変更して実行するとNG&nbsp;終了することを確認する。</span><br><span class='normal_font'>抽出パターンが空欄だと</span><br><span class='normal_font'>仕様上、空文字が{$1}&nbsp;に入るので</span><br><span class='normal_font'>{$n}&nbsp;=&nbsp;1&nbsp;となる。</span></p>
+ </article>
+</section>
+</body>
+</html>

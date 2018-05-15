@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+section#link_zone {
+ margin : 20px;
+ 
+ min-height : 160px;
+}
+
+section#link_zone a {
+ font-size : 12px;
+ color: #aa7755;
+ text-decoration:none;
+ letter-spacing : 0.2em;
+}
+
+section#link_zone a:active  {color: #cc9977;}
+section#link_zone a:hover   {color: #cc9977;}
+
+section#link_zone article {
+ border-radius : 8px;
+ border : 2px dashed #996644;
+ background-color : #ffffff;
+ 
+ padding : 8px;
+ margin : 8px;
+ 
+ width : 280px;
+ 
+ position : relative;
+ float : left;
+}
+
+section#link_zone h1 {
+ margin : 8px;
+ padding : 0px;
+ 
+ color : #775533;
+ font-weight : bold;
+ font-size : 16px;
+}
+
+section#link_zone p {
+ margin : 4px 0px 4px 12px;
+ padding : 0px;
+}

@@ -1,0 +1,159 @@
+@charset "UTF-8";
+
+div.session_frame {
+ display : none;
+ 
+ border  : 1px solid #a0a0a0;
+ background-color : #fafaf0;
+ text-align : left;
+ 
+ border-radius: 9px;
+ box-shadow : 0px 0px 9px 1px rgba(0,0,0,0.4);
+ 
+ position : relative;
+ top : 100px;
+ width : 500px;
+ margin : 0 auto;
+ padding : 20px;
+}
+
+div.session_header_title {
+ position : relative;
+ float : left;
+ width : 250px;
+ height : 20px;
+ text-align : left;
+}
+
+div.session_header_title span {
+ color : #303030;
+ font-weight : bold;
+}
+
+div.session_header_link {
+ position : relative;
+ float : left;
+ width : 250px;
+ height : 20px;
+ text-align : right;
+}
+
+div.session_header_link a {
+ font-size : 12px;
+ color: #303030;
+ text-decoration: none;
+ letter-spacing : 0.1em;
+}
+
+div.session_header_link a:active  {color: #c0c0c0;}
+div.session_header_link a:hover   {color: #c0c0c0;}
+
+div.session_frame ul {
+ margin : 0px;
+ padding : 0px;
+ list-style-type : none;
+ clear : both;
+}
+
+div.session_frame ul li {
+ margin : 0px;
+ padding : 0px;
+}
+
+div.session_title {
+ width : 500px;
+ min-height : 50px;
+ 
+ border-bottom : 1px solid #999990;
+ box-shadow : 0 1px 0 0 #ffffff;
+}
+
+div.session_create {
+ margin-top : 20px;
+ width : 500px;
+ height : 30px;
+ text-align : center;
+}
+
+h2.session_title {
+ position : relative;
+ width : 480px;
+ height : 18px;
+}
+
+p.session_message {
+ position : relative;
+ width : 480px;
+ height : 14px;
+}
+
+span.session_title {
+ position : absolute;
+ left : 8px;
+ 
+ font-size : 16px;
+ text-shadow : 1px 1px 1px #ffffff;
+ font-weight : normal;
+ color : #303030;
+}
+
+span.session_message_enable {
+ position : absolute;
+ left : 24px;
+ 
+ font-size : 12px;
+ font-weight : normal;
+ color : #333333;
+ cursor : pointer;
+}
+
+span.session_message_enable:hover {
+ color : #909090;
+}
+
+span.session_message_disable {
+ position : absolute;
+ left : 24px;
+ 
+ font-size : 12px;
+ font-weight : normal;
+ color : #333333;
+ cursor : not-allowed;
+}
+
+span.session_delete_enable {
+ position : absolute;
+ right : 8px;
+ 
+ font-size : 12px;
+ font-weight : normal;
+ color : #333333;
+ cursor : pointer;
+}
+
+span.session_delete_enable:hover {
+ color : #909090;
+}
+
+span.session_delete_disable {
+ position : absolute;
+ right : 8px;
+ 
+ font-size : 12px;
+ font-weight : normal;
+ color : #333333;
+ cursor : not-allowed;
+}
+
+div.session_status_other_browser {
+ position : relative;
+ left : 48px;
+ width : 400px;
+ 
+ font-weight : normal;
+ color : #404040;
+}
+
+div.session_status_other_browser img {
+ cursor : pointer;
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+<meta charset='UTF-8'>
+<link rel='stylesheet' href='css/base.css' type='text/css'>
+<link rel='stylesheet' href='css/training.css' type='text/css'>
+<link rel='shortcut icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<link rel='icon' href='img/favicon.ico' type='image/vnd.microsoft.icon'>
+<title>Telnetman2</title>
+</head>
+<body>
+<header class='training_headline'>
+<h1>Telnetman&nbsp;Training&nbsp;入門編</h1>
+</header>
+<section class='section_zone'>
+<h2>1.&nbsp;基本操作</h2>
+ <article>
+  <h3>1-1.&nbsp;command&nbsp;作成</h3>
+  <p><img src='img/03_command.png' width='80' height='80' alt='コマンド'></p>
+  <p class='float_left'><img src='img/training/training-01-01-01.png' width='588' height='584' alt='command 作成'></p>
+  <p class='float_left'><span class='normal_font'>タイトル&nbsp;:&nbsp;何でも良い。</span><br><span class='normal_font'>コマンド&nbsp;:&nbsp;show&nbsp;running-config</span><br><span class='normal_font'>を新規作成。</span><br><span class='normal_font'>これ以外はデフォルトのまま。</span></p>
+ </article>
+ <article>
+  <h3>1-2.&nbsp;流れ図作成</h3>
+  <p><img src='img/02_flowchart.png' width='80' height='80' alt='流れ図作成'></p>
+  <p class='float_left'><img src='img/training/training-01-01-02.png' width='578' height='272' alt='流れ図作成'></p>
+  <p class='float_left'><span class='normal_font'>1-1&nbsp;で作成したコマンドを流れ図の左上にドラッグ&amp;ドロップ。</span></p>
+ </article>
+ <article>
+  <h3>1-3.&nbsp;パラメーターシート</h3>
+  <p><img src='img/01_exec.png' width='80' height='80' alt='変数設定&nbsp;&amp;&nbsp;実行'></p>
+  <p class='float_left'><img src='img/training/training-01-01-03.png' width='376' height='192' alt='パラメーターシート'></p>
+  <p class='float_left'><span class='normal_font'>A2,&nbsp;A3,&nbsp;A4,&nbsp;A5,&nbsp;A6,&nbsp;&hellip;&nbsp;に対象機器のIP&nbsp;Address&nbsp;を記入。</span></p>
+ </article>
+ <article>
+  <h3>1-4.&nbsp;ログイン情報</h3>
+  <p class='float_left'><img src='img/training/training-01-01-04.png' width='476' height='368' alt='ログイン情報'></p>
+  <p class='float_left'><span class='normal_font'>ユーザー名、パスワード、enable&nbsp;パスワードを記入。</span><br><span class='normal_font'>それ以外は機器に合わせて適宜変更。</span><br><span class='normal_font'>(cisco&nbsp;機器ならデフォルトのままで良い)</span></p>
+ </article>
+ <article>
+ <h3>1-5.&nbsp;実行</h3>
+  <p class='float_left'><img src='img/training/training-01-01-05-a.png' width='188' height='144' alt='実行ボタン'></p>
+  <p class='float_left'><img src='img/training/training-01-01-05-b.png' width='156' height='92' alt='実行結果'></p>
+  <p class='float_left'><span class='normal_font'>実行ボタンを押す。</span><br><span class='normal_font'>左のように結果が表示される。</span><br><span class='normal_font'>クリックするとログが表示される。</span></p>
+ </article>
+</section>
+<section class='section_zone'>
+<h2>2.&nbsp;Jumper</h2>
+ <article>
+  <h3>前置き</h3>
+  <p><span class='large_font'>準備</span></p>
+  <p class='float_left'><img src='img/training/training-01-02-00.png' width='592' height='592' alt='command 作成'></p>
+  <p class='float_left'><span class='normal_font'>コマンドをもう1つ作成する。何でも良い。</span><br><span class='normal_font'>例)&nbsp;show&nbsp;version</span></p>
+ </article>
+ <article>
+  <h3>2-1.&nbsp;Jumper&nbsp;の挿入</h3>
+  <p class='float_left'><img src='img/training/training-01-02-01.png' width='584' height='416' alt='Jumper の挿入'></p>
+  <p class='float_left'><span class='normal_font'>2つのコマンドの間にJumper&nbsp;を入れて実行してみる。</span><br><span class='normal_font'>色々なJumper&nbsp;を入れてどう動くか確認してみる。</span></p>
+ </article>
+ <article>
+  <h3>実験</h3>
+  <p class='float_left'><img src='img/training/training-01-02-02.png' width='612' height='316' alt='色々な配置'></p>
+  <p class='float_left'><span class='normal_font'>Jumper&nbsp;を含めて色々な配置を試してみる。</span></p>
+ </article>
+</section>
+<section class='section_zone'>
+<h2>3.&nbsp;OK,&nbsp;NG&nbsp;分岐</h2>
+ <article>
+  <h3>前置き</h3>
+  <p><span class='normal_font'>例として、パラメーターシート記載のホスト名と対象機器のホスト名が</span><br><span class='normal_font'>一致しているかどうか確認する流れ図を作成する。</span></p>
+  <p><span class='large_font'>準備</span></p>
+  <p class='float_left'><img src='img/training/training-01-03-00.png' width='592' height='584' alt='command 作成'></p>
+  <p class='float_left'><span class='normal_font'>hostname&nbsp;を確認するcommand&nbsp;を作成する。</span><br><br><span class='normal_font'>コマンド&nbsp;:&nbsp;show&nbsp;running-config&nbsp;|&nbsp;include&nbsp;hostname&nbsp;</span></p>
+ </article>
+ <article>
+  <h3>3-1.&nbsp;パラメーターシートで変数を定義</h3>
+  <p class='float_left'><img src='img/training/training-01-03-01.png' width='408' height='192' alt='パラメーターシートで変数を定義'></p>
+  <p class='float_left'><span class='normal_font'>C1&nbsp;:&nbsp;hostname</span><br><span class='normal_font'>C2,&nbsp;C3,&nbsp;C4,&nbsp;C5,&nbsp;C6,&nbsp;&hellip;&nbsp;:&nbsp;対象機器のホスト名</span><br><span class='normal_font'>と記入して変数hostname&nbsp;とその値を定義する。</span><br><span class='normal_font'>C列以降であればどの列でも良い。</span></p>
+ </article>
+ <article>
+  <h3>3-2.&nbsp;action&nbsp;の作成</h3>
+  <p class='float_left'><img src='img/training/training-01-03-02.png' width='692' height='688' alt='action の作成'></p>
+  <p class='float_left'><span class='normal_font'>command&nbsp;で取得したhostname&nbsp;と</span><br><span class='normal_font'>パラメーターシートのhostname&nbsp;を比較するaction&nbsp;を作成する。</span><br><br><span class='normal_font'>タイトル&nbsp;:&nbsp;何でも良い。</span><br><span class='normal_font'>抽出パターン&nbsp;:&nbsp;hostname&nbsp;(.+)</span><br><span class='normal_font'>分岐条件&nbsp;:&nbsp;&#39;{$1}&#39;&nbsp;eq&nbsp;&#39;{hostname}&#39;</span><br><span class='normal_font'>NGメッセージ&nbsp;:&nbsp;何でも良い。</span></p>
+ </article>
+ <article>
+  <h3>3-3.&nbsp;action&nbsp;を流れ図に配置</h3>
+  <p class='float_left'><img src='img/training/training-01-03-03.png' width='540' height='332' alt='action を流れ図に配置'></p>
+  <p class='float_left'><span class='normal_font'>準備で作成したホスト名取得のcommand&nbsp;の下にホスト名確認のaction&nbsp;を配置する。</span><br><span class='normal_font'>実行してOK&nbsp;終了することを確認する。</span></p>
+ </article>
+ <article>
+  <h3>実験</h3>
+  <p class='float_left'><img src='img/training/training-01-03-04.png' width='384' height='144' alt='NG 終了'></p>
+  <p class='float_left'><span class='normal_font'>次に、左のようにパラメーターシートのhostname&nbsp;に誤った値を記入して実行し</span><br><span class='normal_font'>NG&nbsp;終了するか確認する。</span></p>
+ </article>
+</section>
+<section class='section_zone'>
+<h2>4.&nbsp;設定変更</h2>
+ <article>
+  <h3>前置き</h3>
+  <p><span class='normal_font'>現在のホスト名を確認(事前確認)</span><br><span class='normal_font'>&darr;</span><br><span class='normal_font'>ホスト名の変更</span><br><span class='normal_font'>&darr;</span><br><span class='normal_font'>新しいホスト名の確認(事後確認)</span><br><br><span class='normal_font'>の流れ図を作成して実行してみる。</span></p>
+  <p><span class='large_font'>準備</span></p>
+  <p class='float_left'><img src='img/training/training-01-04-00-a.png' width='432' height='144' alt='変数追加'></p>
+  <p class='float_left'><span class='normal_font'>パラメーターシートに変数new&nbsp;hostname&nbsp;を追加。</span><br><span class='normal_font'>値は何でも良い。</span></p>
+  <div class='clear_both'>
+   <p class='float_left'><img src='img/training/training-01-04-00-b.png' width='300' height='52' alt='action の追加'><br><span class='normal_font'>分岐条件</span><br><span class='normal_font'>&#39;{$1}&#39;&nbsp;eq&nbsp;&#39;{hostname}&#39;</span><br><span class='normal_font'>&darr;</span><br><span class='normal_font'>&#39;{$1}&#39;&nbsp;eq&nbsp;&#39;{new hostname}&#39;</span><br><span class='normal_font'>に変更した事後確認用のaction&nbsp;をもう1つ作成する。</span><br><span class='normal_font'>タイトルやNG&nbsp;メッセージも適当に変更する。</span></p>
+   <p class='float_left'><img src='img/training/training-01-04-00-c.png' width='192' height='32' alt='コピーボタン'><br><span class='normal_font'>コピー機能を使うと楽である。</span></p>
+  </div>
+ </article>
+ <article>
+  <h3>4-1.&nbsp;設定変更command&nbsp;の作成</h3>
+  <p class='float_left'><img src='img/training/training-01-04-01.png' width='592' height='588' alt='設定変更command の作成'></p>
+  <p class='float_left'><span class='normal_font'>パラメーターシートのnew&nbsp;hostname&nbsp;の値で</span><br><span class='normal_font'>ホスト名を設定するcommand&nbsp;を作成する。</span><br><br><span class='normal_font'>系統&nbsp;:&nbsp;conf&nbsp;t</span><br><span class='normal_font'>conf&nbsp;t,&nbsp;end&nbsp;:&nbsp;する</span><br><span class='normal_font'>コマンド&nbsp;:&nbsp;hostname&nbsp;{new&nbsp;hostname}</span></p>
+ </article>
+ <article>
+  <h3>4-2.&nbsp;設定変更の流れ図作成と実行</h3>
+  <p class='float_left'><img src='img/training/training-01-04-02-a.png' width='232' height='396' alt='設定変更の流れ図作成と実行'></p>
+  <p class='float_left'><span class='normal_font'>ホスト名取得</span><br><span class='normal_font'>&darr;</span><br><span class='normal_font'>現在のホスト名の確認</span><br><span class='normal_font'>&darr;</span><br><span class='normal_font'>ホスト名変更</span><br><span class='normal_font'>&darr;</span><br><span class='normal_font'>ホスト名取得</span><br><span class='normal_font'>&darr;</span><br><span class='normal_font'>新しいホスト名の確認</span><br><br><span class='normal_font'>の順に並べる。</span><br><span class='normal_font'>実行してみてホスト名が変わり、</span><br><span class='normal_font'>OK&nbsp;終了することを確認する。</span></p>
+ </article>
+ <article>
+  <h3>実験1</h3>
+  <p><span class='normal_font'>続けてもう1度実行すると、ホスト名変更前にNG&nbsp;終了することを確認する。</span></p>
+ </article>
+ <article>
+  <h3>実験2</h3>
+  <p class='float_left'><img src='img/training/training-01-04-02-b.png' width='408' height='168' alt='パラメーターシート'></p>
+  <p class='float_left'><span class='normal_font'>変数名のみを入れ替えてから、もう1度続けて実行するとホスト名が元に戻り</span><br><span class='normal_font'>OK&nbsp;終了することを確認する。</span></p>
+ </article>
+</section>
+</body>
+</html>
