@@ -1,9 +1,9 @@
-CentOS7 ‚ğÅ¬\¬‚ÅƒCƒ“ƒXƒg[ƒ‹
+CentOS7 ã‚’æœ€å°æ§‹æˆã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
 sudo yum -y update
-SELinux ’â~
+SELinux åœæ­¢
 
 --------------------------------------------------------------------------------
-yyumz
+ã€yumã€‘
 sudo yum -y install telnet mlocate traceroute tcpdump wget zip unzip gcc epel-release 
 
 sudo yum -y install perl-CGI \
@@ -27,28 +27,28 @@ cpan
 
 
 --------------------------------------------------------------------------------
-yCPANz
+ã€CPANã€‘
 sudo perl -MCPAN -e shell
 
-ÅŒãˆÈŠO‘S•”ƒfƒtƒHƒ‹ƒg‚Ì‚Ü‚ÜEnter
-ÅŒã‚¾‚¯no
+æœ€å¾Œä»¥å¤–å…¨éƒ¨ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã¾ã¾Enter
+æœ€å¾Œã ã‘no
 Would you like me to append that to /root/.bashrc now? [yes]no
 
 sudo vi /root/.cpan/CPAN/MyConfig.pm
-•ÒW
+ç·¨é›†
 ============================================================
 'makepl_arg' => q[INSTALLDIRS=site],
 'mbuildpl_arg' => q[--installdirs site],
 ============================================================
 
-ã‹Lno ‚Ì‚Æ‚±‚ë‚ğyes ‚É‚µ‚Ä‚µ‚Ü‚Á‚½ê‡
+ä¸Šè¨˜no ã®ã¨ã“ã‚ã‚’yes ã«ã—ã¦ã—ã¾ã£ãŸå ´åˆ
 sudo vi /root/.bashrc
-•ÒW
+ç·¨é›†
 ============================================================
-’Ç‹L•ª‘S‚Äíœ
+è¿½è¨˜åˆ†å…¨ã¦å‰Šé™¤
 ============================================================
 
-ƒƒOƒCƒ“‚µ’¼‚µB
+ãƒ­ã‚°ã‚¤ãƒ³ã—ç›´ã—ã€‚
 
 sudo cpan GD::SecurityImage
 sudo cpan GD::SecurityImage::AC
@@ -60,11 +60,11 @@ sudo cpan Net::Ping::External
 
 
 --------------------------------------------------------------------------------
-ymariaDBz
+ã€mariaDBã€‘
 sudo yum -y install mariadb-server
 
 sudo vi /etc/my.cnf.d/server.cnf
-•ÒW
+ç·¨é›†
 ============================================================
 [mysqld]
 character-set-server = utf8
@@ -82,17 +82,17 @@ sudo mysql_secure_installation
 
 
 --------------------------------------------------------------------------------
-yApachez
+ã€Apacheã€‘
 sudo yum -y install httpd
 
 sudo vi /etc/httpd/conf/httpd.conf
-•ÒW
+ç·¨é›†
 ============================================================
 <Directory "/var/www/html">
-    —ª
+    ç•¥
     #Options Indexes FollowSymLinks
     Options MultiViews
-    —ª
+    ç•¥
 </Directory>
 
 <Directory "/var/www/cgi-bin">
@@ -109,7 +109,7 @@ AddHandler cgi-script .cgi
 ============================================================
 
 sudo vi /etc/httpd/conf.d/welcome.conf
-•ÒW
+ç·¨é›†
 ============================================================
 #<LocationMatch "^/+$">
 #    Options -Indexes
@@ -121,9 +121,9 @@ sudo vi /etc/httpd/conf.d/welcome.conf
 
 
 --------------------------------------------------------------------------------
-ySSL Ø–¾‘z
-SSL Ø–¾‘‚Ìì¬—áB
-Ø–¾‘‚ğì¬‚Å‚«‚ê‚Î‚â‚è•û‚Í‰½‚Å‚à—Ç‚¢B
+ã€SSL è¨¼æ˜æ›¸ã€‘
+SSL è¨¼æ˜æ›¸ã®ä½œæˆä¾‹ã€‚
+è¨¼æ˜æ›¸ã‚’ä½œæˆã§ãã‚Œã°ã‚„ã‚Šæ–¹ã¯ä½•ã§ã‚‚è‰¯ã„ã€‚
 
 sudo yum -y install mod_ssl
 
@@ -216,21 +216,21 @@ sudo systemctl enable httpd
 
 
 --------------------------------------------------------------------------------
-yfirewalldz
+ã€firewalldã€‘
 sudo firewall-cmd --zone=public --add-service=https --permanent
 sudo firewall-cmd --zone=public --remove-service=dhcpv6-client --permanent
 sudo firewall-cmd --reload
 
 
 --------------------------------------------------------------------------------
-y“ú–{ŒêƒtƒHƒ“ƒgz
-ƒ†[ƒU[“o˜^‚Ì•¶š”FØ‚Åg‚¢‚Ü‚·B
-ƒtƒHƒ“ƒgƒCƒ“ƒXƒg[ƒ‹‚Ì—á‚Å‚·B
-‘¼‚ÌƒtƒHƒ“ƒg‚Å‚à\‚¢‚Ü‚¹‚ñB
+ã€æ—¥æœ¬èªãƒ•ã‚©ãƒ³ãƒˆã€‘
+ãƒ¦ãƒ¼ã‚¶ãƒ¼ç™»éŒ²ã®æ–‡å­—èªè¨¼ã§ä½¿ã„ã¾ã™ã€‚
+ãƒ•ã‚©ãƒ³ãƒˆã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã®ä¾‹ã§ã™ã€‚
+ä»–ã®ãƒ•ã‚©ãƒ³ãƒˆã§ã‚‚æ§‹ã„ã¾ã›ã‚“ã€‚
 
 http://ipafont.ipa.go.jp/ipafont/download.html
 IPAfont****.zip
-‚ğƒ_ƒEƒ“ƒ[ƒh
+ã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰
 
 wget https://ipafont.ipa.go.jp/old/ipafont/IPAfont00303.php
 mv IPAfont00303.php IPAfont00303.zip
@@ -245,7 +245,7 @@ sudo mkfontdir
 
 
 --------------------------------------------------------------------------------
-yƒfƒBƒŒƒNƒgƒŠ ƒtƒ@ƒCƒ‹z
+ã€ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª ãƒ•ã‚¡ã‚¤ãƒ«ã€‘
 sudo mkdir /usr/local/Telnetman2
 sudo mkdir /usr/local/Telnetman2/lib
 sudo mkdir /usr/local/Telnetman2/pl
@@ -289,7 +289,7 @@ rm -rf Telnetman2
 
 
 --------------------------------------------------------------------------------
-ycreate tablez
+ã€create tableã€‘
 create database Telnetman2;
 use Telnetman2;
 
@@ -499,9 +499,9 @@ alter table T_Archive add index IDX_Archive (iYyyyMmDd, vcUserId);
 
 
 --------------------------------------------------------------------------------
-yCronz
+ã€Cronã€‘
 sudo vi /etc/cron.d/Telnetman2.cron
-V‹Kì¬
+æ–°è¦ä½œæˆ
 ============================================================
 */1 * * * * root perl /usr/local/Telnetman2/pl/telnet.pl
 */1 * * * * root perl /usr/local/Telnetman2/pl/telnet.pl -w 10
@@ -513,13 +513,13 @@ sudo vi /etc/cron.d/Telnetman2.cron
 #50  6 * * * root perl /usr/local/Telnetman2/pl/lock.pl
 ============================================================
 
-2ƒ–ŒƒƒOƒCƒ“‚Ì–³‚¢ƒ†[ƒU[‚ÌƒAƒJƒEƒ“ƒg‚ğƒƒbƒN‚·‚é‚È‚çA
-ÅIs‚ÌƒRƒƒ“ƒgƒAƒEƒg‚ğŠO‚·B
+2ãƒ¶æœˆãƒ­ã‚°ã‚¤ãƒ³ã®ç„¡ã„ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’ãƒ­ãƒƒã‚¯ã™ã‚‹ãªã‚‰ã€
+æœ€çµ‚è¡Œã®ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã‚’å¤–ã™ã€‚
 
 
 
 --------------------------------------------------------------------------------
-yƒƒOƒ[ƒe[ƒgz
+ã€ãƒ­ã‚°ãƒ­ãƒ¼ãƒ†ãƒ¼ãƒˆã€‘
 sudo vi /etc/logrotate.d/Telnetman
 ============================================================
 /var/Telnetman2/log/sql_log {
@@ -539,29 +539,29 @@ sudo vi /etc/logrotate.d/Telnetman
 
 
 --------------------------------------------------------------------------------
-y•¶š”FØ‚Ì‚½‚ß‚ÌƒtƒHƒ“ƒg‚ÌƒpƒX‚ğ•Ï‚¦‚½‚¢z
+ã€æ–‡å­—èªè¨¼ã®ãŸã‚ã®ãƒ•ã‚©ãƒ³ãƒˆã®ãƒ‘ã‚¹ã‚’å¤‰ãˆãŸã„ã€‘
 /usr/local/Telnetman2/lib/Common_system.pm
-15s–ÚB
-sub font_path ‚ğ•ÒWB
+15è¡Œç›®ã€‚
+sub font_path ã‚’ç·¨é›†ã€‚
 
 
 
 --------------------------------------------------------------------------------
-yƒVƒXƒeƒ€”zM‚Ìƒ[ƒ‹‚Ì‘—MŒ³ƒAƒhƒŒƒX‚ğ•ÏX‚µ‚½‚¢z
+ã€ã‚·ã‚¹ãƒ†ãƒ é…ä¿¡ã®ãƒ¡ãƒ¼ãƒ«ã®é€ä¿¡å…ƒã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å¤‰æ›´ã—ãŸã„ã€‘
 /usr/local/Telnetman2/lib/Common_system.pm
-20s–ÚB
-sub mail_address ‚ğ•ÒWB
+20è¡Œç›®ã€‚
+sub mail_address ã‚’ç·¨é›†ã€‚
 
 
 
 --------------------------------------------------------------------------------
-yƒ†[ƒU[“o˜^‚ÉŠÇ—Ò‚Öƒ[ƒ‹‘—M‚µ‚½‚¢z
+ã€ãƒ¦ãƒ¼ã‚¶ãƒ¼ç™»éŒ²æ™‚ã«ç®¡ç†è€…ã¸ãƒ¡ãƒ¼ãƒ«é€ä¿¡ã—ãŸã„ã€‘
 /var/www/cgi-bin/Telnetman2/register_user.cgi
-210s–Ú‚ÌƒRƒƒ“ƒgƒAƒEƒg‚ğŠO‚·B
+210è¡Œç›®ã®ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã‚’å¤–ã™ã€‚
 
 
 
 --------------------------------------------------------------------------------
-yƒ†[ƒU[³”F‚Éƒ†[ƒU[‚Öƒ[ƒ‹‘—M‚µ‚½‚¢z
+ã€ãƒ¦ãƒ¼ã‚¶ãƒ¼æ‰¿èªæ™‚ã«ãƒ¦ãƒ¼ã‚¶ãƒ¼ã¸ãƒ¡ãƒ¼ãƒ«é€ä¿¡ã—ãŸã„ã€‘
 /var/www/cgi-bin/Telnetman2/authorize_user.cgi
-86s–Ú‚ÌƒRƒƒ“ƒgƒAƒEƒg‚ğŠO‚·B
+86è¡Œç›®ã®ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã‚’å¤–ã™ã€‚
