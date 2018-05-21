@@ -2,6 +2,7 @@
 # 説明   : action を新規登録、更新、削除する。
 # 作成者 : 江野高広
 # 作成日 : 2017/09/11
+# 更新 2018/05/16 Begin, End 機能の追加。
 
 use strict;
 use warnings;
@@ -96,6 +97,8 @@ my $keyword = '';
 my $comment = '';
 my $pipe_type = 1;
 my $pipe_word = '';
+my $begin_word = '';
+my $end_word = '';
 my $pattern = '';
 my $script_id = '';
 my $json_condition = '';
@@ -110,7 +113,7 @@ my $destroy = 1;
 my $reason = '';
 
 if(($operation eq 'create') || ($operation eq 'update')){
- ($check, $reason, $action_id, $repeat_type, $title, $keyword, $comment, $pipe_type, $pipe_word, $pattern, $script_id, $json_condition, $not, $operator, $count, $ng_message, $json_parameter_sheet_a, $json_parameter_sheet_b, $destroy) = &main::check_parameter($cgi);
+ ($check, $reason, $action_id, $repeat_type, $title, $keyword, $comment, $begin_word, $pipe_type, $pipe_word, $end_word, $pattern, $script_id, $json_condition, $not, $operator, $count, $ng_message, $json_parameter_sheet_a, $json_parameter_sheet_b, $destroy) = &main::check_parameter($cgi);
  ($operation, $action_id) = &Telnetman_common::check_operation($access2db, 'action', $action_id);
  
  
@@ -162,6 +165,8 @@ my $escaped_title          = &Common_sub::escape_sql($title);
 my $escaped_keyword        = &Common_sub::escape_sql($keyword);
 my $escaped_comment        = &Common_sub::escape_sql($comment);
 my $escaped_pipe_word      = &Common_sub::escape_sql($pipe_word);
+my $escaped_begin_word     = &Common_sub::escape_sql($begin_word);
+my $escaped_end_word       = &Common_sub::escape_sql($end_word);
 my $escaped_pattern        = &Common_sub::escape_sql($pattern);
 my $escaped_script_id      = &Common_sub::escape_sql($script_id);
 my $escaped_json_condition = &Common_sub::escape_sql($json_condition);
@@ -175,8 +180,8 @@ my $escaped_json_parameter_sheet_b = &Common_sub::escape_sql($json_parameter_she
 # 新規登録、更新、削除の実行。
 #
 if($operation eq 'create'){
- my $insert_column = 'vcActionId,vcKeyword,iCreateTime,iUpdateTime,vcUserId,vcChanger,vcTitle,iRepeatType,vcComment,iPipeType,vcPipeWord,vcPattern,txConditions,iNot,iOperator,iCount,vcScriptId,vcNgMessage,txParameterSheetA,txParameterSheetB,iDestroy';
- my @values = ("('" . $action_id . "','" . $escaped_keyword . "'," . $time . "," . $time . ",'" . $escaped_user_id . "','','" . $escaped_title . "'," . $repeat_type . ",'" . $escaped_comment . "'," . $pipe_type . ",'" . $escaped_pipe_word . "','" . $escaped_pattern . "','" . $escaped_json_condition . "'," . $not . "," . $operator . "," . $count . ",'" . $escaped_script_id . "','" . $escaped_ng_message . "','" . $escaped_json_parameter_sheet_a . "','" . $escaped_json_parameter_sheet_b . "'," . $destroy . ")");
+ my $insert_column = 'vcActionId,vcKeyword,iCreateTime,iUpdateTime,vcUserId,vcChanger,vcTitle,iRepeatType,vcComment,vcBeginWord,iPipeType,vcPipeWord,vcEndWord,vcPattern,txConditions,iNot,iOperator,iCount,vcScriptId,vcNgMessage,txParameterSheetA,txParameterSheetB,iDestroy';
+ my @values = ("('" . $action_id . "','" . $escaped_keyword . "'," . $time . "," . $time . ",'" . $escaped_user_id . "','','" . $escaped_title . "'," . $repeat_type . ",'" . $escaped_comment . "','" . $escaped_begin_word . "'," . $pipe_type . ",'" . $escaped_pipe_word . "','" . $escaped_end_word . "','" . $escaped_pattern . "','" . $escaped_json_condition . "'," . $not . "," . $operator . "," . $count . ",'" . $escaped_script_id . "','" . $escaped_ng_message . "','" . $escaped_json_parameter_sheet_a . "','" . $escaped_json_parameter_sheet_b . "'," . $destroy . ")");
  my $table = 'T_Action';
  $access2db -> set_insert($insert_column, \@values, $table);
  $access2db -> insert_exe;
@@ -189,8 +194,10 @@ elsif($operation eq 'update'){
             "vcTitle = '" . $escaped_title . "'",
         'iRepeatType = '  . $repeat_type,
           "vcComment = '" . $escaped_comment . "'",
+        "vcBeginWord = '" . $escaped_begin_word . "'",
           'iPipeType = '  . $pipe_type,
          "vcPipeWord = '" . $escaped_pipe_word . "'",
+          "vcEndWord = '" . $escaped_end_word . "'",
           "vcPattern = '" . $escaped_pattern . "'",
        "txConditions = '" . $escaped_json_condition . "'",
                'iNot = '  . $not,
@@ -254,8 +261,10 @@ sub check_parameter {
  my $title          = $cgi -> param('title');
  my $keyword        = $cgi -> param('keyword');
  my $comment        = $cgi -> param('comment');
+ my $begin_word     = $cgi -> param('begin_word');
  my $pipe_type      = $cgi -> param('pipe_type');
  my $pipe_word      = $cgi -> param('pipe_word');
+ my $end_word       = $cgi -> param('end_word');
  my $pattern        = $cgi -> param('pattern');
  my $script_id      = $cgi -> param('script_id');
  my $json_condition = $cgi -> param('json_condition');
@@ -311,6 +320,14 @@ sub check_parameter {
  
  unless(defined($pipe_word)){
   $pipe_word = '';
+ }
+ 
+ unless(defined($begin_word)){
+  $begin_word = '';
+ }
+ 
+ unless(defined($end_word)){
+  $end_word = '';
  }
  
  $pipe_word = &Common_sub::trim_lines($pipe_word);
@@ -418,5 +435,5 @@ sub check_parameter {
  
  $destroy += 0;
  
- return(1, '', $action_id, $repeat_type, $title, $keyword, $comment, $pipe_type, $pipe_word, $pattern, $script_id, $json_condition, $not, $operator, $count, $ng_message, $json_parameter_sheet_a, $json_parameter_sheet_b, $destroy);
+ return(1, '', $action_id, $repeat_type, $title, $keyword, $comment, $begin_word, $pipe_type, $pipe_word, $end_word, $pattern, $script_id, $json_condition, $not, $operator, $count, $ng_message, $json_parameter_sheet_a, $json_parameter_sheet_b, $destroy);
 }

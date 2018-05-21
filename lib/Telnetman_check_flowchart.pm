@@ -6,6 +6,7 @@
 # 更新 2015/11/30 : iOperator, iCount を追加。
 # 更新 2016/05/23 : 変換スクリプトがアップロードされていなかったら警告する。
 #      2017/10/27 : Ver2 に向けて大幅に更新。
+# 更新 2018/05/16 : Begin, End 機能の追加。
 
 use strict;
 use warnings;
@@ -193,7 +194,7 @@ sub select_column {
   $select_column .= ',iWaitTime,iConftEnd,txCommand,iCommandType,txDummyReturn,iPromptChecker,iStore';
  }
  elsif($item_type eq 'action'){
-  $select_column .= ',iPipeType,vcPipeWord,vcPattern,vcScriptId,txConditions,iNot,iOperator,iCount,vcNgMessage,txParameterSheetA,txParameterSheetB,iDestroy';
+  $select_column .= ',vcBeginWord,iPipeType,vcPipeWord,vcEndWord,vcPattern,vcScriptId,txConditions,iNot,iOperator,iCount,vcNgMessage,txParameterSheetA,txParameterSheetB,iDestroy';
  }
  elsif($item_type eq 'ping'){
   $select_column .= ',txTarget,iCount,iTimeout,iCondition,vcNgMessage';
@@ -247,8 +248,10 @@ sub stor_item_data {
   $self -> {'item'} -> {$item_type} -> {$item_id} -> {'store_command'}  = $store_command;
  }
  elsif($item_type eq 'action'){
+  my $begin_word = shift(@$ref_item_data);
   my $pipe_type  = shift(@$ref_item_data);
   my $pipe_word  = shift(@$ref_item_data);
+  my $end_word   = shift(@$ref_item_data);
   my $pattern    = shift(@$ref_item_data);
   my $script_id  = shift(@$ref_item_data);
   my $conditions = shift(@$ref_item_data);
@@ -266,8 +269,10 @@ sub stor_item_data {
   $pipe_type += 0;
   $destroy   += 0;
   
+  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'begin_word'} = $begin_word;
   $self -> {'item'} -> {$item_type} -> {$item_id} -> {'pipe_type'}  = $pipe_type;
   $self -> {'item'} -> {$item_type} -> {$item_id} -> {'pipe_word'}  = $pipe_word;
+  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'end_word'}   = $end_word;
   $self -> {'item'} -> {$item_type} -> {$item_id} -> {'pattern'}    = $pattern;
   $self -> {'item'} -> {$item_type} -> {$item_id} -> {'script_id'}  = $script_id;
   $self -> {'item'} -> {$item_type} -> {$item_id} -> {'conditions'} = &JSON::from_json($conditions);
@@ -384,6 +389,8 @@ sub check_item {
  elsif($item_type eq 'action'){
   my $ref_skeleton_list_comment           = &Telnetman_check_flowchart::pickout_skeleton($self -> {'item'} -> {$item_type} -> {$item_id} -> {'comment'});
   my $ref_skeleton_list_pipe_word         = &Telnetman_check_flowchart::pickout_skeleton($self -> {'item'} -> {$item_type} -> {$item_id} -> {'pipe_word'});
+  my $ref_skeleton_list_begin_word        = &Telnetman_check_flowchart::pickout_skeleton($self -> {'item'} -> {$item_type} -> {$item_id} -> {'begin_word'});
+  my $ref_skeleton_list_end_word          = &Telnetman_check_flowchart::pickout_skeleton($self -> {'item'} -> {$item_type} -> {$item_id} -> {'end_word'});
   my $ref_skeleton_list_conditions        = &Telnetman_check_flowchart::pickout_skeleton($self -> {'item'} -> {$item_type} -> {$item_id} -> {'conditions'});
   my $ref_skeleton_list_ng_message        = &Telnetman_check_flowchart::pickout_skeleton($self -> {'item'} -> {$item_type} -> {$item_id} -> {'ng_message'});
   my $ref_skeleton_list_parameter_sheet_A = &Telnetman_check_flowchart::pickout_skeleton($self -> {'item'} -> {$item_type} -> {$item_id} -> {'parameter_sheet_node'});
@@ -391,7 +398,9 @@ sub check_item {
   my $script_id = $self -> {'item'} -> {$item_type} -> {$item_id} -> {'script_id'};
   
   my @message_list_comment           = &Telnetman_check_flowchart::check_pattern_13(  $ref_skeleton_list_comment,           $routine, $item_type, $item_id, $main_routine_repeat_type, $routine_repeat_type, $item_title, $item_repeat_type, 'コメント');
-  my @message_list_pipe_word         = &Telnetman_check_flowchart::check_pattern_12(  $ref_skeleton_list_pipe_word,         $routine, $item_type, $item_id, $main_routine_repeat_type, $routine_repeat_type, $item_title, $item_repeat_type, 'include/exclude/begin');
+  my @message_list_pipe_word         = &Telnetman_check_flowchart::check_pattern_12(  $ref_skeleton_list_pipe_word,         $routine, $item_type, $item_id, $main_routine_repeat_type, $routine_repeat_type, $item_title, $item_repeat_type, 'include/exclude');
+  my @message_list_begin_word        = &Telnetman_check_flowchart::check_pattern_12(  $ref_skeleton_list_begin_word,        $routine, $item_type, $item_id, $main_routine_repeat_type, $routine_repeat_type, $item_title, $item_repeat_type, 'begin');
+  my @message_list_end_word          = &Telnetman_check_flowchart::check_pattern_12(  $ref_skeleton_list_end_word,          $routine, $item_type, $item_id, $main_routine_repeat_type, $routine_repeat_type, $item_title, $item_repeat_type, 'end');
   my @message_list_conditions        = &Telnetman_check_flowchart::check_pattern_12(  $ref_skeleton_list_conditions,        $routine, $item_type, $item_id, $main_routine_repeat_type, $routine_repeat_type, $item_title, $item_repeat_type, '分岐条件');
   my @message_list_ng_message        = &Telnetman_check_flowchart::check_pattern_34(  $ref_skeleton_list_ng_message,                  $item_type,                                                            $item_title,                    'NGメッセージ');
   my @message_list_parameter_sheet_A = &Telnetman_check_flowchart::check_pattern_1234($ref_skeleton_list_parameter_sheet_A, $routine, $item_type, $item_id, $main_routine_repeat_type, $routine_repeat_type, $item_title, $item_repeat_type, '追加パラメーターシートA');
@@ -399,7 +408,9 @@ sub check_item {
   
   push(@message_list,
    @message_list_comment,
+   @message_list_begin_word,
    @message_list_pipe_word,
+   @message_list_end_word,
    @message_list_conditions,
    @message_list_ng_message,
    @message_list_parameter_sheet_A,

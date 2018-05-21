@@ -5,7 +5,7 @@ div.pattern_match_element_frame {
  margin-bottom : 2px;
  position : relative;
  width: 480px;
- height : 190px;
+ height : 234px;
 }
 
 div.pattern_match_element_box1 {
@@ -37,15 +37,22 @@ p.pattern_match_element_border {
  text-align : left;
 }
 
-div.pattern_match_element_box3{
+div.pattern_match_element_box3 {
  border: 1px solid transparent;
  clear : both;
+ width: 478px;
+ height : 22px;
+ text-align : center;
+}
+
+div.pattern_match_element_box4 {
+ border: 1px solid transparent;
  width: 478px;
  height : 106px;
 }
 
 div.pattern_match_button_area {
- margin-bottom : 2px; 
+ margin-bottom : 2px;
  text-align : left;
 }
 

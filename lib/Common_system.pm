@@ -141,10 +141,6 @@ sub dir_archive {
  return(&Common_system::dir_var() . '/archive/' . $user_id);
 }
 
-sub dir_document {
- return(&Common_system::dir_var() . '/doc');
-}
-
 sub file_auth {
  return(&Common_system::dir_auth() . '/Telnetman_administrator');
 }

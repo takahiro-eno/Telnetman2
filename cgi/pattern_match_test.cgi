@@ -3,6 +3,7 @@
 # 作成者 : 江野高広
 # 作成日 : 2014/10/08
 # 更新 : 2017/01/28 include, exclude, begin に対応。
+# 更新 : 2018/05/16 Begin, End 機能の追加。
 
 use strict;
 use warnings;
@@ -60,6 +61,8 @@ my $command_return = $cgi -> param('command_return');
 my $pattern        = $cgi -> param('pattern');
 my $pipe_type      = $cgi -> param('pipe_type');
 my $pipe_word      = $cgi -> param('pipe_word');
+my $begin_word     = $cgi -> param('begin_word');
+my $end_word       = $cgi -> param('end_word');
 
 unless(defined($command_return) && (length($command_return) > 0)){
  print "Content-type: text/plain; charset=UTF-8\n\n";
@@ -81,12 +84,20 @@ unless(defined($pipe_word)){
  $pipe_word = '';
 }
 
+unless(defined($begin_word)){
+ $begin_word = '';
+}
+
+unless(defined($end_word)){
+ $end_word = '';
+}
+
 
 
 #
 # パターンマッチ
 #
-my @matched_values = &Telnetman_common::pattern_match($command_return, $pattern, $pipe_type, $pipe_word);
+my @matched_values = &Telnetman_common::pattern_match($command_return, $pattern, $pipe_type, $pipe_word, $begin_word, $end_word);
 my $count_of_values = shift(@matched_values);
 
 if($count_of_values == -1){
@@ -113,10 +124,10 @@ if($count_of_values == -1){
 $access2db -> close;
 
 my %results = (
- 'login' => 1,
- 'session' => 1,
- 'result' => 1,
- 'values' => \@matched_values,
+ 'login'      => 1,
+ 'session'    => 1,
+ 'result'     => 1,
+ 'values'     => \@matched_values,
  'session_id' => $session_id
 );
 

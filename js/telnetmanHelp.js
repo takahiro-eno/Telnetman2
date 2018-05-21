@@ -5,11 +5,11 @@
 var objTelnetmanHelp = new telnetmanHelp();
 
 function telnetmanHelp() {
- 
+
  this.help = function (category){
   var title = "";
   var colspan = " colspan='2'";
-  
+
   if(category === "overview"){
    title = "概要";
   }
@@ -54,10 +54,10 @@ function telnetmanHelp() {
    colspan = "";
   }
   else if(category === "include"){
-   title = "include,&nbsp;exclude,&nbsp;begin";
+   title = "begin,&nbsp;include,&nbsp;exclude,&nbsp;end";
   }
   else if(category === "include_test"){
-   title = "試験用include,&nbsp;exclude,&nbsp;begin";
+   title = "試験用begin,&nbsp;include,&nbsp;exclude,&nbsp;end";
    colspan = "";
   }
   else if(category === "pattern"){
@@ -132,12 +132,12 @@ function telnetmanHelp() {
   else if(category.match(/^parameter[0-9]+/)){
    title = "使用可能Telentman&nbsp;変数";
   }
-  
+
   var html = "<table id='" + objLayoutFunctions.idItemViewTable + "' class='telnetman_item_viewer'>" +
              "<tr>" +
              "<th" + colspan + "><div><span>" + title + "</span><img src='img/cancel.png' width='16' height='16' alt='cancel' onclick='objLayoutFunctions.removeScrollEvent(); objLayoutFunctions.removeItemViewTable();'></div></th>" +
              "</tr>";
-  
+
   if(category === "overview"){
    html += "<tr>" +
            "<td class='right'><img src='img/01_exec.png'      width='80' height='80' alt='変数設定&nbsp;&amp;&nbsp;実行'></td>" +
@@ -282,16 +282,20 @@ function telnetmanHelp() {
            "<td class='left'" + colspan + "><span class='telnetman_item_viewer_span2'>コマンド返り値を行単位で選別します。</span><br><span class='telnetman_item_viewer_span2'>対象となった行が次のパターンマッチに進みます。</span><br><span class='telnetman_item_viewer_span2'>この機能を使わない場合は空欄にします。</span></td>" +
            "</tr>" +
            "<tr>" +
+           "<td class='right'><span class='telnetman_item_viewer_span1'>begin</span></td>" +
+           "<td class='left'><span class='telnetman_item_viewer_span2'>含む行であればその行から全行。</span></td>" +
+           "</tr>" +
+           "<tr>" +
            "<td class='right'><span class='telnetman_item_viewer_span1'>include</span></td>" +
-           "<td class='left'><span class='telnetman_item_viewer_span2'>1つでも含めば対象行</span></td>" +
+           "<td class='left'><span class='telnetman_item_viewer_span2'>1つでも含めば対象行。</span></td>" +
            "</tr>" +
            "<tr>" +
            "<td class='right'><span class='telnetman_item_viewer_span1'>exclude</span></td>" +
-           "<td class='left'><span class='telnetman_item_viewer_span2'>全て含まない行が対象</span></td>" +
+           "<td class='left'><span class='telnetman_item_viewer_span2'>全て含まない行が対象。</span></td>" +
            "</tr>" +
            "<tr>" +
-           "<td class='right'><span class='telnetman_item_viewer_span1'>begin</span></td>" +
-           "<td class='left'><span class='telnetman_item_viewer_span2'>1つでも含む行があればそこから全行</span></td>" +
+           "<td class='right'><span class='telnetman_item_viewer_span1'>end</span></td>" +
+           "<td class='left'><span class='telnetman_item_viewer_span2'>含む行であればその行まで全行。</span><br><span class='telnetman_item_viewer_span2'>ただし、begin&nbsp;と同じ行にはなりません。</span></td>" +
            "</tr>";
   }
   else if(category === "include_test"){
@@ -526,14 +530,14 @@ function telnetmanHelp() {
             "<p><img src='img/help/help_parameter_sheet_A.png' width='604' height='212' alt='追加パラメーターシートA'></p>" +
            "</td>" +
            "</tr>";
-           
+
    html += this.commonAdditionalParameterSheetDescription();
   }
   else if(category === "parameter_sheet_B"){
    html += "<tr>" +
            "<td class='left'" + colspan + ">" +
             "<span class='telnetman_item_viewer_span2'>OK&nbsp;だった時にパラメーターシートを編集します。</span><span class='desc_black'>B行</span><span class='telnetman_item_viewer_span2'>(B列に記入がある行)を編集します。</span><br>" +
-            "<span class='telnetman_item_viewer_span2'>以下は記入例と編集箇所の位置関係です。</span><br>" + 
+            "<span class='telnetman_item_viewer_span2'>以下は記入例と編集箇所の位置関係です。</span><br>" +
             this.telnetmanParameterBHtml("GigabitEthernet1", "description") + "<br>" +
             this.telnetmanParameterBHtml("GigabitEthernet6", "description") + "<br>" +
             this.telnetmanParameterBHtml("*", "description") + "<br>" +
@@ -547,7 +551,7 @@ function telnetmanHelp() {
             "<p><img src='img/help/help_parameter_sheet_B.png' width='604' height='212' alt='追加パラメーターシートB'></p>" +
            "</td>" +
            "</tr>";
-           
+
    html += this.commonAdditionalParameterSheetDescription();
   }
   else if(category === "destroy"){
@@ -680,7 +684,7 @@ function telnetmanHelp() {
              "<span class='telnetman_item_viewer_span2'>メインルーチンの</span>" + this.telnetmanParameterHtml("$", "1") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("$", "2") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("$", "3") + "<span class='desc_grey'>,&nbsp;&hellip;&nbsp;</span><span class='telnetman_item_viewer_span2'>を</span>" + this.telnetmanParameterHtml("#", "1") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("#", "2") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("#", "3") + "<span class='desc_grey'>,&nbsp;&hellip;</span><span class='telnetman_item_viewer_span2'>&nbsp;で参照できます。</span><br>" +
              "<span class='telnetman_item_viewer_span2'>サブルーチン内であればどこでも使えます。</span><br>" +
              "<span class='telnetman_item_viewer_span2'>メインルーチンの</span>" + this.telnetmanParameterHtml("$", "*") + "<span class='telnetman_item_viewer_span2'>&nbsp;や</span><br>" +
-             "<span class='telnetman_item_viewer_span2'>サブルーチン内の</span>" + this.telnetmanParameterHtml("$", "1") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("$", "2") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("$", "3") + "<span class='desc_grey'>,&nbsp;&hellip;&nbsp;</span>" + this.telnetmanParameterHtml("$", "*") + "<span class='telnetman_item_viewer_span2'>&nbsp;とは関係ありません。</span>" + 
+             "<span class='telnetman_item_viewer_span2'>サブルーチン内の</span>" + this.telnetmanParameterHtml("$", "1") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("$", "2") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("$", "3") + "<span class='desc_grey'>,&nbsp;&hellip;&nbsp;</span>" + this.telnetmanParameterHtml("$", "*") + "<span class='telnetman_item_viewer_span2'>&nbsp;とは関係ありません。</span>" +
             "</p>" +
             "<p><img src='img/help/description_subroutine1.png' width='248' hight='236' alt='サブルーチン 1回のみ'></p>" +
             "<p><span class='desc_comment'>&#x203B;サブルーチンの中にサブルーチンを置くことはできません。</span></p>" +
@@ -693,7 +697,7 @@ function telnetmanHelp() {
              "<span class='telnetman_item_viewer_span2'>メインルーチンの</span>" + this.telnetmanParameterHtml("$", "*") + "<span class='telnetman_item_viewer_span2'>&nbsp;を</span>" + this.telnetmanParameterHtml("#", "*") + "<span class='telnetman_item_viewer_span2'>&nbsp;で参照できます。</span><br>" +
              "<span class='telnetman_item_viewer_span2'>つまり、</span>" + this.telnetmanParameterHtml("$", "*") + "<span class='telnetman_item_viewer_span2'>&nbsp;の数だけ繰り返します。</span>" + this.telnetmanParameterHtml("#", "*") + "<span class='telnetman_item_viewer_span2'>の記入が無くても繰り返します。</span><br>" +
              "<span class='telnetman_item_viewer_span2'>メインルーチンの</span>" + this.telnetmanParameterHtml("$", "1") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("$", "2") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("$", "3") + "<span class='desc_grey'>,&nbsp;&hellip;&nbsp;</span><span class='telnetman_item_viewer_span2'>や</span><br>" +
-             "<span class='telnetman_item_viewer_span2'>サブルーチン内の</span>" + this.telnetmanParameterHtml("$", "1") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("$", "2") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("$", "3") + "<span class='desc_grey'>,&nbsp;&hellip;&nbsp;</span>" + this.telnetmanParameterHtml("$", "*") + "<span class='telnetman_item_viewer_span2'>&nbsp;とは関係ありません。</span>" + 
+             "<span class='telnetman_item_viewer_span2'>サブルーチン内の</span>" + this.telnetmanParameterHtml("$", "1") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("$", "2") + "<span class='desc_grey'>,&nbsp;</span>" + this.telnetmanParameterHtml("$", "3") + "<span class='desc_grey'>,&nbsp;&hellip;&nbsp;</span>" + this.telnetmanParameterHtml("$", "*") + "<span class='telnetman_item_viewer_span2'>&nbsp;とは関係ありません。</span>" +
             "</p>" +
             "<p><img src='img/help/description_subroutine2.png' width='248' hight='236' alt='サブルーチン 1回のみ'></p>" +
             "<p>" +
@@ -701,7 +705,7 @@ function telnetmanHelp() {
              "<span class='desc_comment'>&#x203B;[逆順]にチェックを入れると繰り返し順が逆になります。</span>" +
             "<p>" +
            "</td>" +
-           "</tr>";         
+           "</tr>";
   }
   else if(category === "pause_button"){
    html += "<tr>" +
@@ -748,7 +752,7 @@ function telnetmanHelp() {
            "<tr>" +
            "<td class='right'><span class='telnetman_item_viewer_span1'>空欄</span></td>" +
            "<td class='left'><span class='telnetman_item_viewer_span2'>空欄は未定義扱いになります。</span><br><span class='telnetman_item_viewer_span2'>空文字を定義したいときは</span><span class='desc_black'>_BLANK_</span><span class='telnetman_item_viewer_span2'>&nbsp;と記入します。</span><br><span class='telnetman_item_viewer_span2'>改行は</span><span class='desc_black'>_LF_</span><span class='telnetman_item_viewer_span2'>&nbsp;と記入します。</span></td>" +
-           "</tr>";      
+           "</tr>";
   }
   else if(category === "login_info"){
    html += "<tr>" +
@@ -819,13 +823,13 @@ function telnetmanHelp() {
   else if(category.match(/^parameter[0-9]+/)){
    html += this.telentmanParameterDescription(category);
   }
-  
+
   html += "<table>";
-  
+
   objCommonFunctions.lockScreen(html);
   $("#" + objLayoutFunctions.idItemViewTable).fadeIn(200, function(){objLayoutFunctions.addScrollEvent();});
  };
- 
+
  // パラメーターシート追加の共通説明
  this.commonAdditionalParameterSheetDescription = function (){
   var html = "<tr>" +
@@ -859,14 +863,14 @@ function telnetmanHelp() {
               "<span class='telnetman_item_viewer_span2'>この機能が発動しないこともある、ということを理解した上で使って下さい。</span>" +
              "</td>" +
              "</tr>";
-             
+
   return(html);
  };
- 
+
  // Telnetman 変数の説明
  this.telentmanParameterDescription = function (parameterPattern){
   var html = "";
-  
+
   if(parameterPattern === "parameter12"){
    html += this.telentmanParameterDescriptionHtml1;
    html += this.telentmanParameterDescriptionHtml2;
@@ -895,29 +899,29 @@ function telnetmanHelp() {
    html += this.telentmanParameterDescriptionHtml5;
    html += this.telentmanParameterDescriptionHtml6;
   }
-  
+
   return(html);
  };
- 
+
  // {$1}, {$2}, {$3}, ..., {$*}, {#1}, {#2}, {#3}, ..., {#*}, {$node}, {$B}, ... などのHTML を作成する。
  this.telnetmanParameterHtml = function (bruePart, blackPart){
   if(bruePart === "$"){
    bruePart = "\$";
   }
-  
+
   return("<span class='desc_green'>{</span><span class='desc_blue'>" + bruePart + "</span><span class='desc_black'>" + blackPart + "</span><span class='desc_green'>}</span>");
  };
- 
+
  // {変数名} のHTML を作成する。
  this.telnetmanParameterAHtml = function (parameterName){
   return("<span class='desc_green'>{</span><span class='desc_grey'>" + parameterName + "</span><span class='desc_green'>}</span>");
  };
- 
+
  // {B列値:変数名} のHTML を作成する。
  this.telnetmanParameterBHtml = function (B, parameterName){
   return("<span class='desc_green'>{</span><span class='desc_grey'>" + B + "</span><span class='desc_black'>:</span><span class='desc_grey'>" + parameterName + "</span><span class='desc_green'>}</span>");
  };
- 
+
  this.telentmanParameterDescriptionHtml1 =
   "<tr>" +
   "<td class='left'>" + this.telnetmanParameterAHtml("変数名") + "</td>" +
@@ -955,7 +959,7 @@ function telnetmanHelp() {
   "<td class='left'>" + this.telnetmanParameterHtml("$", "node") + "</td>" +
   "<td class='left'><span class='telnetman_item_viewer_span2'>現在の対象ノード(パラメーターシートのA列)</span></td>" +
   "</tr>";
- 
+
  this.telentmanParameterDescriptionHtml2 =
   "<tr>" +
   "<td class='left'>" + this.telnetmanParameterHtml("$", "user") + "</td>" +
@@ -985,13 +989,13 @@ function telnetmanHelp() {
   "<td class='left'><span class='desc_black'>_LF_</span></td>" +
   "<td class='left'><span class='telnetman_item_viewer_span2'>改行</span></td>" +
   "</tr>";
- 
+
  this.telentmanParameterDescriptionHtml3 =
   "<tr>" +
   "<td class='left'><span class='desc_green'>{</span><span class='desc_blue'>\$</span><span class='desc_black'>title</span><span class='desc_green'>}</span></td>" +
   "<td class='left'><span class='telnetman_item_viewer_span2'>この登録のタイトル</span></td>" +
   "</tr>";
- 
+
  this.telentmanParameterDescriptionHtml4 =
   "<tr>" +
   "<td class='left'>" + this.telnetmanParameterHtml("$", "command") + "</td>" +
@@ -1009,7 +1013,7 @@ function telnetmanHelp() {
   "<td class='left'>" + this.telnetmanParameterHtml("$", "n") + "</td>" +
   "<td class='left'><span class='telnetman_item_viewer_span2'>分岐条件適用後の抽出値の数</span></td>" +
   "</tr>";
-  
+
  this.telentmanParameterDescriptionHtml5 =
   "<tr>" +
   "<td class='left'>" + this.telnetmanParameterAHtml("変数名") + "</td>" +
@@ -1038,7 +1042,7 @@ function telnetmanHelp() {
   "<td class='left'><span class='desc_black'>_LF_</span></td>" +
   "<td class='left'><span class='telnetman_item_viewer_span2'>改行</span></td>" +
   "</tr>";
-  
+
  this.telentmanParameterDescriptionHtml6 =
   "<tr>" +
   "<td class='left'>" + this.telnetmanParameterHtml("$", "B") + "</td>" +
@@ -1048,48 +1052,48 @@ function telnetmanHelp() {
   "<td class='left'><span class='desc_green'>{</span><span class='desc_blue'>*</span><span class='desc_black'>:</span><span class='desc_grey'>変数名</span><span class='desc_green'>}</span></td>" +
   "<td class='left'><span class='desc_green'>{</span>" + this.telnetmanParameterHtml("$", "B") + "<span class='desc_black'>:</span><span class='desc_grey'>変数名</span><span class='desc_green'>}</span><span class='telnetman_item_viewer_span2'>&nbsp;と同じ</span><br><span class='desc_comment'>&#x203B;この記入がある行は{\$B}&nbsp;の値の数だけ繰り返します。</span></td>" +
   "</tr>";
- 
+
  this.telnetmanScriptTemplate =
-  "#!/usr/bin/perl\n" + 
-  "# 説明   : \n" + 
-  "# 作成者 : \n" + 
-  "# 作成日 : YYYY/MM/DD\n" + 
-  "\n" + 
-  "=pod\n" + 
-  "詳細説明\n" + 
-  "...\n" + 
-  "入力値と出力値の例など\n" + 
-  "...\n" + 
-  "..\n" + 
-  ".\n" + 
-  "=cut\n" + 
-  "\n" + 
-  "use strict;\n" + 
-  "use warnings;\n" + 
-  "\n" + 
-  "package Telnetman_script_任意の半角文字列;\n" + 
-  "\n" + 
-  "sub convert {\n" + 
-  " my @values = @_;\n" + 
-  " \n" + 
-  " #\n" + 
-  " # 変換処理\n" + 
-  " #\n" + 
-  " my @new_values = @values;\n" + 
-  " \n" + 
-  " \n" + 
-  " \n" + 
-  " #\n" + 
-  " # 例外の場合(何も値を返したくない場合)はundef を返す。\n" + 
-  " #\n" + 
-  " if(scalar(@new_values) == 0){\n" + 
-  "  return(undef);\n" + 
-  " }\n" + 
-  " \n" + 
-  " return(@new_values);\n" + 
-  "}\n" + 
-  "\n" + 
-  "1;\n"; 
-  
+  "#!/usr/bin/perl\n" +
+  "# 説明   : \n" +
+  "# 作成者 : \n" +
+  "# 作成日 : YYYY/MM/DD\n" +
+  "\n" +
+  "=pod\n" +
+  "詳細説明\n" +
+  "...\n" +
+  "入力値と出力値の例など\n" +
+  "...\n" +
+  "..\n" +
+  ".\n" +
+  "=cut\n" +
+  "\n" +
+  "use strict;\n" +
+  "use warnings;\n" +
+  "\n" +
+  "package Telnetman_script_任意の半角文字列;\n" +
+  "\n" +
+  "sub convert {\n" +
+  " my @values = @_;\n" +
+  " \n" +
+  " #\n" +
+  " # 変換処理\n" +
+  " #\n" +
+  " my @new_values = @values;\n" +
+  " \n" +
+  " \n" +
+  " \n" +
+  " #\n" +
+  " # 例外の場合(何も値を返したくない場合)はundef を返す。\n" +
+  " #\n" +
+  " if(scalar(@new_values) == 0){\n" +
+  "  return(undef);\n" +
+  " }\n" +
+  " \n" +
+  " return(@new_values);\n" +
+  "}\n" +
+  "\n" +
+  "1;\n";
+
  return(this);
 }

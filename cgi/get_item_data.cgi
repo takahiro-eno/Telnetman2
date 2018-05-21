@@ -5,6 +5,7 @@
 # 更新 2015/05/24 txParameterSheetNode, txParameterSheetInterface を追加。
 # 更新 2015/11/30 iOperator, iCount を追加。
 # 更新 2017/09/06 Ver.2 用に大幅改造。
+# 更新 2018/05/16 Begin, End 機能の追加。
 
 use strict;
 use warnings;
@@ -89,8 +90,8 @@ if($item_type eq 'command'){
  push(@key_list, 'wait', 'conft_end', 'command', 'command_type', 'dummy', 'prompt', 'store');
 }
 elsif($item_type eq 'action'){
- $select_column .= ',iPipeType,vcPipeWord,vcPattern,vcScriptId,txConditions,iNot,iOperator,iCount,vcNgMessage,txParameterSheetA,txParameterSheetB,iDestroy';
- push(@key_list, 'pipe_type', 'pipe_word', 'pattern', 'script_id', 'json_condition', 'not', 'operator', 'count', 'ng_message', 'json_parameter_sheet_a', 'json_parameter_sheet_b', 'destroy');
+ $select_column .= ',vcBeginWord,iPipeType,vcPipeWord,vcEndWord,vcPattern,vcScriptId,txConditions,iNot,iOperator,iCount,vcNgMessage,txParameterSheetA,txParameterSheetB,iDestroy';
+ push(@key_list, 'begin_word', 'pipe_type', 'pipe_word', 'end_word', 'pattern', 'script_id', 'json_condition', 'not', 'operator', 'count', 'ng_message', 'json_parameter_sheet_a', 'json_parameter_sheet_b', 'destroy');
 }
 elsif($item_type eq 'ping'){
  $select_column .= ',txTarget,iCount,iTimeout,iCondition,vcNgMessage';

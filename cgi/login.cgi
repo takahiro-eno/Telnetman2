@@ -140,41 +140,7 @@ sub issue_login_id {
  
  my $access2db          = $self -> {'access2db'};
  my $user_id            = $self -> {'user_id'};
- my $max_session_number = $self -> {'max_session_number'};
-
-=pod
- # 有効なログインID が発行済みでないか確認する。
- my $select_column = 'vcLoginId,iLastAccessTime';
- my $table         = 'T_LoginList';
- my $condition     = "where vcUserId = '" . &Common_sub::escape_sql($user_id) . "' order by iLastAccessTime";
- $access2db -> set_select($select_column, $table, $condition);
- my $ref_LoginList = $access2db -> select_array_cols;
- 
- if(scalar(@$ref_LoginList) > 0){
-  my $ref_cols = pop(@$ref_LoginList);
-  my ($login_id, $last_access_time) = @$ref_cols;
-  
-  if(($last_access_time > $time_2hours_ago) || ($max_session_number == 0)){
-   $self -> {'login_id'} = $login_id;
-   
-   # アクティベート時刻を更新する。
-   my @set = ('iUserLastActivationTime = ' . $time);
-   my $table     = 'T_User';
-   my $condition = "where vcUserId = '" . &Common_sub::escape_sql($user_id) . "'";
-   $access2db -> set_update(\@set, $table, $condition);
-   my $count = $access2db -> update_exe;
-   
-   # アクティベート時刻を更新する。
-   @set = ('iLastAccessTime = ' . $time);
-   $table     = 'T_LoginList';
-   $condition = "where vcLoginId = '" . $login_id . "'";
-   $access2db -> set_update(\@set, $table, $condition);
-   $count = $access2db -> update_exe;
-   
-   return(1);
-  }
- }
-=cut 
+ my $max_session_number = $self -> {'max_session_number'}; 
  
  my $login_id = &Common_sub::uuid();
  

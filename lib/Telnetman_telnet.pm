@@ -14,6 +14,7 @@
 #      2017/08/01 : ローカル認証対応を修正。パラメーターシート追加で改行を_LF_ に変換するように修正。
 #      2017/09/01 : ルーチンの繰り返し逆順を追加。
 #      2017/10/31 : Ver2 に向けて大幅更新。
+#      2018/05/16 : Begin, End 機能の追加。
 
 use strict;
 use warnings;
@@ -131,8 +132,10 @@ sub new {
  ### action
  #### owner
  #### comment
+ #### begin_word
  #### pipe_type
  #### pipe_word
+ #### end_word
  #### pattern
  #### script_id
  #### conditions (2次元配列)
@@ -703,6 +706,30 @@ sub get_pipe_word {
  }
  
  return($pipe_word);
+}
+
+sub get_begin_word {
+ my $self = $_[0];
+ my ($item_type, $item_id) = $self -> get_item_type_id;
+ my $begin_word = '';
+ 
+ if(defined($item_type) && (length($item_type) > 0) && defined($item_id) && (length($item_id) > 0)){
+  $begin_word = $self -> {'item'} -> {'action'} -> {$item_id} -> {'begin_word'};
+ }
+ 
+ return($begin_word);
+}
+
+sub get_end_word {
+ my $self = $_[0];
+ my ($item_type, $item_id) = $self -> get_item_type_id;
+ my $end_word = '';
+ 
+ if(defined($item_type) && (length($item_type) > 0) && defined($item_id) && (length($item_id) > 0)){
+  $end_word = $self -> {'item'} -> {'action'} -> {$item_id} -> {'end_word'};
+ }
+ 
+ return($end_word);
 }
 
 sub get_pattern {
@@ -2498,20 +2525,28 @@ sub pattern_match {
  
  my $command_return = $self -> {'command_return'};
  my $repeat_type = $self -> get_repeat_type;
- my $pattern   = $self -> get_pattern;
- my $pipe_type = $self -> get_pipe_type;
- my $pipe_word = $self -> get_pipe_word;
- my $complete_pipe_words = '';
+ my $pattern     = $self -> get_pattern;
+ my $pipe_type   = $self -> get_pipe_type;
+ my $pipe_word   = $self -> get_pipe_word;
+ my $begin_word  = $self -> get_begin_word;
+ my $end_word    = $self -> get_end_word;
+ my $complete_pipe_words  = '';
+ my $complete_begin_words = '';
+ my $complete_end_words   = '';
  
- # pipe word のスケルトン埋め。
+ # pipe word, begin word, end word のスケルトン埋め。
  if($repeat_type == 1){
-  $complete_pipe_words = $self -> insert_skeleton_values($pipe_word);
+  $complete_pipe_words  = $self -> insert_skeleton_values($pipe_word);
+  $complete_begin_words = $self -> insert_skeleton_values($begin_word);
+  $complete_end_words   = $self -> insert_skeleton_values($end_word);
  } 
  elsif($repeat_type == 2){
-  $complete_pipe_words = $self -> make_complete_string_type_2($pipe_word);
+  $complete_pipe_words  = $self -> make_complete_string_type_2($pipe_word);
+  $complete_begin_words = $self -> make_complete_string_type_2($begin_word);
+  $complete_end_words   = $self -> make_complete_string_type_2($end_word);
  }
  
- unless(defined($complete_pipe_words)){
+ unless(defined($complete_pipe_words) && defined($complete_begin_words) && defined($complete_end_words)){
   return(-1);
  } 
  
@@ -2519,11 +2554,19 @@ sub pattern_match {
  $complete_pipe_words =~ s/_DUMMY_//g;
  $complete_pipe_words =~ s/_LF_/\n/g;
  
+ $complete_begin_words =~ s/_BLANK_//g;
+ $complete_begin_words =~ s/_DUMMY_//g;
+ $complete_begin_words =~ s/_LF_/\n/g;
+ 
+ $complete_end_words =~ s/_BLANK_//g;
+ $complete_end_words =~ s/_DUMMY_//g;
+ $complete_end_words =~ s/_LF_/\n/g;
+ 
  # 初期化
  $self -> initialize_matched_values;
  
  # 抽出
- my @matched_values = &Telnetman_common::pattern_match($command_return, $pattern, $pipe_type, $complete_pipe_words);
+ my @matched_values = &Telnetman_common::pattern_match($command_return, $pattern, $pipe_type, $complete_pipe_words, $complete_begin_words, $complete_end_words);
  my $n = shift(@matched_values);
  
  if($n > 0){
@@ -3064,6 +3107,7 @@ sub insert_skeleton_values {
    }
    elsif(($joined_character eq '.') || ($joined_character eq '+') || ($joined_character eq '-')){
     $value = '';
+    $self -> {'calculation_type'} = $joined_character;
    }
    elsif($joined_character eq '$node'){
     $value = $node;
