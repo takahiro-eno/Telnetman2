@@ -20,9 +20,9 @@
  </article>
  <article>
   <h3>1-1.&nbsp;パラメーターシートのA行に追記するaction&nbsp;の作成</h3>
-  <p><img src='img/training/training-04-01-01-a.png' width='700' height='700' alt='事前コンフィグ保存'></p>
+  <p><img src='img/training/training-04-01-01-a.png' width='700' height='740' alt='事前コンフィグ保存'></p>
   <p><span class='normal_font'>追加パラメーターシートA&nbsp;:&nbsp;{$node}&nbsp;&rarr;&nbsp;before&nbsp;config&nbsp;=&nbsp;{$1}</span><br><span class='normal_font'>パラメーターシートに変数before&nbsp;config&nbsp;を定義して{$1}&nbsp;を値にする。</span><br><span class='normal_font'>これを事前コンフィグ取得用にする。</span></p>
-  <p><img src='img/training/training-04-01-01-b.png' width='700' height='700' alt='事後コンフィグ保存'></p>
+  <p><img src='img/training/training-04-01-01-b.png' width='700' height='740' alt='事後コンフィグ保存'></p>
   <p><span class='normal_font'>追加パラメーターシートA&nbsp;:&nbsp;{$node}&nbsp;&rarr;&nbsp;after&nbsp;config&nbsp;=&nbsp;{$1}</span><br><span class='normal_font'>パラメーターシートに変数after&nbsp;config&nbsp;を定義して{$1}&nbsp;を値にする。</span><br><span class='normal_font'>これを事後コンフィグ取得用にする。</span></p>
  </article>
  <article>
@@ -84,7 +84,7 @@
    <span class='mono_font'>Port-channel4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unassigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;unset&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
    <span class='mono_font'>Tunnel0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.13.0.42&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YES&nbsp;unset&nbsp;&nbsp;up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up</span><br>
   </p>
-  <p class='float_left'><img src='img/training/training-04-02-00-a.png' width='700' height='700' alt='インターフェース取得'></p>
+  <p class='float_left'><img src='img/training/training-04-02-00-a.png' width='700' height='740' alt='インターフェース取得'></p>
   <p class='float_left'>
    <span class='mono_font'>Te*/*/*</span><br>
    <span class='mono_font'>GigabitEthernet*/*/*</span><br>
@@ -137,7 +137,7 @@
     <span class='mono_font'>&nbsp;channel-group&nbsp;1&nbsp;mode&nbsp;active</span><br>
     <span class='mono_font'>end</span><br>
   </p>
-  <p><img src='img/training/training-04-02-01-a.png' width='700' height='700' alt='B行追加のaction'></p>
+  <p><img src='img/training/training-04-02-01-a.png' width='700' height='740' alt='B行追加のaction'></p>
   <p><span class='normal_font'>抽出パターン&nbsp;:&nbsp;description&nbsp;(.+)</span><br><span class='normal_font'>追加パラメーターシートB&nbsp;:&nbsp;{$node}&nbsp;&rarr;&nbsp;{#*}&nbsp;&rarr;&nbsp;description&nbsp;=&nbsp;{$1}</span><br><span class='normal_font'>パラメーターシートのB列に{#*}&nbsp;を記入し、変数description&nbsp;を定義して値を{$1}&nbsp;にする。</span></p>
   <p class='float_left'><img src='img/training/training-04-02-01-b.png' width='600' height='340' alt='サブルーチンに配置'></p>
   <p class='float_left'><span class='normal_font'>サブルーチンに配置する。</span></p>
@@ -164,8 +164,8 @@
  </article>
  <article>
   <h3>実験2</h3>
-  <p><img src='img/training/training-04-02-05.png' width='700' height='700' alt='個数条件'></p>
-  <p><span class='normal_font'>個数条件を変更して{$n}&nbsp;=&nbsp;0&nbsp;の場合、つまり、description&nbsp;を検出できない場合も許容すると</span><br><span class='normal_font'>青矢印が無くてもOK&nbsp;終了することを確認する。</span><br><span class='normal_font'>追加パラメーターシートの欄に{$1},&nbsp;{$2},&nbsp;{$3},&hellip;,&nbsp;{$*}&nbsp;が書かれている、かつ、{$n}&nbsp;=&nbsp;0&nbsp;の場合は</span><br><span class='normal_font'>ここの処理は行われない。</span></p>
+  <p><img src='img/training/training-04-02-05.png' width='700' height='740' alt='個数条件'></p>
+  <p><span class='normal_font'>個数条件を変更して{$n}&nbsp;=&nbsp;0&nbsp;の場合、つまり、description&nbsp;を検出できない場合も許容すると</span><br><span class='normal_font'>青矢印が無くてもOK&nbsp;終了することを確認する。</span><br><span class='normal_font'>追加パラメーターシートの欄に{$1},&nbsp;{$2},&nbsp;{$3},&hellip;,&nbsp;{$*}&nbsp;が書かれている、かつ、{$n}&nbsp;=&nbsp;0&nbsp;の場合は</span><br><span class='normal_font'>ここの処理は行われない仕様。</span></p>
  </article>
 </section>
 <section class='section_zone'>

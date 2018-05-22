@@ -26,7 +26,7 @@
  </article>
  <article>
   <h3>1-1.&nbsp;コマンド返り値を破棄しないaction&nbsp;の作成</h3>
-  <p><img src='img/training/training-03-01-01-a.png' width='700' height='692' alt='コマンド返り値を破棄しないaction の作成'></p>
+  <p><img src='img/training/training-03-01-01-a.png' width='700' height='740' alt='コマンド返り値を破棄しないaction の作成'></p>
   <p><span class='normal_font'>タイトル&nbsp;:&nbsp;何でも良い。</span><br><span class='normal_font'>include&nbsp;:&nbsp;</span>{up&nbsp;link}<br><span class='normal_font'>抽出パターン&nbsp;:&nbsp;[^&yen;s]+&yen;s+[^&yen;s]+&yen;s+[^&yen;s]+&yen;s+[^&yen;s]+&yen;s+([^&yen;s]+&yen;s*[^&yen;s]+)+&yen;s+[^&yen;s]+</span><br><span class='normal_font'>分岐条件&nbsp;:&nbsp;&#39;{$1}&#39;&nbsp;eq&nbsp;&#39;up&#39;</span><br><span class='normal_font'>NG&nbsp;メッセージ&nbsp;:&nbsp;何でも良い。</span><br><span class='normal_font'>コマンド返り値を&nbsp;:&nbsp;保持する</span></p>
   <p>
    <span class='normal_font'>{up&nbsp;link}&nbsp;=&nbsp;GigabitEthernet3&nbsp;の場合</span><br>
@@ -44,8 +44,8 @@
  <article>
   <h3>開発ヒント</h3>
   <p><span class='normal_font'>パターンマッチ試験が行える。</span></p>
-  <p class='float_left'><img src='img/training/training-03-01-01-b.png' width='608' height='452' alt='パターンマッチ試験'></p>
-  <p class='float_left'><span class='normal_font'>1.&nbsp;[&#9660;]&nbsp;ボタンを押して試験領域を表示</span><br><span class='normal_font'>2.&nbsp;コマンド返り値を記入</span><br><span class='normal_font'>3.&nbsp;include,&nbsp;exclude,&nbsp;begin&nbsp;用文字列を、Telnetman&nbsp;変数を値で埋めた形で記入</span><br><span class='normal_font'>4.&nbsp;[TEST]&nbsp;ボタンを押して試験</span></p>
+  <p class='float_left'><img src='img/training/training-03-01-01-b.png' width='608' height='532' alt='パターンマッチ試験'></p>
+  <p class='float_left'><span class='normal_font'>1.&nbsp;[&#9660;]&nbsp;ボタンを押して試験領域を表示</span><br><span class='normal_font'>2.&nbsp;コマンド返り値を記入</span><br><span class='normal_font'>3.&nbsp;include,&nbsp;exclude&nbsp;用文字列を、Telnetman&nbsp;変数を値で埋めた形で記入</span><br><span class='normal_font'>4.&nbsp;[TEST]&nbsp;ボタンを押して試験</span></p>
  </article>
  <article>
   <h3>1-2.&nbsp;1つのコマンド返り値を使い回す流れ図</h3>
@@ -188,7 +188,7 @@
  </article>
  <article>
   <h3>3-1.&nbsp;何も無いことを確認するaction&nbsp;の作成</h3>
-  <p class='float_left'><img src='img/training/training-03-03-01-a.png' width='700' height='700' alt='何も無いことを確認するaction'></p>
+  <p class='float_left'><img src='img/training/training-03-03-01-a.png' width='700' height='740' alt='何も無いことを確認するaction'></p>
   <p class='float_left'><span class='normal_font'>抽出パターン&nbsp;:&nbsp;.+</span><br><span class='normal_font'>個数条件&nbsp;:&nbsp;{$n}&nbsp;==&nbsp;0</span></p>
   <div class='clear_both'>
    <p class='float_left'><img src='img/training/training-03-03-01-b.png' width='592' height='340' alt='流れ図に配置'></p>
@@ -197,7 +197,7 @@
  </article>
  <article>
   <h3>実験</h3>
-  <p class='float_left'><img src='img/training/training-03-03-02.png' width='700' height='700' alt='抽出パターンが空'></p>
+  <p class='float_left'><img src='img/training/training-03-03-02.png' width='700' height='740' alt='抽出パターンが空'></p>
   <p class='float_left'><span class='normal_font'>抽出パターン&nbsp;:&nbsp;空欄</span><br><span class='normal_font'>NG&nbsp;メッセージ&nbsp;:&nbsp;{$n}&nbsp;がわかる内容</span><br><br><span class='normal_font'>に変更して実行するとNG&nbsp;終了することを確認する。</span><br><span class='normal_font'>抽出パターンが空欄だと</span><br><span class='normal_font'>仕様上、空文字が{$1}&nbsp;に入るので</span><br><span class='normal_font'>{$n}&nbsp;=&nbsp;1&nbsp;となる。</span></p>
  </article>
 </section>
