@@ -244,7 +244,7 @@ function action () {
                       "<td><textarea spellcheck='false' autocomplete='off' style='width:260px; height:30px;' id='" + this.idComment + "' onblur='objAction.readValue(this.id);'></textarea></td>" +
                       "</tr>" +
                       "<tr>" +
-                      "<td class='right'><span class='telnetman_build_table_span0'>抽出パターン</span><img src='img/help.png' width='16' height='16' alt='help' class='onclick_node' onclick='objTelnetmanHelp.help(\"pattern\");'></td>" +
+                      "<td class='right'><span class='telnetman_build_table_span0'>抽出パターン</span><img src='img/column_one.png' width='16' height='16' alt='help' class='onclick_node' onclick='objTelnetmanHelp.help(\"reg-gen\");'><img src='img/help.png' width='16' height='16' alt='help' class='onclick_node' onclick='objTelnetmanHelp.help(\"pattern\");'></td>" +
                       "<td>" +
 
                       "<div class='pattern_match_element_frame'>" +
@@ -1266,8 +1266,6 @@ function action () {
           var pattern    = objCommonFunctions.escapeHtml(hashResult["pattern"]);
           var pipeType   = hashResult["pipe_type"];
           var pipeWord   = objCommonFunctions.escapeHtml(hashResult["pipe_word"]);
-          var beginWord  = objCommonFunctions.escapeHtml(hashResult["begin_word"]);
-          var endWord    = objCommonFunctions.escapeHtml(hashResult["end_word"]);
           var beginWord  = objCommonFunctions.escapeHtml(hashResult["begin_word"]);
           var endWord    = objCommonFunctions.escapeHtml(hashResult["end_word"]);
           var scriptId   = objCommonFunctions.escapeHtml(hashResult["script_id"]);

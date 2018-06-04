@@ -63,6 +63,10 @@ function telnetmanHelp() {
   else if(category === "pattern"){
    title = "抽出パターン";
   }
+  else if(category === "reg-gen"){
+   title = "正規表現ジェネレーター";
+   colspan = "";
+  }
   else if(category === "script"){
    title = "変換スクリプト";
   }
@@ -361,6 +365,24 @@ function telnetmanHelp() {
            "<td class='right'><span class='telnetman_item_viewer_span1'>メタ文字</span></td>" +
            "<td class='left'><span class='telnetman_item_viewer_span2'>メタ文字を正規表現としてではなく書いたまま使いたい場合は必ず「&yen;」でエスケープして下さい。</span><br><span class='telnetman_item_viewer_span2'>メタ文字&nbsp;.&nbsp;*&nbsp;+&nbsp;?&nbsp;|&nbsp;[&nbsp;]&nbsp;(&nbsp;)&nbsp;{&nbsp;}&nbsp;^&nbsp;\$&nbsp;&yen;&nbsp;[]内の-</span></td>" +
            "</tr>" +
+           "</tr>";
+  }
+  else if(category === "reg-gen"){
+   html += "<tr>" +
+           "<td class='left'" + colspan + ">" +
+            "<span class='telnetman_item_viewer_span2'>1.&nbsp;正規表現にしたい文字列を入力。</span><br>" +
+            "<span class='telnetman_item_viewer_span2'>2.&nbsp;(&nbsp;)&nbsp;で囲みたい部分を選択状態に。</span><br>" +
+            "<span class='telnetman_item_viewer_span2'>3.&nbsp;[生成]&nbsp;ボタンを押す。</span><br>" +
+            "<span class='telnetman_item_viewer_span2'>&darr;</span><br>" +
+            "<span class='telnetman_item_viewer_span2'>いくつか候補が出るので参考にする。</span><br>" +
+           "</td>" +
+           "</tr>"+
+           "<tr>" +
+           "<td class='center'" + colspan + ">" +
+            "<p><input type='text' spellcheck='false' autocomplete='off' value='' style='width:600px;' id='reg-gen_sample_text'></p>" +
+            "<p><button class='enable' onclick='objRegGen.gen();'>生成</button></p>" +
+            "<p><textarea spellcheck='false' autocomplete='off' style='width:800px; height:100px;' id='reg-gen_generated_reg'></textarea></p>" +
+           "</td>" +
            "</tr>";
   }
   else if(category === "script"){
