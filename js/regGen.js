@@ -60,17 +60,19 @@ function regGen () {
  this.gen = function (){
   this.readSampleText();
 
-  var sampleRegList = new Array(5);
+  var sampleRegList = new Array(6);
   sampleRegList[0] = new Array();
   sampleRegList[1] = new Array();
   sampleRegList[2] = new Array();
   sampleRegList[3] = new Array();
   sampleRegList[4] = new Array();
+  sampleRegList[5] = new Array();
 
   /*
-   選択部分(カッコ内)は[^\s]+ または[0-9]+ にする。
-   空白は\s+
-
+   基本ルール
+    空白は\s+
+    選択部分(カッコ内)は[^\s]+ または[0-9]+ にする。
+   
    パターン1
     記号 : そのまま
     数字 : [0-9]+
@@ -93,6 +95,9 @@ function regGen () {
 
    パターン5
     [^\s]+ \s+ のみで構成
+    
+   パターン6
+    パターン5 と同じだが、カッコ内も[^\s]+ \s+ のみで構成
   */
 
   var splitSampleText = this.sampleText.split("");
@@ -110,38 +115,48 @@ function regGen () {
     sampleRegList[2].push("(");
     sampleRegList[3].push("(");
     sampleRegList[4].push("(");
+    sampleRegList[5].push("(");
 
     insideBrackets = true;
    }
 
    var char1 = splitSampleText[i];
-   var regPart = "";
 
    if(insideBrackets){// カッコ内
-    regPart = this.makeRegPart(0, char1);
+    var regPart0 = this.makeRegPart(0, char1);
+    var regPart6 = this.makeRegPart(6, char1);
 
-    for(var k = 0; k < 5; k ++){
-     if(regPart === char1){
-      sampleRegList[k].push(regPart);
+    for(var k = 0; k < 6; k ++){
+     var regPart06 = "";
+     
+     if((k >= 0) && (k < 5)){
+      regPart06 = regPart0;
+     }
+     else if(k === 5){
+      regPart06 = regPart6;
+     }
+     
+     if(regPart06 === char1){
+      sampleRegList[k].push(regPart06);
      }
      else{
       if(sampleRegList[k].lenght === 0){
-       sampleRegList[k].push(regPart);
+       sampleRegList[k].push(regPart06);
       }
       else{
        var popedRegPart = sampleRegList[k].pop();
-       if(popedRegPart !== regPart){
+       if(popedRegPart !== regPart06){
         sampleRegList[k].push(popedRegPart);
        }
 
-       sampleRegList[k].push(regPart);
+       sampleRegList[k].push(regPart06);
       }
      }
     }
    }
    else{// カッコ外
-    for(var l = 0; l < 5; l ++){
-     regPart = this.makeRegPart(l + 1, char1);
+    for(var l = 0; l < 6; l ++){
+     var regPart = this.makeRegPart(l + 1, char1);
 
      if(regPart === char1){
       sampleRegList[l].push(regPart);
@@ -168,12 +183,13 @@ function regGen () {
     sampleRegList[2].push(")");
     sampleRegList[3].push(")");
     sampleRegList[4].push(")");
+    sampleRegList[5].push(")");
 
     insideBrackets = false;
    }
   }
 
-  for(var m = 0; m < 5; m ++){
+  for(var m = 0; m < 6; m ++){
    var sampleReg = sampleRegList[m].join("");
 
    var isUnique = true;
@@ -281,7 +297,7 @@ function regGen () {
     regPart = this.escapeMetaChar(char1);
    }
   }
-  else if(pattern === 5){
+  else if((pattern === 5) || (pattern === 6)){
    if(isSpace){
     regPart = "\\s+";
    }
