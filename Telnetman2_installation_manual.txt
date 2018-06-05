@@ -1,10 +1,19 @@
 CentOS7 を最小構成でインストール
 sudo yum -y update
-SELinux 停止
+
+--------------------------------------------------------------------------------
+【SELinux 停止】
+sudo vi /etc/selinux/config
+編集
+============================================================
+SELINUX=disabled
+============================================================
+
+
 
 --------------------------------------------------------------------------------
 【yum】
-sudo yum -y install telnet mlocate traceroute tcpdump wget zip unzip gcc epel-release 
+sudo yum -y install telnet mlocate traceroute tcpdump wget zip unzip gcc epel-releasegit git  
 
 sudo yum -y install perl-CGI \
 perl-GD \
