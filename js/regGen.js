@@ -10,8 +10,8 @@ function regGen () {
  this.idGeneratedReg = this.idFrefix + "generated_reg";// 作成した正規表現の出力欄のid
 
  this.sampleText = "";// 正規表現にしたいテキスト
- this.startCharPos = 0;// () の開始位置
- this.endCharPos   = 0;// () の終了位置
+ this.startCharPos = -1;// () の開始位置
+ this.endCharPos   = -1;// () の終了位置
 
  this.regList = new Array();//作成した正規表現一覧
  
@@ -42,8 +42,8 @@ function regGen () {
    this.endCharPos   = endCursorPos - 1;
   }
   else{
-   this.startCharPos = 0;
-   this.endCharPos   = 0;
+   this.startCharPos = -1;
+   this.endCharPos   = -1;
   }
  };
 
@@ -99,7 +99,7 @@ function regGen () {
   var existBrackets = false;
   var insideBrackets = false;
 
-  if((this.startCharPos !== 0) && (this.endCharPos !== 0)){
+  if((this.startCharPos >= 0) && (this.endCharPos >= 0)){
    existBrackets = true;
   }
 

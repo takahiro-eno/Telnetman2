@@ -374,7 +374,9 @@ function telnetmanHelp() {
             "<span class='telnetman_item_viewer_span2'>2.&nbsp;(&nbsp;)&nbsp;で囲みたい部分を選択状態に。</span><br>" +
             "<span class='telnetman_item_viewer_span2'>3.&nbsp;[生成]&nbsp;ボタンを押す。</span><br>" +
             "<span class='telnetman_item_viewer_span2'>&darr;</span><br>" +
-            "<span class='telnetman_item_viewer_span2'>いくつか候補が出るので参考にする。</span><br>" +
+            "<span class='telnetman_item_viewer_span2'>いくつか候補が出ます。</span><br>" +
+            "<span class='telnetman_item_viewer_span2'>最後のものが一番汎用性が高いです。これをベースに他のものを参考にして改造すると良いでしょう。</span><br>" +
+            "<span class='telnetman_item_viewer_span2'>他にも+&nbsp;を*&nbsp;にしたり{1,3}&nbsp;のように文字数指定にしたり。</span>" +
            "</td>" +
            "</tr>"+
            "<tr>" +
