@@ -5,6 +5,7 @@
 //        : 2015/12/09 --More-- 対応。
 // 更新   : 2016/06/27 ssh に対応。
 // 更新   : 2017/09/11 繰り返し型ルーチンの逆順に対応。
+// 更新   : 2018/06/07 検索キーワードをsession storage に入れる。
 
 
 var storageL = localStorage;
@@ -399,24 +400,24 @@ function controleStorageL () {
    }
    
    var splitMainRoutineSymbolElements = symbolElements.split(" ");
-   var commandType = splitMainRoutineSymbolElements[0];
-   var commandId   = splitMainRoutineSymbolElements[1];
+   var itemType = splitMainRoutineSymbolElements[0];
+   var itemId   = splitMainRoutineSymbolElements[1];
    
-   if(commandType === "sub"){
-    commandId = parseInt(commandId, 10);
+   if(itemType === "sub"){
+    itemId = parseInt(itemId, 10);
    }
    
-   return([commandType, commandId]);
+   return([itemType, itemId]);
   }
  };
  
- this.setMainRoutineSymbol = function (x, y, commandType, commandId){
-  if(typeof(commandId) === "number"){
-   commandId = String(commandId);
+ this.setMainRoutineSymbol = function (x, y, itemType, itemId){
+  if(typeof(itemId) === "number"){
+   itemId = String(itemId);
   }
   
-  if((commandType !== null) && (commandType !== undefined) && (commandType.length > 0) && (commandId !== null) && (commandId !== undefined) && (commandId.length > 0)){
-   storageL.setItem(this.keyMainRoutineSymbol(x, y), commandType + " " + commandId);
+  if((itemType !== null) && (itemType !== undefined) && (itemType.length > 0) && (itemId !== null) && (itemId !== undefined) && (itemId.length > 0)){
+   storageL.setItem(this.keyMainRoutineSymbol(x, y), itemType + " " + itemId);
   }
   else{
    this.removeMainRoutineSymbol(x, y);
@@ -731,20 +732,20 @@ function controleStorageL () {
    }
    
    var splitMainRoutineSymbolElements = symbolElements.split(" ");
-   var commandType = splitMainRoutineSymbolElements[0];
-   var commandId   = splitMainRoutineSymbolElements[1];
+   var itemType = splitMainRoutineSymbolElements[0];
+   var itemId   = splitMainRoutineSymbolElements[1];
    
-   return([commandType, commandId]);
+   return([itemType, itemId]);
   }
  };
  
- this.setSubRoutineSymbol = function (subRoutineIndex, subRoutineX, subRoutineY, commandType, commandId) {
-  if(typeof(commandId) === "number"){
-   commandId = String(commandId);
+ this.setSubRoutineSymbol = function (subRoutineIndex, subRoutineX, subRoutineY, itemType, itemId) {
+  if(typeof(itemId) === "number"){
+   itemId = String(itemId);
   }
   
-  if((commandType !== null) && (commandType !== undefined) && (commandType.length > 0) && (commandId !== null) && (commandId !== undefined) && (commandId.length > 0)){
-   storageL.setItem(this.keySubRoutineSymbol(subRoutineIndex, subRoutineX, subRoutineY), commandType + " " + commandId);
+  if((itemType !== null) && (itemType !== undefined) && (itemType.length > 0) && (itemId !== null) && (itemId !== undefined) && (itemId.length > 0)){
+   storageL.setItem(this.keySubRoutineSymbol(subRoutineIndex, subRoutineX, subRoutineY), itemType + " " + itemId);
   }
   else{
    this.removeSubRoutineSymbol(subRoutineIndex, subRoutineX, subRoutineY);
@@ -1792,6 +1793,29 @@ function controleStorageS () {
   storageS.removeItem(this.keyTerminalMonitorErrors());
  };
  
+ 
+ // 検索キーワード
+  this.keyKeyword = function () {
+  return(this.prefix + "keyword");
+ };
+ 
+ this.getKeyword = function () {
+  var keyword = storageS.getItem(this.keyKeyword());
+  
+  if(keyword === null){
+   keyword = "";
+  }
+  
+  return(keyword);
+ };
+ 
+ this.setKeyword = function (keyword) {
+  storageS.setItem(this.keyKeyword(), keyword);
+ };
+ 
+ this.removeKeyword = function () {
+  storageS.removeItem(this.keyKeyword());
+ };
  
  return(this);
 }

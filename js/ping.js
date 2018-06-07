@@ -371,6 +371,10 @@ function ping () {
   
   if((value !== null) && (value !== undefined)){
    this.valueList[id] = value;
+   
+   if(id === this.idKeyword){
+    objControleStorageS.setKeyword(value);
+   }
   }
   else{
    this.valueList[id] = "";
@@ -403,15 +407,25 @@ function ping () {
  // 入力欄に値を入れる。
  this.insertValue = function () {
   document.getElementById(this.idSearchKeyword).value = this.valueSearchKeyword;
-  document.getElementById(this.idSearchTitle).value   = this.valueSearchTitle;
-  
+  document.getElementById(this.idSearchTitle).value   = this.valueSearchTitle; 
   document.getElementById(this.idTitle).value     = this.valueList[this.idTitle];
-  document.getElementById(this.idKeyword).value   = this.valueList[this.idKeyword];
   document.getElementById(this.idComment).value   = this.valueList[this.idComment];
   document.getElementById(this.idTarget).value    = this.valueList[this.idTarget];
   document.getElementById(this.idCount).value     = this.valueList[this.idCount];
   document.getElementById(this.idTimeout).value   = this.valueList[this.idTimeout];
   document.getElementById(this.idNgMessage).value = this.valueList[this.idNgMessage];
+  
+  if(this.valueList[this.idKeyword].length > 0){
+   document.getElementById(this.idKeyword).value = this.valueList[this.idKeyword];
+  }
+  else{
+   var keyword = objControleStorageS.getKeyword();
+   
+   if(keyword.length > 0){
+    document.getElementById(this.idKeyword).value = keyword;
+    this.valueList[this.idKeyword] = keyword;
+   }
+  }
   
   if(this.repeatType === 1){
    document.getElementById(this.idRepeatType2).checked = false;
