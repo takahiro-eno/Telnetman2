@@ -470,6 +470,10 @@ function command () {
   
   if((value !== null) && (value !== undefined)){
    this.valueList[id] = value;
+   
+   if(id === this.idKeyword){
+    objControleStorageS.setKeyword(value);
+   }
   }
   else{
    this.valueList[id] = "";
@@ -505,11 +509,22 @@ function command () {
   document.getElementById(this.idSearchTitle).value   = this.valueSearchTitle;
   
   document.getElementById(this.idTitle).value   = this.valueList[this.idTitle];
-  document.getElementById(this.idKeyword).value = this.valueList[this.idKeyword];
   document.getElementById(this.idComment).value = this.valueList[this.idComment];
   document.getElementById(this.idWait).value    = this.valueList[this.idWait];
   document.getElementById(this.idCommand).value = this.valueList[this.idCommand];
   document.getElementById(this.idDummy).value   = this.valueList[this.idDummy];
+  
+  if(this.valueList[this.idKeyword].length > 0){
+   document.getElementById(this.idKeyword).value = this.valueList[this.idKeyword];
+  }
+  else{
+   var keyword = objControleStorageS.getKeyword();
+   
+   if(keyword.length > 0){
+    document.getElementById(this.idKeyword).value = keyword;
+    this.valueList[this.idKeyword] = keyword;
+   }
+  }
   
   if(this.repeatType === 1){
    document.getElementById(this.idRepeatType2).checked = false;

@@ -606,6 +606,10 @@ function action () {
 
   if((value !== null) && (value !== undefined)){
    this.valueList[id] = value;
+   
+   if(id === this.idKeyword){
+    objControleStorageS.setKeyword(value);
+   }
   }
   else{
    this.valueList[id] = "";
@@ -700,7 +704,6 @@ function action () {
   }
 
   document.getElementById(this.idTitle).value         = this.valueList[this.idTitle];
-  document.getElementById(this.idKeyword).value       = this.valueList[this.idKeyword];
   document.getElementById(this.idComment).value       = this.valueList[this.idComment];
   document.getElementById(this.idBeginWord).value     = this.valueList[this.idBeginWord];
   document.getElementById(this.idPipeWord).value      = this.valueList[this.idPipeWord];
@@ -712,6 +715,18 @@ function action () {
   document.getElementById(this.idCount).value         = this.valueList[this.idCount];
   document.getElementById(this.idNgMessage).value     = this.valueList[this.idNgMessage];
   document.getElementById(this.idTestCommandReturn).value = this.valueList[this.idTestCommandReturn];
+  
+  if(this.valueList[this.idKeyword].length > 0){
+   document.getElementById(this.idKeyword).value = this.valueList[this.idKeyword];
+  }
+  else{
+   var keyword = objControleStorageS.getKeyword();
+   
+   if(keyword.length > 0){
+    document.getElementById(this.idKeyword).value = keyword;
+    this.valueList[this.idKeyword] = keyword;
+   }
+  }
 
   var scriptOptionList = document.getElementById(this.idScriptId).options;
   for(var i = 0, j = scriptOptionList.length; i < j; i ++){
