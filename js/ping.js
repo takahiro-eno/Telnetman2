@@ -373,7 +373,7 @@ function ping () {
    this.valueList[id] = value;
    
    if(id === this.idKeyword){
-    objControleStorageS.setKeyword(value);
+    objControleStorageL.setKeyword(value);
    }
   }
   else{
@@ -419,7 +419,7 @@ function ping () {
    document.getElementById(this.idKeyword).value = this.valueList[this.idKeyword];
   }
   else{
-   var keyword = objControleStorageS.getKeyword();
+   var keyword = objControleStorageL.getKeyword();
    
    if(keyword.length > 0){
     document.getElementById(this.idKeyword).value = keyword;
