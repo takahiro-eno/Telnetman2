@@ -5,7 +5,7 @@
 //        : 2015/12/09 --More-- 対応。
 // 更新   : 2016/06/27 ssh に対応。
 // 更新   : 2017/09/11 繰り返し型ルーチンの逆順に対応。
-// 更新   : 2018/06/07 検索キーワードをsession storage に入れる。
+// 更新   : 2018/06/07 検索キーワードをlocal storage に入れる。
 
 
 var storageL = localStorage;
@@ -860,6 +860,29 @@ function controleStorageL () {
   storageL.removeItem(this.keyFlowchartTitle(flowchartType));
  };
  
+ 
+ // 検索キーワード
+ this.keyKeyword = function () {
+  return(this.prefix + "keyword");
+ };
+ 
+ this.getKeyword = function () {
+  var keyword = storageS.getItem(this.keyKeyword());
+  
+  if(keyword === null){
+   keyword = "";
+  }
+  
+  return(keyword);
+ };
+ 
+ this.setKeyword = function (keyword) {
+  storageS.setItem(this.keyKeyword(), keyword);
+ };
+ 
+ this.removeKeyword = function () {
+  storageS.removeItem(this.keyKeyword());
+ };
  
  
  return(this);
@@ -1792,30 +1815,6 @@ function controleStorageS () {
  this.removeTerminalMonitorErrors = function () {
   storageS.removeItem(this.keyTerminalMonitorErrors());
  };
- 
- 
- // 検索キーワード
-  this.keyKeyword = function () {
-  return(this.prefix + "keyword");
- };
- 
- this.getKeyword = function () {
-  var keyword = storageS.getItem(this.keyKeyword());
   
-  if(keyword === null){
-   keyword = "";
-  }
-  
-  return(keyword);
- };
- 
- this.setKeyword = function (keyword) {
-  storageS.setItem(this.keyKeyword(), keyword);
- };
- 
- this.removeKeyword = function () {
-  storageS.removeItem(this.keyKeyword());
- };
- 
  return(this);
 }
