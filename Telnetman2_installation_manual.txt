@@ -389,6 +389,7 @@ create table T_Command(
  txCommand text not null,
  iCommandType tinyint unsigned,
  txDummyReturn text,
+ vcParticularPrompt varchar(128),
  iPromptChecker tinyint unsigned,
  iStore tinyint unsigned
 );

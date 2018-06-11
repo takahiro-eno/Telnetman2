@@ -73,26 +73,27 @@ T_LockedAccount : ロック解除画面用URL 変数とiUserIndex を関連付�
 
 
 T_Command : コマンドの登録
-+----------------+---------------------+------+-----+---------+-------+
-| Field          | Type                | Null | Key | Default | Extra |
-+----------------+---------------------+------+-----+---------+-------+
-| vcCommandId    | varchar(128)        | NO   | PRI | NULL    |       | コマンドID
-| vcKeyword      | varchar(128)        | YES  |     | NULL    |       | 検索キーワード
-| iCreateTime    | int(10) unsigned    | YES  |     | NULL    |       | 作成時刻(unixtime)
-| iUpdateTime    | int(10) unsigned    | YES  |     | NULL    |       | 更新時刻(unixtime)
-| vcUserId       | varchar(64)         | YES  |     | NULL    |       | T_User.vcUserId (作成者)
-| vcChanger      | varchar(64)         | YES  |     | NULL    |       | T_User.vcUserId (更新者)
-| vcTitle        | varchar(128)        | NO   |     | NULL    |       | タイトル
-| iRepeatType    | tinyint(3) unsigned | YES  |     | NULL    |       | 1:1回のみ実行 2:繰り返し
-| vcComment      | varchar(512)        | YES  |     | NULL    |       | ログに挿入するコメント
-| iWaitTime      | int(10) unsigned    | YES  |     | NULL    |       | コマンド実行前の待機時間 (秒)
-| iConftEnd      | tinyint(3) unsigned | YES  |     | NULL    |       | コマンド実行前後にconf t, end を実行 0:しない 1:する
-| txCommand      | text                | NO   |     | NULL    |       | コマンド
-| iCommandType   | tinyint(3) unsigned | YES  |     | NULL    |       | 1:show系 2:conf t系 3:返り値無し系 (アイコンを変えるだけ)
-| txDummyReturn  | text                | YES  |     | NULL    |       | ダミー用コマンド返り値
-| iPromptChecker | tinyint(3) unsigned | YES  |     | NULL    |       | プロンプト確認 1:通常タイプ 2:JUNOSタイプ 0:行わない
-| iStore         | tinyint(3) unsigned | YES  |     | NULL    |       | コマンド結果を0:溜めない 1:溜める
-+----------------+---------------------+------+-----+---------+-------+
++--------------------+---------------------+------+-----+---------+-------+
+| Field              | Type                | Null | Key | Default | Extra |
++--------------------+---------------------+------+-----+---------+-------+
+| vcCommandId        | varchar(128)        | NO   | PRI | NULL    |       | コマンドID
+| vcKeyword          | varchar(128)        | YES  |     | NULL    |       | 検索キーワード
+| iCreateTime        | int(10) unsigned    | YES  |     | NULL    |       | 作成時刻(unixtime)
+| iUpdateTime        | int(10) unsigned    | YES  |     | NULL    |       | 更新時刻(unixtime)
+| vcUserId           | varchar(64)         | YES  |     | NULL    |       | T_User.vcUserId (作成者)
+| vcChanger          | varchar(64)         | YES  |     | NULL    |       | T_User.vcUserId (更新者)
+| vcTitle            | varchar(128)        | NO   |     | NULL    |       | タイトル
+| iRepeatType        | tinyint(3) unsigned | YES  |     | NULL    |       | 1:1回のみ実行 2:繰り返し
+| vcComment          | varchar(512)        | YES  |     | NULL    |       | ログに挿入するコメント
+| iWaitTime          | int(10) unsigned    | YES  |     | NULL    |       | コマンド実行前の待機時間 (秒)
+| iConftEnd          | tinyint(3) unsigned | YES  |     | NULL    |       | コマンド実行前後にconf t, end を実行 0:しない 1:する
+| txCommand          | text                | NO   |     | NULL    |       | コマンド
+| iCommandType       | tinyint(3) unsigned | YES  |     | NULL    |       | 1:show系 2:conf t系 3:返り値無し系 (アイコンを変えるだけ)
+| txDummyReturn      | text                | YES  |     | NULL    |       | ダミー用コマンド返り値
+| vcParticularPrompt | varchar(128)        | YES  |     | NULL    |       | 個別のプロンプト
+| iPromptChecker     | tinyint(3) unsigned | YES  |     | NULL    |       | プロンプト確認 1:通常タイプ 2:JUNOSタイプ 0:行わない
+| iStore             | tinyint(3) unsigned | YES  |     | NULL    |       | コマンド結果を0:溜めない 1:溜める
++--------------------+---------------------+------+-----+---------+-------+
 
 
 T_Action : コマンド結果の加工やOK, NG 判断など
