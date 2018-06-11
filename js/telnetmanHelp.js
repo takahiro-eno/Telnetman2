@@ -46,7 +46,11 @@ function telnetmanHelp() {
    title = "ダミー用コマンド返り値";
    colspan = "";
   }
-  else if(category === "prompt"){
+  else if(category === "particular-prompt"){
+   title = "個別プロンプト";
+   colspan = "";
+  }
+  else if(category === "prompt-checker"){
    title = "プロンプト多重確認";
   }
   else if(category === "store"){
@@ -253,7 +257,12 @@ function telnetmanHelp() {
            "<td class='left'><span class='telnetman_item_viewer_span2'>コマンド欄に</span><span class='desc_black'>_DUMMY_</span><span class='telnetman_item_viewer_span2'>と書いたときにコマンド返り値をここの記入内容で代用します。</span><br><span class='telnetman_item_viewer_span2'>Telnetman&nbsp;変数をつなぎ合わせて次のaction&nbsp;で評価したいときなどに使います。</span><br><span class='telnetman_item_viewer_span2'>実機へはEnter&nbsp;が実行されます。</span></td>" +
            "</tr>";
   }
-  else if(category === "prompt"){
+  else if(category === "particular-prompt"){
+   html += "<tr>" +
+           "<td class='left'><span class='telnetman_item_viewer_span2'>コマンド毎にプロンプトを指定できます。</span><br><span class='telnetman_item_viewer_span2'>空欄の場合はログイン情報のものが使われます。</span></td>" +
+           "</tr>";
+  }
+  else if(category === "prompt-checker"){
    html += "<tr>" +
            "<td class='left'" + colspan + "><span class='telnetman_item_viewer_span2'>コマンドを実行した後にEnter&nbsp;を複数回実行して確実にプロンプトが返ってきたことを確認します。</span><br><span class='telnetman_item_viewer_span2'>この機能による複数回のEnter&nbsp;はログには反映されません。</span></td>" +
            "</tr>" +

@@ -7,6 +7,7 @@
 # 更新 2016/05/23 : 変換スクリプトがアップロードされていなかったら警告する。
 #      2017/10/27 : Ver2 に向けて大幅に更新。
 # 更新 2018/05/16 : Begin, End 機能の追加。
+# 更新 2018/06/11 : 個別プロンプト追加。
 
 use strict;
 use warnings;
@@ -191,7 +192,7 @@ sub select_column {
  my $select_column = 'vcUserId,vcTitle,iRepeatType,vcComment';
  
  if($item_type eq 'command'){
-  $select_column .= ',iWaitTime,iConftEnd,txCommand,iCommandType,txDummyReturn,iPromptChecker,iStore';
+  $select_column .= ',iWaitTime,iConftEnd,txCommand,iCommandType,txDummyReturn,vcParticularPrompt,iPromptChecker,iStore';
  }
  elsif($item_type eq 'action'){
   $select_column .= ',vcBeginWord,iPipeType,vcPipeWord,vcEndWord,vcPattern,vcScriptId,txConditions,iNot,iOperator,iCount,vcNgMessage,txParameterSheetA,txParameterSheetB,iDestroy';
@@ -225,13 +226,14 @@ sub stor_item_data {
  $self -> {'item'}             -> {$item_type} -> {$item_id} -> {'comment'} = $comment;
  
  if($item_type eq 'command'){
-  my $wait_time      = shift(@$ref_item_data);
-  my $conft_end      = shift(@$ref_item_data);
-  my $command        = shift(@$ref_item_data);
-  my $command_type   = shift(@$ref_item_data);
-  my $dummy_return   = shift(@$ref_item_data);
-  my $prompt_checker = shift(@$ref_item_data);
-  my $store_command  = shift(@$ref_item_data);
+  my $wait_time         = shift(@$ref_item_data);
+  my $conft_end         = shift(@$ref_item_data);
+  my $command           = shift(@$ref_item_data);
+  my $command_type      = shift(@$ref_item_data);
+  my $dummy_return      = shift(@$ref_item_data);
+  my $particular_prompt = shift(@$ref_item_data);
+  my $prompt_checker    = shift(@$ref_item_data);
+  my $store_command     = shift(@$ref_item_data);
   
   $wait_time      += 0;
   $conft_end      += 0;
@@ -239,13 +241,14 @@ sub stor_item_data {
   $prompt_checker += 0;
   $store_command  += 0;
   
-  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'wait_time'}      = $wait_time;
-  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'conft_end'}      = $conft_end;
-  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'command'}        = $command;
-  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'command_type'}   = $command_type;
-  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'dummy_return'}   = $dummy_return;
-  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'prompt_checker'} = $prompt_checker;
-  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'store_command'}  = $store_command;
+  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'wait_time'}         = $wait_time;
+  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'conft_end'}         = $conft_end;
+  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'command'}           = $command;
+  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'command_type'}      = $command_type;
+  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'dummy_return'}      = $dummy_return;
+  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'particular_prompt'} = $particular_prompt;
+  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'prompt_checker'}    = $prompt_checker;
+  $self -> {'item'} -> {$item_type} -> {$item_id} -> {'store_command'}     = $store_command;
  }
  elsif($item_type eq 'action'){
   my $begin_word = shift(@$ref_item_data);

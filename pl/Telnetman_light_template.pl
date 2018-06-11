@@ -1401,6 +1401,24 @@ sub get_dummy_return {
  return($dummy_return);
 }
 
+sub get_particular_prompt {
+ my $self = $_[0];
+ my ($item_type, $item_id) = $self -> get_item_type_id;
+ my $particular_prompt = '';
+ 
+ if(defined($item_type) && (length($item_type) > 0) && defined($item_id) && (length($item_id) > 0)){
+  $particular_prompt = $self -> {'item'} -> {'command'} -> {$item_id} -> {'particular_prompt'};
+ }
+ 
+ if(length($particular_prompt) > 0){
+  return($particular_prompt);
+ }
+ else{
+  my $prompt = $self -> get_prompt;
+  return($prompt);
+ }
+}
+
 sub get_prompt_checker {
  my $self = $_[0];
  my ($item_type, $item_id) = $self -> get_item_type_id;
@@ -1798,7 +1816,14 @@ sub start_telnet {
   if($service eq 'telnet'){
    $telnet -> open($node);
 
-   ($command_return, $matched_prompt) = $telnet -> waitfor('/' . $user_prompt . '/');
+   ($command_return, $matched_prompt) = $telnet -> waitfor(Match => '/' . $user_prompt . '/', Errmode => 'return', Timeout => 5);
+   
+   # コンソールログインの場合、Escape character is '^]'. の表示のまま止まるのでEnter を実行。
+   unless(defined($matched_prompt)){
+    $telnet -> print('');
+    ($command_return, $matched_prompt) = $telnet -> waitfor('/' . $user_prompt . '/');
+   }
+   
    $ok_error = $self -> add_command_return('', $command_return, $matched_prompt);
 
    if($ok_error == -1){
@@ -2633,7 +2658,7 @@ sub command_cisco {
  my $matched_prompt = '';
 
  my $telnet = $self -> {'telnet'};
- my $prompt = $self -> get_prompt;
+ my $prompt = $self -> get_particular_prompt;
 
  my $flag_match = 0;
  my $count_space_20 = 0;
@@ -2772,7 +2797,7 @@ sub command_junos {
  my $matched_prompt = '';
 
  my $telnet = $self -> {'telnet'};
- my $prompt = $self -> get_prompt;
+ my $prompt = $self -> get_particular_prompt;
 
  my $between_prompt = '';
  my $ref_buffer = $telnet -> buffer;
@@ -2912,7 +2937,7 @@ sub command_none {
  my $matched_prompt = '';
 
  my $telnet = $self -> {'telnet'};
- my $prompt = $self -> get_prompt;
+ my $prompt = $self -> get_particular_prompt;
 
  my $flag_match = 0;
 

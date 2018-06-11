@@ -2,6 +2,7 @@
 # 説明   : コマンドを新規登録、更新、削除する。
 # 作成者 : 江野高広
 # 作成日 : 2017/09/07
+# 更新   : 2018/06/11 個別プロンプト追加。
 
 use strict;
 use warnings;
@@ -99,13 +100,14 @@ my $wait = 0;
 my $conft_end = 0;
 my $command = '';
 my $dummy = '';
-my $prompt = 1;
+my $particular_prompt = '';
+my $prompt_checker = 1;
 my $store = 1;
 
 my $reason = '';
 
 if(($operation eq 'create') || ($operation eq 'update')){
- ($check, $reason, $command_id, $repeat_type, $command_type, $title, $keyword, $comment, $wait, $conft_end, $command, $dummy, $prompt, $store) = &main::check_parameter($cgi);
+ ($check, $reason, $command_id, $repeat_type, $command_type, $title, $keyword, $comment, $wait, $conft_end, $command, $dummy, $particular_prompt, $prompt_checker, $store) = &main::check_parameter($cgi);
  ($operation, $command_id) = &Telnetman_common::check_operation($access2db, 'command', $command_id);
  
  
@@ -152,37 +154,39 @@ if($check == 0){
 
 
 
-my $escaped_user_id = &Common_sub::escape_sql($user_id);
-my $escaped_title   = &Common_sub::escape_sql($title);
-my $escaped_keyword = &Common_sub::escape_sql($keyword);
-my $escaped_comment = &Common_sub::escape_sql($comment);
-my $escaped_command = &Common_sub::escape_sql($command);
-my $escaped_dummy   = &Common_sub::escape_sql($dummy);
+my $escaped_user_id           = &Common_sub::escape_sql($user_id);
+my $escaped_title             = &Common_sub::escape_sql($title);
+my $escaped_keyword           = &Common_sub::escape_sql($keyword);
+my $escaped_comment           = &Common_sub::escape_sql($comment);
+my $escaped_command           = &Common_sub::escape_sql($command);
+my $escaped_dummy             = &Common_sub::escape_sql($dummy);
+my $escaped_particular_prompt = &Common_sub::escape_sql($particular_prompt);
 
 
 
 if($operation eq 'create'){
- my $insert_column = 'vcCommandId,vcKeyword,iCreateTime,iUpdateTime,vcUserId,vcChanger,vcTitle,iRepeatType,vcComment,iWaitTime,iConftEnd,txCommand,iCommandType,txDummyReturn,iPromptChecker,iStore';
- my @values = ("('" . $command_id . "','" . $escaped_keyword . "'," . $time . "," . $time . ",'" . $escaped_user_id . "','','" . $escaped_title . "'," . $repeat_type . ",'" . $escaped_comment . "'," . $wait . "," . $conft_end . ",'" . $escaped_command . "'," . $command_type . ",'" . $escaped_dummy . "'," . $prompt . "," . $store . ")");
+ my $insert_column = 'vcCommandId,vcKeyword,iCreateTime,iUpdateTime,vcUserId,vcChanger,vcTitle,iRepeatType,vcComment,iWaitTime,iConftEnd,txCommand,iCommandType,txDummyReturn,vcParticularPrompt,iPromptChecker,iStore';
+ my @values = ("('" . $command_id . "','" . $escaped_keyword . "'," . $time . "," . $time . ",'" . $escaped_user_id . "','','" . $escaped_title . "'," . $repeat_type . ",'" . $escaped_comment . "'," . $wait . "," . $conft_end . ",'" . $escaped_command . "'," . $command_type . ",'" . $escaped_dummy . "','" . $escaped_particular_prompt . "'," . $prompt_checker . "," . $store . ")");
  my $table = 'T_Command';
  $access2db -> set_insert($insert_column, \@values, $table);
  $access2db -> insert_exe;
 }
 elsif($operation eq 'update'){
  my @set = (
-       "vcKeyword = '" . $escaped_keyword . "'",
-     'iUpdateTime = '  . $time,
-       "vcChanger = '" . $escaped_user_id . "'",
-         "vcTitle = '" . $escaped_title . "'",
-     'iRepeatType = '  . $repeat_type,
-       "vcComment = '" . $escaped_comment . "'",
-       'iWaitTime = '  . $wait,
-       'iConftEnd = '  . $conft_end,
-       "txCommand = '" . $escaped_command . "'",
-    'iCommandType = '  . $command_type,
-   "txDummyReturn = '" . $escaped_dummy . "'",
-  'iPromptChecker = '  . $prompt,
-          'iStore = '  . $store         
+          "vcKeyword = '" . $escaped_keyword . "'",
+        'iUpdateTime = '  . $time,
+          "vcChanger = '" . $escaped_user_id . "'",
+            "vcTitle = '" . $escaped_title . "'",
+        'iRepeatType = '  . $repeat_type,
+          "vcComment = '" . $escaped_comment . "'",
+          'iWaitTime = '  . $wait,
+          'iConftEnd = '  . $conft_end,
+          "txCommand = '" . $escaped_command . "'",
+       'iCommandType = '  . $command_type,
+      "txDummyReturn = '" . $escaped_dummy . "'",
+ "vcParticularPrompt = '" . $escaped_particular_prompt . "'",
+     'iPromptChecker = '  . $prompt_checker,
+             'iStore = '  . $store         
  );
  my $table     = 'T_Command';
  my $condition = "where vcCommandId = '" . $command_id . "'";
@@ -232,19 +236,20 @@ print $json_results;
 #
 sub check_parameter {
  my $cgi = $_[0];
- my $command_id   = $cgi -> param('command_id');
- my $item_id      = $cgi -> param('item_id');
- my $repeat_type  = $cgi -> param('repeat_type');
- my $command_type = $cgi -> param('command_type');
- my $title        = $cgi -> param('title');
- my $keyword      = $cgi -> param('keyword');
- my $comment      = $cgi -> param('comment');
- my $wait         = $cgi -> param('wait');
- my $conft_end    = $cgi -> param('conft_end');
- my $command      = $cgi -> param('command');
- my $dummy        = $cgi -> param('dummy');
- my $prompt       = $cgi -> param('prompt');
- my $store        = $cgi -> param('store');
+ my $command_id        = $cgi -> param('command_id');
+ my $item_id           = $cgi -> param('item_id');
+ my $repeat_type       = $cgi -> param('repeat_type');
+ my $command_type      = $cgi -> param('command_type');
+ my $title             = $cgi -> param('title');
+ my $keyword           = $cgi -> param('keyword');
+ my $comment           = $cgi -> param('comment');
+ my $wait              = $cgi -> param('wait');
+ my $conft_end         = $cgi -> param('conft_end');
+ my $command           = $cgi -> param('command');
+ my $dummy             = $cgi -> param('dummy');
+ my $particular_prompt = $cgi -> param('particular_prompt');
+ my $prompt_checker    = $cgi -> param('prompt_checker');
+ my $store             = $cgi -> param('store');
  
  unless(defined($command_id)){
   $command_id = '';
@@ -317,14 +322,18 @@ sub check_parameter {
   $dummy = '';
  }
  
- unless(defined($prompt) && (length($prompt) > 0)){
-  $prompt = 1;
- }
- elsif(($prompt != 1) && ($prompt != 2) && ($prompt != 0)){
-  $prompt = 1;
+ unless(defined($particular_prompt)){
+  $particular_prompt = '';
  }
  
- $prompt += 0;
+ unless(defined($prompt_checker) && (length($prompt_checker) > 0)){
+  $prompt_checker = 1;
+ }
+ elsif(($prompt_checker != 1) && ($prompt_checker != 2) && ($prompt_checker != 0)){
+  $prompt_checker = 1;
+ }
+ 
+ $prompt_checker += 0;
  
  unless(defined($store) && (length($store) > 0)){
   $store = 1;
@@ -335,5 +344,5 @@ sub check_parameter {
  
  $store += 0;
   
- return(1, '', $command_id, $repeat_type, $command_type, $title, $keyword, $comment, $wait, $conft_end, $command, $dummy, $prompt, $store);
+ return(1, '', $command_id, $repeat_type, $command_type, $title, $keyword, $comment, $wait, $conft_end, $command, $dummy, $particular_prompt, $prompt_checker, $store);
 }
