@@ -15,6 +15,7 @@
 #      2017/09/01 : ルーチンの繰り返し逆順を追加。
 #      2017/10/31 : Ver2 に向けて大幅更新。
 #      2018/05/16 : Begin, End 機能の追加。
+#      2018/06/11 : コンソールログインの場合、Escape character is '^]'. で止まるので対応。
 
 use strict;
 use warnings;
@@ -1048,7 +1049,14 @@ sub start_telnet {
   if($service eq 'telnet'){
    $telnet -> open($node);
    
-   ($command_return, $matched_prompt) = $telnet -> waitfor('/' . $user_prompt . '/');
+   ($command_return, $matched_prompt) = $telnet -> waitfor(Match => '/' . $user_prompt . '/', Errmode => 'return', Timeout => 5);
+   
+   # コンソールログインの場合、Escape character is '^]'. の表示のまま止まるのでEnter を実行。
+   unless(defined($matched_prompt)){
+    $telnet -> print('');
+    ($command_return, $matched_prompt) = $telnet -> waitfor('/' . $user_prompt . '/');
+   }
+   
    $ok_error = $self -> add_command_return('', $command_return, $matched_prompt);
    
    if($ok_error == -1){

@@ -147,7 +147,12 @@
  <article>
   <h3>2-4.&nbsp;プロンプトの正規表現の修正</h3>
   <p class='float_left'><img src='img/training/training-03-02-04.png' width='480' height='372' alt='プロンプトの正規表現の修正'></p>
-  <p class='float_left'><span class='normal_font'>デフォルトのプロンプトの正規表現は</span><br><span class='normal_font'>.*(>|#|&yen;]|&yen;?)\s*$</span><br><span class='normal_font'>で「:」を検知できないので</span><br><span class='normal_font'>.*(>|#|&yen;]|&yen;?|:)\s*$</span><br><span class='normal_font'>のように「:」を加える。</span><br><span class='normal_font'>拡張ping&nbsp;の値入力待ちの行は「:」で終わっている。</span><br><br><span class='normal_font'>実行してみて拡張ping&nbsp;が行えていることを確認する。</span></p>
+  <p class='float_left'><span class='normal_font'>デフォルトのプロンプトの正規表現は</span><br><span class='normal_font'>.*(>|#|&yen;]|&yen;?)&yen;s*$</span><br><span class='normal_font'>で「:」を検知できないので</span><br><span class='normal_font'>.*(>|#|&yen;]|&yen;?|:)&yen;s*$</span><br><span class='normal_font'>のように「:」を加える。</span><br><span class='normal_font'>拡張ping&nbsp;の値入力待ちの行は「:」で終わっている。</span><br><br><span class='normal_font'>実行してみて拡張ping&nbsp;が行えていることを確認する。</span></p>
+ </article>
+ <article>
+  <h3>実験</h3>
+  <p class='float_left'><img src='img/training/training-03-02-04-b.png' width='480' height='116' alt='個別プロンプト'></p>
+  <p class='float_left'><span class='normal_font'>ログイン情報のプロンプトではなく、</span><br><span class='normal_font'>コマンド毎の個別プロンプトを設定してもうまくいくことを確認する。</span><br><span class='normal_font'>ログイン情報のプロンプトは元に戻し、個別プロンプトを.*:&yen;s*$&nbsp;と設定して実行してみる。</span></p>
  </article>
  <article>
   <h3>課題</h3>

@@ -1,6 +1,7 @@
 // 説明   : コマンド登録画面。
 // 作成日 : 2017/09/04
 // 作成者 : 江野高広
+// 更新 : 2018/06/11 個別プロンプト追加。
 
 var objCommand = new command();
 
@@ -13,11 +14,11 @@ function command () {
  this.commandIdList = new Array();
  this.symbolList    = new Object();
  this.valueList     = new Object();
- this.repeatType  = 1;
- this.commandType = 1;
- this.conftEnd    = 0;
- this.prompt      = 1;
- this.store       = 1;
+ this.repeatType    = 1;
+ this.commandType   = 1;
+ this.conftEnd      = 0;
+ this.promptChecker = 1;
+ this.store         = 1;
  
  // 必須項目が正しく書けているかどうかの確認。
  this.isTitle     = false;
@@ -50,10 +51,12 @@ function command () {
  this.idCommand = this.idPrefix + "command";
  this.idDummy   = this.idPrefix + "dummy";
  
- this.namePrompt     = this.idPrefix + "prompt";
- this.idPromptNormal = this.idPrefix + "prompt_normal";
- this.idPromptJunos  = this.idPrefix + "prompt_junos";
- this.idPromptNone   = this.idPrefix + "prompt_none";
+ this.idParticularPrompt = this.idPrefix + 'particular_prompt';
+ 
+ this.namePromptChecker     = this.idPrefix + "promptChecker";
+ this.idPromptCheckerNormal = this.idPrefix + "promptChecker_normal";
+ this.idPromptCheckerJunos  = this.idPrefix + "promptChecker_junos";
+ this.idPromptCheckerNone   = this.idPrefix + "promptChecker_none";
  
  this.nameStore  = this.idPrefix + "store";
  this.idStoreYes = this.idPrefix + "store_yes";
@@ -236,12 +239,16 @@ function command () {
                       "<td><textarea spellcheck='false' autocomplete='off' style='width:380px; height:100px;' id='" + this.idDummy + "' onblur='objCommand.readValue(this.id);'></textarea></td>" +
                       "</tr>" +
                       "<tr>" +
-                      "<td class='right'><span class='telnetman_build_table_span1'>プロンプト多重確認</span><img src='img/help.png' width='16' height='16' alt='help' class='onclick_node' onclick='objTelnetmanHelp.help(\"prompt\");'></td>" +
+                      "<td class='right'><span class='telnetman_build_table_span0'>個別プロンプト</span><img src='img/help.png' width='16' height='16' alt='help' class='onclick_node' onclick='objTelnetmanHelp.help(\"particular-prompt\");'></td>" +
+                      "<td><input type='text' spellcheck='false' autocomplete='off' style='width:200px;' id='" + this.idParticularPrompt + "' value='' onblur='objCommand.readValue(this.id);'><span>&#x203B;正規表現</span></td>" +
+                      "</tr>" +
+                      "<tr>" +
+                      "<td class='right'><span class='telnetman_build_table_span1'>プロンプト多重確認</span><img src='img/help.png' width='16' height='16' alt='help' class='onclick_node' onclick='objTelnetmanHelp.help(\"prompt-checker\");'></td>" +
                       "<td>" + 
                       "<span class='middle_radio_buntton'>" +
-                       "<input type='radio' name='" + this.namePrompt + "' id='" + this.idPromptNormal + "' value='1' onchange='objCommand.readPrompt(this.value);' checked><label for='" + this.idPromptNormal + "'>通常型</label>" +
-                       "<input type='radio' name='" + this.namePrompt + "' id='" + this.idPromptJunos  + "' value='2' onchange='objCommand.readPrompt(this.value);'        ><label for='" + this.idPromptJunos  + "'>JUNOS型</label>" +
-                       "<input type='radio' name='" + this.namePrompt + "' id='" + this.idPromptNone   + "' value='0' onchange='objCommand.readPrompt(this.value);'        ><label for='" + this.idPromptNone   + "'>しない</label>" +
+                       "<input type='radio' name='" + this.namePromptChecker + "' id='" + this.idPromptCheckerNormal + "' value='1' onchange='objCommand.readPromptChecker(this.value);' checked><label for='" + this.idPromptCheckerNormal + "'>通常型</label>" +
+                       "<input type='radio' name='" + this.namePromptChecker + "' id='" + this.idPromptCheckerJunos  + "' value='2' onchange='objCommand.readPromptChecker(this.value);'        ><label for='" + this.idPromptCheckerJunos  + "'>JUNOS型</label>" +
+                       "<input type='radio' name='" + this.namePromptChecker + "' id='" + this.idPromptCheckerNone   + "' value='0' onchange='objCommand.readPromptChecker(this.value);'        ><label for='" + this.idPromptCheckerNone   + "'>しない</label>" +
                       "</span>" +
                       "</td>" +
                       "</tr>" +
@@ -302,11 +309,11 @@ function command () {
   this.operation = "create";
   this.commandId = "";
   
-  this.repeatType  = 1;
-  this.commandType = 1;
-  this.conftEnd    = 0;
-  this.prompt      = 1;
-  this.store       = 1;
+  this.repeatType    = 1;
+  this.commandType   = 1;
+  this.conftEnd      = 0;
+  this.promptChecker = 1;
+  this.store         = 1;
   
   this.valueList[this.idTitle]   = "";
   this.valueList[this.idCommand] = "";
@@ -314,6 +321,7 @@ function command () {
   this.valueList[this.idComment] = "{\$title}";
   this.valueList[this.idDummy]   = "";
   this.valueList[this.idWait]    = 0;
+  this.valueList[this.idParticularPrompt] = "";
   
   this.isTitle   = false;
   this.isCommand = false;
@@ -341,9 +349,10 @@ function command () {
   var elConftEndNo   = document.getElementById(this.idConftEndNo);
   var elCommand      = document.getElementById(this.idCommand);
   var elDummy        = document.getElementById(this.idDummy);
-  var elPromptNormal = document.getElementById(this.idPromptNormal);
-  var elPromptJunos  = document.getElementById(this.idPromptJunos);
-  var elPromptNone   = document.getElementById(this.idPromptNone);
+  var elParticularPrompt    = document.getElementById(this.idParticularPrompt);
+  var elPromptCheckerNormal = document.getElementById(this.idPromptCheckerNormal);
+  var elPromptCheckerJunos  = document.getElementById(this.idPromptCheckerJunos);
+  var elPromptCheckerNone   = document.getElementById(this.idPromptCheckerNone);
   var elStoreYes     = document.getElementById(this.idStoreYes);
   var elStoreNo      = document.getElementById(this.idStoreNo);
   
@@ -361,9 +370,10 @@ function command () {
    elConftEndNo.disabled   = false;
    elCommand.readOnly      = false;
    elDummy.readOnly        = false;
-   elPromptNormal.disabled = false;
-   elPromptJunos.disabled  = false;
-   elPromptNone.disabled   = false;
+   elParticularPrompt.readOnly    = false;
+   elPromptCheckerNormal.disabled = false;
+   elPromptCheckerJunos.disabled  = false;
+   elPromptCheckerNone.disabled   = false;
    elStoreYes.disabled     = false;
    elStoreNo.disabled      = false;
 
@@ -388,9 +398,10 @@ function command () {
    elConftEndNo.disabled   = true;
    elCommand.readOnly      = true;
    elDummy.readOnly        = true;
-   elPromptNormal.disabled = true;
-   elPromptJunos.disabled  = true;
-   elPromptNone.disabled   = true;
+   elParticularPrompt.readOnly    = true;
+   elPromptCheckerNormal.disabled = true;
+   elPromptCheckerJunos.disabled  = true;
+   elPromptCheckerNone.disabled   = true;
    elStoreYes.disabled     = true;
    elStoreNo.disabled      = true;
 
@@ -421,23 +432,23 @@ function command () {
   this.commandType = commandType;
   
   if(commandType === 1){
-   this.conftEnd = 0;
-   this.prompt   = 1;
-   this.store    = 1;
+   this.conftEnd      = 0;
+   this.promptChecker = 1;
+   this.store         = 1;
   }
   else if(commandType === 2){
-   this.conftEnd = 1;
-   this.prompt   = 1;
-   this.store    = 0;
+   this.conftEnd      = 1;
+   this.promptChecker = 1;
+   this.store         = 0;
   }
   else if(commandType === 3){
-   this.conftEnd = 0;
-   this.prompt   = 0;
-   this.store    = 0;
+   this.conftEnd      = 0;
+   this.promptChecker = 0;
+   this.store         = 0;
   }
   
   this.changeConftEnd();
-  this.changePrompt();
+  this.changePromptChecker();
   this.changeStore();
  };
  
@@ -449,12 +460,12 @@ function command () {
   this.conftEnd = conftEnd;
  };
  
- this.readPrompt = function (prompt) {
-  if(typeof(prompt) === "string"){
-   prompt = parseInt(prompt, 10);
+ this.readPromptChecker = function (promptChecker) {
+  if(typeof(promptChecker) === "string"){
+   promptChecker = parseInt(promptChecker, 10);
   }
   
-  this.prompt = prompt;
+  this.promptChecker = promptChecker;
  };
  
  this.readStore = function (store) {
@@ -513,6 +524,7 @@ function command () {
   document.getElementById(this.idWait).value    = this.valueList[this.idWait];
   document.getElementById(this.idCommand).value = this.valueList[this.idCommand];
   document.getElementById(this.idDummy).value   = this.valueList[this.idDummy];
+  document.getElementById(this.idParticularPrompt).value = this.valueList[this.idParticularPrompt];
   
   if(this.valueList[this.idKeyword].length > 0){
    document.getElementById(this.idKeyword).value = this.valueList[this.idKeyword];
@@ -552,7 +564,7 @@ function command () {
   }
   
   this.changeConftEnd();
-  this.changePrompt();
+  this.changePromptChecker();
   this.changeStore();
  };
  
@@ -570,21 +582,21 @@ function command () {
  };
  
  // プロンプト確認するしないの表示の変更。
- this.changePrompt = function (){
-  if(this.prompt === 1){
-   document.getElementById(this.idPromptJunos).checked  = false;
-   document.getElementById(this.idPromptNone).checked   = false;
-   document.getElementById(this.idPromptNormal).checked = true;
+ this.changePromptChecker = function (){
+  if(this.promptChecker === 1){
+   document.getElementById(this.idPromptCheckerJunos).checked  = false;
+   document.getElementById(this.idPromptCheckerNone).checked   = false;
+   document.getElementById(this.idPromptCheckerNormal).checked = true;
   }
-  else if(this.prompt === 2){
-   document.getElementById(this.idPromptNormal).checked = false;
-   document.getElementById(this.idPromptNone).checked   = false;
-   document.getElementById(this.idPromptJunos).checked  = true;
+  else if(this.promptChecker === 2){
+   document.getElementById(this.idPromptCheckerNormal).checked = false;
+   document.getElementById(this.idPromptCheckerNone).checked   = false;
+   document.getElementById(this.idPromptCheckerJunos).checked  = true;
   }
-  else if(this.prompt === 0){
-   document.getElementById(this.idPromptNormal).checked = false;
-   document.getElementById(this.idPromptJunos).checked  = false;
-   document.getElementById(this.idPromptNone).checked   = true;
+  else if(this.promptChecker === 0){
+   document.getElementById(this.idPromptCheckerNormal).checked = false;
+   document.getElementById(this.idPromptCheckerJunos).checked  = false;
+   document.getElementById(this.idPromptCheckerNone).checked   = true;
   }
  };
  
@@ -675,7 +687,8 @@ function command () {
     "repeat_type"       : this.repeatType,
     "command_type"      : this.commandType,
     "conft_end"         : this.conftEnd,
-    "prompt"            : this.prompt,
+    "particular_prompt" : objCommonFunctions.convertYen(this.valueList[this.idParticularPrompt]),
+    "prompt_checker"    : this.promptChecker,
     "store"             : this.store
    },
    success : function (jsonResult) {
@@ -839,19 +852,20 @@ function command () {
         
         if(result === 1){
          if(objControleStorageL.getPage() === "command"){// コマンド設定画面を開いている時
-          objCommand.commandId   = hashResult["item_id"];
-          objCommand.operation   = hashResult["operation"];
-          objCommand.repeatType  = hashResult["repeat_type"];
-          objCommand.commandType = hashResult["command_type"];
-          objCommand.conftEnd    = hashResult["conft_end"];
-          objCommand.prompt      = hashResult["prompt"];
-          objCommand.store       = hashResult["store"];
+          objCommand.commandId        = hashResult["item_id"];
+          objCommand.operation        = hashResult["operation"];
+          objCommand.repeatType       = hashResult["repeat_type"];
+          objCommand.commandType      = hashResult["command_type"];
+          objCommand.conftEnd         = hashResult["conft_end"];
+          objCommand.promptChecker    = hashResult["prompt_checker"];
+          objCommand.store            = hashResult["store"];
           objCommand.valueList[objCommand.idTitle]   = hashResult["title"];
           objCommand.valueList[objCommand.idKeyword] = hashResult["keyword"];
           objCommand.valueList[objCommand.idComment] = hashResult["comment"];
           objCommand.valueList[objCommand.idWait]    = hashResult["wait"];
           objCommand.valueList[objCommand.idCommand] = hashResult["command"];
           objCommand.valueList[objCommand.idDummy]   = hashResult["dummy"];
+          objCommand.valueList[objCommand.idParticularPrompt] = hashResult["particular_prompt"];
           
           objCommand.insertValue();
           objCommand.isTitle   = true;
@@ -863,22 +877,23 @@ function command () {
           objLayoutFunctions.rotateSymbol(idSymbol);
          }
          else{// 流れ図画面を開いている時
-          var itemId      = hashResult["item_id"];
-          var repeatType  = hashResult["repeat_type"];
-          var commandType = hashResult["command_type"];
-          var conftEnd    = hashResult["conft_end"];
-          var prompt      = hashResult["prompt"];
-          var store       = hashResult["store"];
-          var title       = objCommonFunctions.escapeHtml(hashResult["title"]);
-          var keyword     = objCommonFunctions.escapeHtml(hashResult["keyword"]);
-          var comment     = objCommonFunctions.escapeHtml(hashResult["comment"]);
-          var wait        = hashResult["wait"];
-          var command     = objCommonFunctions.escapeHtml(hashResult["command"]);
-          var dummy       = objCommonFunctions.escapeHtml(hashResult["dummy"]);
-          var ownerName   = objCommonFunctions.escapeHtml(hashResult["owner_name"]);
-          var changerName = objCommonFunctions.escapeHtml(hashResult["changer_name"]);
-          var createTime  = hashResult["create_time"];
-          var updateTime  = hashResult["update_time"];
+          var itemId           = hashResult["item_id"];
+          var repeatType       = hashResult["repeat_type"];
+          var commandType      = hashResult["command_type"];
+          var conftEnd         = hashResult["conft_end"];
+          var particularPrompt = objCommonFunctions.escapeHtml(hashResult["particular_prompt"]);
+          var promptChecker    = hashResult["prompt_checker"];
+          var store            = hashResult["store"];
+          var title            = objCommonFunctions.escapeHtml(hashResult["title"]);
+          var keyword          = objCommonFunctions.escapeHtml(hashResult["keyword"]);
+          var comment          = objCommonFunctions.escapeHtml(hashResult["comment"]);
+          var wait             = hashResult["wait"];
+          var command          = objCommonFunctions.escapeHtml(hashResult["command"]);
+          var dummy            = objCommonFunctions.escapeHtml(hashResult["dummy"]);
+          var ownerName        = objCommonFunctions.escapeHtml(hashResult["owner_name"]);
+          var changerName      = objCommonFunctions.escapeHtml(hashResult["changer_name"]);
+          var createTime       = hashResult["create_time"];
+          var updateTime       = hashResult["update_time"];
           
           var repeatTypeText = "";
           if(repeatType === 1){
@@ -907,15 +922,15 @@ function command () {
            conftEndText = "する";
           }
           
-          var promptText = "";
-          if(prompt === 1){
-           promptText = "通常型";
+          var promptCheckerText = "";
+          if(promptChecker === 1){
+           promptCheckerText = "通常型";
           }
-          else if(prompt === 2){
-           promptText = "JUNOS型";
+          else if(promptChecker === 2){
+           promptCheckerText = "JUNOS型";
           }
-          else if(prompt === 0){
-           promptText = "しない";
+          else if(promptChecker === 0){
+           promptCheckerText = "しない";
           }
           
           var storeText = "";
@@ -994,8 +1009,12 @@ function command () {
                      "<td class='left'><span class='telnetman_item_viewer_span2'>" + dummy + "</span></td>" +
                      "</tr>" +
                      "<tr>" +
+                     "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>個別プロンプト</span></td>" +
+                     "<td class='left'><span class='telnetman_item_viewer_span2'>" + particularPrompt + "</span></td>" +
+                     "</tr>" +
+                     "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>プロンプト多重確認</span></td>" +
-                     "<td class='left'><span class='telnetman_item_viewer_span2'>" + promptText + "</span></td>" +
+                     "<td class='left'><span class='telnetman_item_viewer_span2'>" + promptCheckerText + "</span></td>" +
                      "</tr>" +
                      "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>コマンド返り値を</span></td>" +

@@ -6,6 +6,7 @@
 # 更新 2015/11/30 iOperator, iCount を追加。
 # 更新 2017/09/06 Ver.2 用に大幅改造。
 # 更新 2018/05/16 Begin, End 機能の追加。
+# 更新 2018/06/11 個別プロンプト追加。
 
 use strict;
 use warnings;
@@ -86,8 +87,8 @@ my @key_list = ('create_time', 'update_time', 'keyword', 'user_id', 'changer', '
 my $condition = 'where ' . $id_column . " = '" . &Common_sub::escape_sql($item_id) . "'";
 
 if($item_type eq 'command'){
- $select_column .= ',iWaitTime,iConftEnd,txCommand,iCommandType,txDummyReturn,iPromptChecker,iStore';
- push(@key_list, 'wait', 'conft_end', 'command', 'command_type', 'dummy', 'prompt', 'store');
+ $select_column .= ',iWaitTime,iConftEnd,txCommand,iCommandType,txDummyReturn,vcParticularPrompt,iPromptChecker,iStore';
+ push(@key_list, 'wait', 'conft_end', 'command', 'command_type', 'dummy', 'particular_prompt', 'prompt_checker', 'store');
 }
 elsif($item_type eq 'action'){
  $select_column .= ',vcBeginWord,iPipeType,vcPipeWord,vcEndWord,vcPattern,vcScriptId,txConditions,iNot,iOperator,iCount,vcNgMessage,txParameterSheetA,txParameterSheetB,iDestroy';
@@ -154,11 +155,11 @@ $item_data{'update_time'} += 0;
 $item_data{'repeat_type'} += 0;
 
 if($item_type eq 'command'){
- $item_data{'wait'}         += 0;
- $item_data{'conft_end'}    += 0;
- $item_data{'command_type'} += 0;
- $item_data{'prompt'}       += 0;
- $item_data{'store'}        += 0;
+ $item_data{'wait'}           += 0;
+ $item_data{'conft_end'}      += 0;
+ $item_data{'command_type'}   += 0;
+ $item_data{'prompt_checker'} += 0;
+ $item_data{'store'}          += 0;
 }
 elsif($item_type eq 'action'){
  $item_data{'pipe_type'} += 0;
