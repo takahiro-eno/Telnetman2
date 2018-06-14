@@ -1003,16 +1003,20 @@ function command () {
                      "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>コマンド</span></td>" +
                      "<td class='left'><span class='telnetman_item_viewer_span2'>" + command + "</span></td>" +
-                     "</tr>" +
-                     "<tr>" +
+                     "</tr>";
+            if(dummy.length > 0){ 
+             html += "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>ダミー用</span><br><span class='telnetman_item_viewer_span1'>コマンド返り値</span></td>" +
                      "<td class='left'><span class='telnetman_item_viewer_span2'>" + dummy + "</span></td>" +
-                     "</tr>" +
-                     "<tr>" +
+                     "</tr>";
+            }
+            if(particularPrompt.length > 0){
+             html += "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>個別プロンプト</span></td>" +
                      "<td class='left'><span class='telnetman_item_viewer_span2'>" + particularPrompt + "</span></td>" +
-                     "</tr>" +
-                     "<tr>" +
+                     "</tr>";
+            }
+             html += "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>プロンプト多重確認</span></td>" +
                      "<td class='left'><span class='telnetman_item_viewer_span2'>" + promptCheckerText + "</span></td>" +
                      "</tr>" +

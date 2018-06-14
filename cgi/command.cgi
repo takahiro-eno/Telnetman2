@@ -325,6 +325,13 @@ sub check_parameter {
  unless(defined($particular_prompt)){
   $particular_prompt = '';
  }
+ else{
+  my $check_prompt = &Telnetman_common::check_prompt_reg($particular_prompt);
+  
+  if($check_prompt ne '1'){
+   return(0, '個別プロンプトで、' . $check_prompt, $command_id);
+  }
+ }
  
  unless(defined($prompt_checker) && (length($prompt_checker) > 0)){
   $prompt_checker = 1;
