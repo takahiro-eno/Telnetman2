@@ -534,7 +534,7 @@ sub check_pattern_12 {
   elsif(($item_repeat_type == 2) && ($skeleton =~ /^\$[0-9]+$/)){
    push(@message_list, &Telnetman_check_flowchart::make_message($item_type, $item_title, $sub_item, '{' . $skeleton . '}', '繰り返し実行型で{$1},{$2},{$3},... は使えません。'));
   }
-  elsif(($skeleton =~ /^\$/) && ($skeleton !~ /^\$[1-9][0-9]*$/) && ($skeleton ne '$*') && ($skeleton ne '$node') && ($skeleton ne '$user') && ($skeleton ne '$password') && ($skeleton ne '$enable_password') && ($skeleton ne '$promt') && ($skeleton ne '$B')){
+  elsif(($skeleton =~ /^\$/) && ($skeleton !~ /^\$[1-9][0-9]*$/) && ($skeleton ne '$*') && ($skeleton ne '$node') && ($skeleton ne '$user') && ($skeleton ne '$password') && ($skeleton ne '$enable_password') && ($skeleton ne '$prompt') && ($skeleton ne '$B')){
    push(@message_list, &Telnetman_check_flowchart::make_message($item_type, $item_title, $sub_item, '{' . $skeleton . '}', '$ で始まる変数は{$1},{$2},{$3},... {$*} {$node} {$user} {$password} {$enable_password} {$prompt} {$B} 以外使えません'));
   }
   else{
@@ -649,7 +649,7 @@ sub check_pattern_1234 {
   elsif(($item_repeat_type == 2) && ($skeleton =~ /^\$[0-9]+$/)){
    push(@message_list, &Telnetman_check_flowchart::make_message($item_type, $item_title, $sub_item, '{' . $skeleton . '}', '繰り返し実行型で{$1},{$2},{$3},... は使えません。'));
   }
-  elsif(($skeleton =~ /^\$/) && ($skeleton !~ /^\$[1-9][0-9]*$/) && ($skeleton ne '$*') && ($skeleton ne '$node') && ($skeleton ne '$user') && ($skeleton ne '$password') && ($skeleton ne '$enable_password') && ($skeleton ne '$promt') && ($skeleton ne '$B') && ($skeleton ne '$title') || ($skeleton ne '$command') || ($skeleton ne '$pattern') || ($skeleton ne '$condition') || ($skeleton ne '$n')){
+  elsif(($skeleton =~ /^\$/) && ($skeleton !~ /^\$[1-9][0-9]*$/) && ($skeleton ne '$*') && ($skeleton ne '$node') && ($skeleton ne '$user') && ($skeleton ne '$password') && ($skeleton ne '$enable_password') && ($skeleton ne '$prompt') && ($skeleton ne '$B') && ($skeleton ne '$title') || ($skeleton ne '$command') || ($skeleton ne '$pattern') || ($skeleton ne '$condition') || ($skeleton ne '$n')){
    push(@message_list, &Telnetman_check_flowchart::make_message($item_type, $item_title, $sub_item, '{' . $skeleton . '}', '$ で始まる変数は{$1},{$2},{$3},... {$*} {$node} {$user} {$password} {$enable_password} {$prompt} {$B} {$title} {$command} {$pattern} {$condition} {$n} 以外使えません'));
   }
   else{

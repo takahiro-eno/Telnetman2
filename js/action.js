@@ -1421,7 +1421,7 @@ function action () {
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>コメント</span></td>" +
                      "<td class='left'><span class='telnetman_item_viewer_span2'>" + comment + "</span></td>" +
                      "</tr>";
-         if(beginWord.length > 0){
+          if(beginWord.length > 0){
            html +=   "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>begin</span></td>" +
                      "<td class='left'><span class='telnetman_item_viewer_span2'>" + beginWord + "</span></td>" +
@@ -1439,15 +1439,17 @@ function action () {
                      "<td class='left'><span class='telnetman_item_viewer_span2'>" + endWord + "</span></td>" +
                      "</tr>";
           }
-          html +=    "<tr>" +
+           html +=   "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>抽出パターン</span></td>" +
                      "<td class='left'><span class='telnetman_item_viewer_span2'>" + pattern + "</span></td>" +
-                     "</tr>" +
-                     "<tr>" +
+                     "</tr>";
+          if(spanScript.length > 0){
+           html +=   "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>変換スクリプト</span></td>" +
                      "<td class='left'>" + spanScript + "</td>" +
-                     "</tr>" +
-                     "<tr>" +
+                     "</tr>";
+          }
+           html +=   "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'>" + htmlNot + "<span class='telnetman_item_viewer_span1'>分岐条件</span></td>" +
                      "<td class='left'><div class='telnetman_item_viewer_condition_list'>" + conditionListHtml + "</div></td>" +
                      "</tr>" +
@@ -1458,16 +1460,20 @@ function action () {
                      "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>NG&nbsp;メッセージ</span></td>" +
                      "<td class='left'><span class='telnetman_item_viewer_span2'>" + ngMessage + "</span></td>" +
-                     "</tr>" +
-                     "<tr>" +
+                     "</tr>";
+          if(parameterSheetAaaaHtml.length > 0){
+           html +=   "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>追加パラメーターシートA</span></td>" +
                      "<td class='left'><div class='telnetman_item_viewer_condition_list'>" + parameterSheetAaaaHtml + "</div></td>" +
-                     "</tr>" +
-                     "<tr>" +
+                     "</tr>";
+          }
+          if(parameterSheetBbbbHtml.length > 0){
+           html +=   "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>追加パラメーターシートB</span></td>" +
                      "<td class='left'><div class='telnetman_item_viewer_condition_list'>" + parameterSheetBbbbHtml + "</div></td>" +
-                     "</tr>" +
-                     "<tr>" +
+                     "</tr>";
+          }
+           html +=   "<tr>" +
                      "<td class='right telnetman_item_viewer_td1'><span class='telnetman_item_viewer_span1'>コマンド返り値を</span></td>" +
                      "<td class='left'><span class='telnetman_item_viewer_span2'>" + destroyHtml + "</span></td>" +
                      "</tr>" +
