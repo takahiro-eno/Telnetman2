@@ -863,11 +863,11 @@ function controleStorageL () {
  
  // 検索キーワード
  this.keyKeyword = function () {
-  return(this.prefix + "keyword");
+  return(this.prefix() + "keyword");
  };
  
  this.getKeyword = function () {
-  var keyword = storageS.getItem(this.keyKeyword());
+  var keyword = storageL.getItem(this.keyKeyword());
   
   if(keyword === null){
    keyword = "";
@@ -877,11 +877,11 @@ function controleStorageL () {
  };
  
  this.setKeyword = function (keyword) {
-  storageS.setItem(this.keyKeyword(), keyword);
+  storageL.setItem(this.keyKeyword(), keyword);
  };
  
  this.removeKeyword = function () {
-  storageS.removeItem(this.keyKeyword());
+  storageL.removeItem(this.keyKeyword());
  };
  
  
