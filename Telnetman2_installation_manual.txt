@@ -521,10 +521,13 @@ sudo vi /etc/cron.d/Telnetman2.cron
 */1 * * * * root perl /usr/local/Telnetman2/pl/telnet.pl -w 50
 30  6 * * * apache perl /usr/local/Telnetman2/pl/delete_session.pl
 #50  6 * * * root perl /usr/local/Telnetman2/pl/lock.pl
+#*/5 * * * * root perl  /usr/local/Telnetman2/pl/auto_authorize_user.pl
 ============================================================
 
 2ヶ月ログインの無いユーザーのアカウントをロックするなら、
-最終行のコメントアウトを外す。
+lock.pl のコメントアウトを外す。
+
+未承認ユーザーを自動承認したい場合はauto_authorize_user.pl のコメントアウトを外す。
 
 
 
