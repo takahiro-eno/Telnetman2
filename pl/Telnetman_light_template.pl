@@ -2526,6 +2526,7 @@ sub exec_command {
   my ($command_return, $matched_prompt) = $self -> command_none($configure_terminal);
 
   if(defined($command_return) && defined($matched_prompt)){
+   $self -> {'dummy'} = 0;
    my $ok_error = $self -> add_command_return($configure_terminal, $command_return, $matched_prompt);
 
    if($ok_error == -1){
@@ -2557,6 +2558,7 @@ sub exec_command {
   my ($command_return, $matched_prompt) = $self -> command_none($configure_end);
 
   if(defined($command_return) && defined($matched_prompt)){
+   $self -> {'dummy'} = 0;
    my $ok_error = $self -> add_command_return($configure_end, $command_return, $matched_prompt);
 
    if($ok_error == -1){
@@ -3775,7 +3777,8 @@ sub get_complete_command_list {
 sub insert_skeleton_values {
  my $self   = $_[0];
  my $string = $_[1];
- my $replaced_string = "";
+ my $replaced_string = '';
+ $self -> {'calculation_type'} = '';
 
  unless(defined($string) && (length($string) > 0)){
   return('');
