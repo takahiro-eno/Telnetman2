@@ -183,7 +183,7 @@ function telnetmanSession () {
              "<div class='session_header_link'><a href='index.html'>top</a></div>" +
              "<ul id='" + this.idUl + "'></ul>" +
              "<div class='session_create'>" +
-             "<span>タイトル</span><input type='text' size='50' name='" + this.idInput + "' id='" + this.idInput + "' value=''><button class='enable' id='" + this.idButton + "' onclick='objTelnetmanSession.create();'>新規作成</button>" +
+             "<span>タイトル</span><input type='text' size='50' spellcheck='false' autocomplete='off' name='" + this.idInput + "' id='" + this.idInput + "' value=''><button class='enable' id='" + this.idButton + "' onclick='objTelnetmanSession.create();'>新規作成</button>" +
              "</div>" +
              "</div>";
   

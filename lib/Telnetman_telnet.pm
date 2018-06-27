@@ -16,6 +16,7 @@
 #      2017/10/31 : Ver2 に向けて大幅更新。
 #      2018/05/16 : Begin, End 機能の追加。
 #      2018/06/11 : コンソールログインの場合、Escape character is '^]'. で止まるので対応。
+#      2018/06/11 : 個別プロンプト追加。
 
 use strict;
 use warnings;
@@ -128,6 +129,7 @@ sub new {
  #### command
  #### command_type
  #### dummy_return
+ #### particular_prompt
  #### prompt_checker
  #### store_command
  ### action
@@ -647,6 +649,24 @@ sub get_dummy_return {
  }
  
  return($dummy_return);
+}
+
+sub get_particular_prompt {
+ my $self = $_[0];
+ my ($item_type, $item_id) = $self -> get_item_type_id;
+ my $particular_prompt = '';
+ 
+ if(defined($item_type) && (length($item_type) > 0) && defined($item_id) && (length($item_id) > 0)){
+  $particular_prompt = $self -> {'item'} -> {'command'} -> {$item_id} -> {'particular_prompt'};
+ }
+ 
+ if(length($particular_prompt) > 0){
+  return($particular_prompt);
+ }
+ else{
+  my $prompt = $self -> get_prompt;
+  return($prompt);
+ }
 }
 
 sub get_prompt_checker {
@@ -1760,6 +1780,7 @@ sub exec_command {
   my ($command_return, $matched_prompt) = $self -> command_none($configure_terminal);
   
   if(defined($command_return) && defined($matched_prompt)){
+   $self -> {'dummy'} = 0;
    my $ok_error = $self -> add_command_return($configure_terminal, $command_return, $matched_prompt);
     
    if($ok_error == -1){
@@ -1791,6 +1812,7 @@ sub exec_command {
   my ($command_return, $matched_prompt) = $self -> command_none($configure_end);
   
   if(defined($command_return) && defined($matched_prompt)){
+   $self -> {'dummy'} = 0;
    my $ok_error = $self -> add_command_return($configure_end, $command_return, $matched_prompt);
     
    if($ok_error == -1){
@@ -1892,7 +1914,7 @@ sub command_cisco {
  my $matched_prompt = '';
  
  my $telnet = $self -> {'telnet'};
- my $prompt = $self -> get_prompt;
+ my $prompt = $self -> get_particular_prompt;
  
  my $flag_match = 0;
  my $count_space_20 = 0;
@@ -2031,7 +2053,7 @@ sub command_junos {
  my $matched_prompt = '';
  
  my $telnet = $self -> {'telnet'};
- my $prompt = $self -> get_prompt; 
+ my $prompt = $self -> get_particular_prompt; 
  
  my $between_prompt = '';
  my $ref_buffer = $telnet -> buffer;
@@ -2171,7 +2193,7 @@ sub command_none {
  my $matched_prompt = '';
  
  my $telnet = $self -> {'telnet'};
- my $prompt = $self -> get_prompt; 
+ my $prompt = $self -> get_particular_prompt; 
  
  my $flag_match = 0;
  
@@ -3010,7 +3032,8 @@ sub get_complete_command_list {
 sub insert_skeleton_values {
  my $self   = $_[0];
  my $string = $_[1];
- my $replaced_string = "";
+ my $replaced_string = '';
+ $self -> {'calculation_type'} = '';
  
  unless(defined($string) && (length($string) > 0)){
   return('');

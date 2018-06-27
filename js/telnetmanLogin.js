@@ -27,7 +27,7 @@ function telnetmanLogin () {
    "</tr>" +
    "<tr>" +
    "<td><span>user:</span></td>" +
-   "<td><input type='text' size='30' id='" + this.idUser + "' value=''></td>" +
+   "<td><input type='text' size='30' spellcheck='false' autocomplete='off' id='" + this.idUser + "' value=''></td>" +
    "</tr>" +
    "<tr>" +
    "<td><span>password:</span></td>" +
