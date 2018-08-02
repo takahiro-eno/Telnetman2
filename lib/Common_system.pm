@@ -12,7 +12,7 @@ sub DB_connect_parameter {
 
 # ユーザー登録画面の画像認証で使うフォントのパス。
 sub font_path {
- return('/usr/share/fonts/ipa/TrueType/ipagp.ttf');
+ return('/usr/share/fonts/ipa-pgothic/ipagp.ttf');
 }
 
 # システム配信メールで使う送信者メールアドレス。
@@ -150,11 +150,11 @@ sub file_admin_mail {
 }
 
 sub dir_conversion_script {
- return('/usr/local/Telnetman2/conversion_script');
+ return(&Common_system::dir_var() . '/conversion_script');
 }
 
 sub dir_tmp {
- return('/usr/local/Telnetman2/tmp');
+ return(&Common_system::dir_var() . '/tmp');
 }
 
 sub name_telnet_zip_log {

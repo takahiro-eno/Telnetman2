@@ -1,0 +1,11 @@
+/var/Telnetman2/log/sql_log {
+    ifempty
+    dateformat .%Y%m%d
+    missingok
+    compress
+    monthly
+    rotate 12
+    postrotate
+        /bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true
+    endscript
+}
