@@ -78,20 +78,7 @@ sed -i -e '/ErrorDocument 403/d' /etc/httpd/conf.d/welcome.conf
 
 # SSL
 openssl genrsa 2048 > server.key
-#-------------------------------------------------------------------------------
-openssl req -new -key server.key <<EOF > server.csr
-JP
-
-
-
-
-Telneman2
-
-
-
-EOF
-
-#-------------------------------------------------------------------------------
+echo -e "JP\n\n\n\n\nTelnetman2\n\n\n" | openssl req -new -key server.key > server.csr
 openssl x509 -days 3650 -req -signkey server.key < server.csr > server.crt
 mv server.crt /etc/httpd/conf/ssl.crt
 mv server.key /etc/httpd/conf/ssl.key
@@ -132,15 +119,7 @@ chown -R apache:apache /var/Telnetman2/log
 
 
 # Add Administrator
-#-------------------------------------------------------------------------------
-perl /usr/local/Telnetman2/pl/create_administrator.pl <<EOF
-admin
-tcpport23
-tcpport23
-admin@telnetman.com
-EOF
-
-#-------------------------------------------------------------------------------
+echo -e "admin\ntcpport23\ntcpport23\nadmin@telnetman.com" | perl /usr/local/Telnetman2/pl/create_administrator.pl
 
 
 # Cron
