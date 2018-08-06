@@ -101,7 +101,6 @@ mkdir /var/www/html/Telnetman2/img
 mkdir /var/www/html/Telnetman2/css
 mkdir /var/www/html/Telnetman2/js
 mkdir /var/www/cgi-bin/Telnetman2
-touch /var/Telnetman2/log/sql_log
 mv ./Telnetman2/html/* /var/www/html/Telnetman2/
 mv ./Telnetman2/js/*   /var/www/html/Telnetman2/js/
 mv ./Telnetman2/css/*  /var/www/html/Telnetman2/css/
@@ -133,7 +132,6 @@ mv ./Telnetman2/install/Telnetman2.logrotate.txt /etc/logrotate.d/Telnetman2
 # Firewalld
 firewall-cmd --zone=public --add-service=https --permanent
 firewall-cmd --zone=public --remove-service=dhcpv6-client --permanent
-#firewall-cmd --reload
 
 
 # Disable SELinux
@@ -143,5 +141,3 @@ sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
 systemctl enable mariadb
 systemctl enable httpd
 rm -rf Telnetman2
-
-#reboot

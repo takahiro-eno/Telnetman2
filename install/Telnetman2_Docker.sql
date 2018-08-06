@@ -1,27 +1,7 @@
-DROP DATABASE IF EXISTS Telnetman2;
-
-create database Telnetman2;
+create database if not exists Telnetman2;
 use Telnetman2;
 
-DROP TABLE IF EXISTS T_User;
-DROP TABLE IF EXISTS T_Group;
-DROP TABLE IF EXISTS T_UserGroup;
-DROP TABLE IF EXISTS T_GroupUser;
-DROP TABLE IF EXISTS T_LoginList;
-DROP TABLE IF EXISTS T_SessionList;
-DROP TABLE IF EXISTS T_LockedAccount;
-DROP TABLE IF EXISTS T_Script;
-DROP TABLE IF EXISTS T_Command;
-DROP TABLE IF EXISTS T_Action;
-DROP TABLE IF EXISTS T_Ping;
-DROP TABLE IF EXISTS T_Search;
-DROP TABLE IF EXISTS T_Queue;
-DROP TABLE IF EXISTS T_ChildProcess;
-DROP TABLE IF EXISTS T_SessionStatus;
-DROP TABLE IF EXISTS T_NodeStatus;
-DROP TABLE IF EXISTS T_Archive;
-
-create table T_User(
+create table if not exists T_User(
  vcUserId varchar(64) not null primary key,
  vcUserPassword varchar(64),
  vcUserName varchar(64),
@@ -32,45 +12,60 @@ create table T_User(
  iUserLastActivationTime int unsigned
 );
 
-create table T_Group (
+create table if not exists T_Group (
  vcGroupId varchar(64) not null primary key,
  vcGroupName varchar(64),
  iCreateTime int unsigned,
  iUpdateTime int unsigned
 );
 
-create table T_UserGroup (
+create table if not exists T_UserGroup (
  vcUserId varchar(64) not null,
  vcGroupId varchar(64) not null
 );
-alter table T_UserGroup add index IDX_UserGroup (vcUserId); 
 
-create table T_GroupUser (
+set @x := (select count(*) from information_schema.statistics where table_name = 'T_UserGroup' and index_name = 'IDX_UserGroup' and table_schema = database());
+set @sql := if( @x > 0, 'select ''Index exists.''', 'Alter Table T_UserGroup ADD Index IDX_UserGroup (vcUserId);');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+
+
+create table if not exists T_GroupUser (
  vcGroupId varchar(64) not null,
  vcUserId varchar(64) not null
 );
-alter table T_GroupUser add index IDX_GroupUser (vcGroupId); 
 
-create table T_LoginList(
+set @x := (select count(*) from information_schema.statistics where table_name = 'T_GroupUser' and index_name = 'IDX_GroupUser' and table_schema = database());
+set @sql := if( @x > 0, 'select ''Index exists.''', 'Alter Table T_GroupUser ADD Index IDX_GroupUser (vcGroupId);');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+
+
+create table if not exists T_LoginList(
  vcLoginId varchar(128) not null primary key,
  vcUserId varchar(64),
  iLastAccessTime int unsigned
 );
 
-create table T_SessionList(
+create table if not exists T_SessionList(
  vcUserId varchar(64) not null,
  vcSessionId varchar(128),
  iCreateTime int unsigned,
  iLastAccessTime int unsigned
 );
-alter table T_SessionList add index IDX_SessionList (vcUserId);
 
-create table T_LockedAccount(
+set @x := (select count(*) from information_schema.statistics where table_name = 'T_SessionList' and index_name = 'IDX_SessionList' and table_schema = database());
+set @sql := if( @x > 0, 'select ''Index exists.''', 'Alter Table T_SessionList ADD Index IDX_SessionList (vcUserId);');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+
+
+create table if not exists T_LockedAccount(
  vcLockingId varchar(128) not null primary key,
  vcUserId varchar(64)
 );
 
-create table T_Script(
+create table if not exists T_Script(
  vcScriptId varchar(128) not null primary key,
  iCreateTime int unsigned,
  iUpdateTime int unsigned,
@@ -78,7 +73,7 @@ create table T_Script(
  vcChanger varchar(64)
 );
 
-create table T_Command(
+create table if not exists T_Command(
  vcCommandId varchar(128) not null primary key,
  vcKeyword varchar(128),
  iCreateTime int unsigned,
@@ -98,7 +93,7 @@ create table T_Command(
  iStore tinyint unsigned
 );
 
-create table T_Action (
+create table if not exists T_Action (
  vcActionId varchar(128) not null primary key,
  vcKeyword varchar(128),
  iCreateTime int unsigned,
@@ -124,7 +119,7 @@ create table T_Action (
  iDestroy tinyint unsigned
 );
 
-create table T_Ping (
+create table if not exists T_Ping (
  vcPingId varchar(128) not null primary key,
  vcKeyword varchar(128),
  iCreateTime int unsigned,
@@ -141,20 +136,25 @@ create table T_Ping (
  vcNgMessage varchar(512)
 );
 
-create table T_Search (
+create table if not exists T_Search (
  vcKeyword varchar(128) not null,
  vcItemType varchar(32) not null,
  vcItemId varchar(128) not null,
  vcTitle varchar(128) not null
 );
-alter table T_Search add index IDX_Search (vcKeyword);
 
-create table T_Queue(
+set @x := (select count(*) from information_schema.statistics where table_name = 'T_Search' and index_name = 'IDX_Search' and table_schema = database());
+set @sql := if( @x > 0, 'select ''Index exists.''', 'Alter Table T_Search ADD Index IDX_Search (vcKeyword);');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+
+
+create table if not exists T_Queue(
  vcSessionId varchar(128) not null primary key,
  iQueueIndex int unsigned
 );
 
-create table T_ChildProcess(
+create table if not exists T_ChildProcess(
  iChildProcessIndex int unsigned not null primary key auto_increment,
  iChildProcessStatus tinyint unsigned,
  iCountOfNode int unsigned,
@@ -162,9 +162,13 @@ create table T_ChildProcess(
  iStartTime int unsigned
 );
 
-insert into T_ChildProcess (iChildProcessStatus,iCountOfNode,iExpectedTime,iStartTime) values (0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0);
+set @x := (select count(*) from T_ChildProcess);
+set @sql := if( @x > 0, 'select count(*) from T_ChildProcess', 'insert into T_ChildProcess (iChildProcessStatus,iCountOfNode,iExpectedTime,iStartTime) values (0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0)');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
 
-create table T_SessionStatus(
+
+create table if not exists T_SessionStatus(
  vcSessionId varchar(128) not null primary key,
  iCreateTime int unsigned,
  iUpdateTime int unsigned,
@@ -176,7 +180,7 @@ create table T_SessionStatus(
  iTotalNumber int unsigned
 );
 
-create table T_NodeStatus(
+create table if not exists T_NodeStatus(
  vcSessionId varchar(128) not null,
  iCreateTime int unsigned,
  iUpdateTime int unsigned,
@@ -184,13 +188,22 @@ create table T_NodeStatus(
  iNodeIndex int unsigned,
  vcIpAddress varchar(64)
 );
-alter table T_NodeStatus add index IDX_NodeStatus (vcSessionId,iNodeStatus);
 
-create table T_Archive(
+set @x := (select count(*) from information_schema.statistics where table_name = 'T_NodeStatus' and index_name = 'IDX_NodeStatus' and table_schema = database());
+set @sql := if( @x > 0, 'select ''Index exists.''', 'Alter Table T_NodeStatus ADD Index IDX_NodeStatus (vcSessionId,iNodeStatus);');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+
+
+create table if not exists T_Archive(
  iYyyyMmDd int unsigned not null,
  vcUserId varchar(64) not null,
  vcSessionId varchar(128),
  vcTitle varchar(64),
  iPushedTime int unsigned
 );
-alter table T_Archive add index IDX_Archive (iYyyyMmDd, vcUserId);
+
+set @x := (select count(*) from information_schema.statistics where table_name = 'T_Archive' and index_name = 'IDX_Archive' and table_schema = database());
+set @sql := if( @x > 0, 'select ''Index exists.''', 'Alter Table T_Archive ADD Index IDX_Archive (iYyyyMmDd, vcUserId);');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;

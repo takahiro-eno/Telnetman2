@@ -67,10 +67,13 @@ RUN mv ./Telnetman2/install/start.sh /sbin/start.sh && \
 
 
 # MariaDB
-RUN sed -i -e 's/\[mysqld\]/\[mysqld\]\ncharacter-set-server = utf8\nskip-character-set-client-handshake\nmax_connect_errors=999999999\n\n\[client\]\ndefault-character-set=utf8/' /etc/my.cnf.d/server.cnf
-RUN bash -c "/usr/bin/mysqld_safe --skip-grant-tables &" && \
-    sleep 5 && \
-    mysql -u root < ./Telnetman2/install/Telnetman2_Docker.sql
+RUN sed -i -e 's/\[mysqld\]/\[mysqld\]\ncharacter-set-server = utf8\nskip-character-set-client-handshake\nmax_connect_errors=999999999\n\n\[client\]\ndefault-character-set=utf8/' /etc/my.cnf.d/server.cnf && \
+    mkdir /var/lib/mysql/Telnetman2 && \
+    chmod 700 /var/lib/mysql/Telnetman2 && \
+    chown mysql:mysql /var/lib/mysql/Telnetman2 && \
+    mv ./Telnetman2/install/Telnetman2_Docker.sql /root/Telnetman2_Docker.sql
+VOLUME /var/lib/mysql/Telnetman2
+
 
 
 # Apache
@@ -78,7 +81,8 @@ RUN sed -i -e 's/Options Indexes FollowSymLinks/Options MultiViews/' /etc/httpd/
     sed -i -e 's/Options None/Options ExecCGI/' /etc/httpd/conf/httpd.conf && \
     sed -i -e 's/#AddHandler cgi-script \.cgi/AddHandler cgi-script \.cgi/' /etc/httpd/conf/httpd.conf && \
     sed -i -e 's/DirectoryIndex index\.html/DirectoryIndex index.html index\.cgi/' /etc/httpd/conf/httpd.conf && \
-    sed -i -e '/ErrorDocument 403/d' /etc/httpd/conf.d/welcome.conf
+    sed -i -e '/ErrorDocument 403/s/^/#/' /etc/httpd/conf.d/welcome.conf && \
+    sed -i -e 's/443/8443/' /etc/httpd/conf.d/ssl.conf
 
 
 # SSL
@@ -106,7 +110,6 @@ RUN mkdir /usr/local/Telnetman2 && \
     mkdir /var/www/html/Telnetman2/css && \
     mkdir /var/www/html/Telnetman2/js && \
     mkdir /var/www/cgi-bin/Telnetman2 && \
-    touch /var/Telnetman2/log/sql_log && \
     mv ./Telnetman2/html/* /var/www/html/Telnetman2/ && \
     mv ./Telnetman2/js/*   /var/www/html/Telnetman2/js/ && \
     mv ./Telnetman2/css/*  /var/www/html/Telnetman2/css/ && \
@@ -121,10 +124,9 @@ RUN mkdir /usr/local/Telnetman2 && \
     chown -R apache:apache /var/Telnetman2/session && \
     chown -R apache:apache /var/Telnetman2/archive && \
     chown -R apache:apache /var/Telnetman2/log
-
-
-# Add Administrator
-RUN echo -e "admin\ntcpport23\ntcpport23\nadmin@telnetman.com" | perl /usr/local/Telnetman2/pl/create_administrator.pl
+VOLUME /var/Telnetman2/conversion_script
+VOLUME /var/Telnetman2/session
+VOLUME /var/Telnetman2/auth
 
 
 # Update Source Code
@@ -141,6 +143,6 @@ RUN mv ./Telnetman2/install/Telnetman2.logrotate.txt /etc/logrotate.d/Telnetman2
 
 RUN rm -rf Telnetman2
 
-EXPOSE 443
+EXPOSE 8443
 
 CMD ["/sbin/start.sh"]
