@@ -57,23 +57,18 @@ RUN \cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 RUN sed -i -e '/pam_loginuid.so/s/^/#/' /etc/pam.d/crond
 
 
-# Download SourceCode
-RUN git clone https://github.com/takahiro-eno/Telnetman2.git
-
-
 # Copy startup script
-RUN mv ./Telnetman2/install/start.sh /sbin/start.sh && \
-    chmod 744 /sbin/start.sh
+ADD ./install/start.sh /sbin/start.sh
+RUN chmod 744 /sbin/start.sh
 
 
 # MariaDB
 RUN sed -i -e 's/\[mysqld\]/\[mysqld\]\ncharacter-set-server = utf8\nskip-character-set-client-handshake\nmax_connect_errors=999999999\n\n\[client\]\ndefault-character-set=utf8/' /etc/my.cnf.d/server.cnf && \
     mkdir /var/lib/mysql/Telnetman2 && \
     chmod 700 /var/lib/mysql/Telnetman2 && \
-    chown mysql:mysql /var/lib/mysql/Telnetman2 && \
-    mv ./Telnetman2/install/Telnetman2_Docker.sql /root/Telnetman2_Docker.sql
+    chown mysql:mysql /var/lib/mysql/Telnetman2
+ADD ./install/Telnetman2_Docker.sql /root/Telnetman2_Docker.sql
 VOLUME /var/lib/mysql/Telnetman2
-
 
 
 # Apache
@@ -107,17 +102,22 @@ RUN mkdir /usr/local/Telnetman2 && \
     mkdir /var/Telnetman2/tmp && \
     mkdir /var/www/html/Telnetman2 && \
     mkdir /var/www/html/Telnetman2/img && \
+    mkdir /var/www/html/Telnetman2/img/help && \
+    mkdir /var/www/html/Telnetman2/img/training && \
     mkdir /var/www/html/Telnetman2/css && \
     mkdir /var/www/html/Telnetman2/js && \
-    mkdir /var/www/cgi-bin/Telnetman2 && \
-    mv ./Telnetman2/html/* /var/www/html/Telnetman2/ && \
-    mv ./Telnetman2/js/*   /var/www/html/Telnetman2/js/ && \
-    mv ./Telnetman2/css/*  /var/www/html/Telnetman2/css/ && \
-    mv ./Telnetman2/img/*  /var/www/html/Telnetman2/img/ && \
-    mv ./Telnetman2/cgi/*  /var/www/cgi-bin/Telnetman2/ && \
-    mv ./Telnetman2/lib/*  /usr/local/Telnetman2/lib/ && \
-    mv ./Telnetman2/pl/*   /usr/local/Telnetman2/pl/ && \
-    chmod 755 /var/www/cgi-bin/Telnetman2/* && \
+    mkdir /var/www/cgi-bin/Telnetman2
+ADD ./html/*         /var/www/html/Telnetman2/
+ADD ./js/*           /var/www/html/Telnetman2/js/
+ADD ./css/*          /var/www/html/Telnetman2/css/
+ADD ./img/*png       /var/www/html/Telnetman2/img/
+ADD ./img/*ico       /var/www/html/Telnetman2/img/
+ADD ./img/help/*     /var/www/html/Telnetman2/img/help/
+ADD ./img/training/* /var/www/html/Telnetman2/img/training/
+ADD ./cgi/*          /var/www/cgi-bin/Telnetman2/
+ADD ./lib/*          /usr/local/Telnetman2/lib/
+ADD ./pl/*           /usr/local/Telnetman2/pl/
+RUN chmod 755 /var/www/cgi-bin/Telnetman2/* && \
     chown -R apache:apache /var/Telnetman2/conversion_script && \
     chown -R apache:apache /var/Telnetman2/tmp && \
     chown -R apache:apache /var/Telnetman2/captcha && \
@@ -134,15 +134,14 @@ RUN sed -i -e "s/'telnetman', 'tcpport23'/'root', ''/" /usr/local/Telnetman2/lib
 
 
 # Cron
-RUN cp ./Telnetman2/install/Telnetman2.cron /etc/cron.d/
+ADD ./install/Telnetman2.cron /etc/cron.d/Telnetman2.cron
 
 
 # Logrotate 
-RUN mv ./Telnetman2/install/Telnetman2.logrotate.txt /etc/logrotate.d/Telnetman2
+ADD ./install/Telnetman2.logrotate.txt /etc/logrotate.d/Telnetman2
 
-
-RUN rm -rf Telnetman2
 
 EXPOSE 8443
+
 
 CMD ["/sbin/start.sh"]

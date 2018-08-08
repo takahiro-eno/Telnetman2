@@ -22,7 +22,6 @@ zip \
 unzip \
 gcc \
 epel-release \
-git \
 mariadb-server \
 httpd \
 mod_ssl \
@@ -58,22 +57,18 @@ cpan -f IO::Pty
 cpan -f Net::Ping::External
 
 
-# Download SourceCode
-git clone https://github.com/takahiro-eno/Telnetman2.git
-
-
 # MariaDB
 sed -i -e 's/\[mysqld\]/\[mysqld\]\ncharacter-set-server = utf8\nskip-character-set-client-handshake\nmax_connect_errors=999999999\n\n\[client\]\ndefault-character-set=utf8/' /etc/my.cnf.d/server.cnf
 systemctl start mariadb
-mysql -u root < ./Telnetman2/install/Telnetman2.sql
+mysql -u root < ./install/Telnetman2.sql
 
 
 # Apache
 sed -i -e 's/Options Indexes FollowSymLinks/Options MultiViews/' /etc/httpd/conf/httpd.conf
 sed -i -e 's/Options None/Options ExecCGI/' /etc/httpd/conf/httpd.conf
 sed -i -e 's/#AddHandler cgi-script \.cgi/AddHandler cgi-script \.cgi/' /etc/httpd/conf/httpd.conf
-sed -i -e 's/DirectoryIndex index\.html/DirectoryIndex index.html index\.cgi/' /etc/httpd/conf/httpd.conf
-sed -i -e '/ErrorDocument 403/d' /etc/httpd/conf.d/welcome.conf
+sed -i -e 's/DirectoryIndex index\.html/DirectoryIndex index\.html index\.cgi/' /etc/httpd/conf/httpd.conf
+sed -i -e '/ErrorDocument 403/s/^/#/' /etc/httpd/conf.d/welcome.conf
 
 
 # SSL
@@ -101,13 +96,13 @@ mkdir /var/www/html/Telnetman2/img
 mkdir /var/www/html/Telnetman2/css
 mkdir /var/www/html/Telnetman2/js
 mkdir /var/www/cgi-bin/Telnetman2
-mv ./Telnetman2/html/* /var/www/html/Telnetman2/
-mv ./Telnetman2/js/*   /var/www/html/Telnetman2/js/
-mv ./Telnetman2/css/*  /var/www/html/Telnetman2/css/
-mv ./Telnetman2/img/*  /var/www/html/Telnetman2/img/
-mv ./Telnetman2/cgi/*  /var/www/cgi-bin/Telnetman2/
-mv ./Telnetman2/lib/*  /usr/local/Telnetman2/lib/
-mv ./Telnetman2/pl/*   /usr/local/Telnetman2/pl/
+mv ./html/* /var/www/html/Telnetman2/
+mv ./js/*   /var/www/html/Telnetman2/js/
+mv ./css/*  /var/www/html/Telnetman2/css/
+mv ./img/*  /var/www/html/Telnetman2/img/
+mv ./cgi/*  /var/www/cgi-bin/Telnetman2/
+mv ./lib/*  /usr/local/Telnetman2/lib/
+mv ./pl/*   /usr/local/Telnetman2/pl/
 chmod 755 /var/www/cgi-bin/Telnetman2/*
 chown -R apache:apache /var/Telnetman2/conversion_script
 chown -R apache:apache /var/Telnetman2/tmp
@@ -122,11 +117,11 @@ echo -e "admin\ntcpport23\ntcpport23\nadmin@telnetman.com" | perl /usr/local/Tel
 
 
 # Cron
-mv ./Telnetman2/install/Telnetman2.cron /etc/cron.d/
+mv ./install/Telnetman2.cron /etc/cron.d/
 
 
 # Logrotate 
-mv ./Telnetman2/install/Telnetman2.logrotate.txt /etc/logrotate.d/Telnetman2
+mv ./install/Telnetman2.logrotate.txt /etc/logrotate.d/Telnetman2
 
 
 # Firewalld
@@ -140,4 +135,3 @@ sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
 
 systemctl enable mariadb
 systemctl enable httpd
-rm -rf Telnetman2
