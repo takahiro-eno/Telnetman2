@@ -118,6 +118,8 @@ echo -e "admin\ntcpport23\ntcpport23\nadmin@telnetman.com" | perl /usr/local/Tel
 
 # Cron
 mv ./install/Telnetman2.cron /etc/cron.d/
+chmod 644 /etc/cron.d/Telnetman2.cron
+chown root:root /etc/cron.d/Telnetman2.cron
 
 
 # Logrotate 

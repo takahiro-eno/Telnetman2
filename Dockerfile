@@ -135,6 +135,7 @@ RUN sed -i -e "s/'telnetman', 'tcpport23'/'root', ''/" /usr/local/Telnetman2/lib
 
 # Cron
 ADD ./install/Telnetman2.cron /etc/cron.d/Telnetman2.cron
+RUN chmod 644 /etc/cron.d/Telnetman2.cron
 
 
 # Logrotate 
