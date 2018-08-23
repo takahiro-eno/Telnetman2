@@ -13,7 +13,6 @@ This is a tool to create telnet or ssh tools.
 ## Install
 ### VM or Bare Metal
 1. install minimal CentOS7
-1. `sudo yum -y install git`
 1. `git clone https://github.com/takahiro-eno/Telnetman2.git`
 1. `cd Telnetman2`
 1. `sudo sh Telnetman2_install.sh`
@@ -28,13 +27,10 @@ If you are going to put TelnetmanWF too, follow the installation manual of Telne
 https://github.com/takahiro-eno/TelnetmanWF  
 This installation manual is for those who use Telnetman2 only.
 
-1. `sudo yum -y install git`
 1. `git clone https://github.com/takahiro-eno/Telnetman2.git`
 1. `cd Telnetman2`
 1. `sudo docker build -t telnetman2/telnetman .`
 1. `sudo docker run -i -p 8443:8443 -d telnetman2/telnetman`
-1. `cd ..`
-1. `rm -rf Telnetman2`
 
 https&#58;//host address:8443/Telnetman2/
 
