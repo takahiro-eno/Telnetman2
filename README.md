@@ -24,6 +24,10 @@ This is a tool to create telnet or ssh tools.
 https&#58;//server address/Telnetman2/
 
 ### Docker Container
+If you are going to put TelnetmanWF too, follow the installation manual of TelnetmanWF's page.  
+https://github.com/takahiro-eno/TelnetmanWF  
+This installation manual is for those who use Telnetman2 only.
+
 1. `sudo yum -y install git`
 1. `git clone https://github.com/takahiro-eno/Telnetman2.git`
 1. `cd Telnetman2`
@@ -35,8 +39,7 @@ https&#58;//server address/Telnetman2/
 https&#58;//host address:8443/Telnetman2/
 
 ---
-The administrator account is created as admin.  
-Admin's password is tcpport23.  
-If you want to change administrator account, you erase the corresponding line of the files which exists in /var/Telnetman2/auth at first.  
-And execute the following command.  
-`sudo perl /usr/local/Telnetman2/pl/create_administrator.pl`
+The default administrator account is admin and the password is tcpport23.  
+You can create new administrator account with the following command.  
+`sudo perl /usr/local/Telnetman2/pl/create_administrator.pl`  
+Then, the default administrator account is invalidated.

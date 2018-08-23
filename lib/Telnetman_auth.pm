@@ -6,6 +6,7 @@
 # 
 # 作成日 : 2014/06/06
 # 作成者 : 江野高広
+# 更新   : 2018/08/23 一度も管理者アカウントが作成されていなければ、初期管理者アカウントとしてadmin/tcpport23 のアクセスを許可する。
 
 use strict;
 use warnings;
@@ -260,7 +261,12 @@ sub check_administrator {
  my $file_auth = &Common_system::file_auth();
  
  unless(-f $file_auth){
-  return(0);
+  if(($admin_id eq 'admin') && ($admin_password eq 'tcpport23')){
+   return(1);
+  }
+  else{
+   return(0);
+  }
  }
  
  my $registerd_password = '';
@@ -336,6 +342,10 @@ sub administrator_mail_address {
  my $id = $_[0];
  
  my $file_admin_mail = &Common_system::file_admin_mail();
+ 
+ unless(-f $file_admin_mail){
+  return('');
+ }
  
  if(defined($id) && (length($id) > 0)){
   my $mail_address = '';

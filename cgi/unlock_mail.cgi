@@ -14,6 +14,7 @@ use Telnetman_common;
 use Common_system;
 use Common_sub;
 use Access2DB;
+use Telnetman_auth;
 
 
 
@@ -100,17 +101,19 @@ my $unse_name         = $ref_User -> [0];
 my $user_mail_address = $ref_User -> [1];
 my ($scheme_authority) = $url =~ /^https*:\/\/.+?\//g;
 $url = $scheme_authority . &Common_system::dir_cgi() . '/unlock.cgi?id=' . $locking_id;
-my $from = &Common_system::mail_address();
-my @to = ($user_mail_address);
-my @cc = ();
-my $subject = '【Telnetman】アカウントロック解除';
-my $message = 'システム配信メール' . "\n\n" .
-              $unse_name . 'さん' . "\n\n" .
-              '以下のアドレスにアクセスするとロック解除されます。' . "\n" .
-              $url . "\n";
 
-&Common_sub::send_mail($from, \@to, \@cc, $subject, $message);
+my @administrator_mail_address_list = &Telnetman_auth::administrator_mail_address();
+if(scalar(@administrator_mail_address_list) > 0){
+ my $from = $administrator_mail_address_list[0];
+ my @to = ($user_mail_address);
+ my $subject = '【Telnetman】アカウントロック解除';
+ my $message = 'システム配信メール' . "\n\n" .
+               $unse_name . 'さん' . "\n\n" .
+               '以下のアドレスにアクセスするとロック解除されます。' . "\n" .
+               $url . "\n";
 
+ &Common_sub::send_mail($from, \@to, \@administrator_mail_address_list, $subject, $message);
+}
 
 
 print "Content-type: text/plain; charset=UTF-8\n\n";

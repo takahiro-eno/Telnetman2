@@ -78,12 +78,15 @@ if($count == 1){
  $access2db -> set_select($select_column, $table, $condition);
  my $ref_User = $access2db -> select_cols;
  
- my ($user_name, $user_mail_address) = @$ref_User;
- my $from = &Common_system::mail_address();
- my $subject = '【Telnetman】ユーザー登録完了通知';
- my $body = $user_name . ' さん' . "\n\n" . 'ユーザー登録が承認されました。' . "\n" . 'ログインできるか確認して下さい。' . "\n\n" . $url . "\n\n" . '(システム配信メール)';
+ my @administrator_mail_address_list = &Telnetman_auth::administrator_mail_address();
+ if(scalar(@administrator_mail_address_list) > 0){
+  my $from = $administrator_mail_address_list[0];
+  my ($user_name, $user_mail_address) = @$ref_User;
+  my $subject = '【Telnetman】ユーザー登録完了通知';
+  my $body = $user_name . ' さん' . "\n\n" . 'ユーザー登録が承認されました。' . "\n" . 'ログインできるか確認して下さい。' . "\n\n" . $url . "\n\n" . '(システム配信メール)';
   
- #&Common_sub::send_mail($from, $user_mail_address, undef, $subject, $body);
+  #&Common_sub::send_mail($from, $user_mail_address, \@administrator_mail_address_list, $subject, $body);
+ }
 }
 else{
  $result = -1;

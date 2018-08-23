@@ -8,8 +8,5 @@
 /bin/sleep 5
 /bin/mysql -u root < /root/Telnetman2_Docker.sql
 
-# Add Administrator
-/bin/echo -e "admin\ntcpport23\ntcpport23\nadmin@telnetman.com" | /usr/bin/perl /usr/local/Telnetman2/pl/create_administrator.pl
-
 # Start Apache
 /usr/sbin/httpd -D FOREGROUND

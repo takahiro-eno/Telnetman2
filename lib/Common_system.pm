@@ -15,11 +15,6 @@ sub font_path {
  return('/usr/share/fonts/ipa-pgothic/ipagp.ttf');
 }
 
-# システム配信メールで使う送信者メールアドレス。
-sub mail_address {
- return('takahiro.eno@g.softbank.co.jp');
-}
-
 # ドキュメントルートの絶対パス。
 sub document_root {
  return('/var/www/html');

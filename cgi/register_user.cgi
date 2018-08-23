@@ -201,13 +201,15 @@ if($count == 0){
   my $dir_html = &Common_system::dir_html();
   $dir_html = &Common_sub::escape_reg($dir_html);
   $url =~ s/$dir_html\/.+/$dir_html\/authorize_user\.html/;
-   
-  my $from = &Common_system::mail_address();
-  my @administrator_mail_address_list = &Telnetman_auth::administrator_mail_address();
-  my $subject = '【Telnetman】ユーザー登録通知';
-  my $body = 'Telnetman 管理者各位' . "\n\n" . 'ユーザー登録がありました。'. "\n" . '問題無ければ承認して下さい。' . "\n\n" . 'name : ' . $user_name . "\n" . 'id : ' . $user_id . "\n" . 'mail : ' . $user_mail_address . "\n\n" . $url . "\n\n" . '(システム配信メール)';
   
-  #&Common_sub::send_mail($from, \@administrator_mail_address_list, undef, $subject, $body);
+  my @administrator_mail_address_list = &Telnetman_auth::administrator_mail_address();
+  if(scalar(@administrator_mail_address_list) > 0){
+   my $from = $administrator_mail_address_list[0];
+   my $subject = '【Telnetman】ユーザー登録通知';
+   my $body = 'Telnetman 管理者各位' . "\n\n" . 'ユーザー登録がありました。'. "\n" . '問題無ければ承認して下さい。' . "\n\n" . 'name : ' . $user_name . "\n" . 'id : ' . $user_id . "\n" . 'mail : ' . $user_mail_address . "\n\n" . $url . "\n\n" . '(システム配信メール)';
+   
+   #&Common_sub::send_mail($from, \@administrator_mail_address_list, \@administrator_mail_address_list, $subject, $body);
+  }
  }
  else{
   $result_code = 0;

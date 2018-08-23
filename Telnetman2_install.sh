@@ -4,13 +4,6 @@
 # CentOS 7
 #
 
-# This installer creats an administrator account admin.
-# Admin's password is tcpport23.
-# If you want to change administrator account, you erase the corresponding line of the files which exists in /var/Telnetman2/auth at first.
-# And try the following command.
-# perl /usr/local/Telnetman2/pl/create_administrator.pl
-
-
 yum -y update
 
 yum -y install telnet \
@@ -110,10 +103,6 @@ chown -R apache:apache /var/Telnetman2/captcha
 chown -R apache:apache /var/Telnetman2/session
 chown -R apache:apache /var/Telnetman2/archive
 chown -R apache:apache /var/Telnetman2/log
-
-
-# Add Administrator
-echo -e "admin\ntcpport23\ntcpport23\nadmin@telnetman.com" | perl /usr/local/Telnetman2/pl/create_administrator.pl
 
 
 # Cron
