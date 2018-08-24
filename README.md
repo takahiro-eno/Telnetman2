@@ -25,7 +25,7 @@ https&#58;//server address/Telnetman2/
 ### Docker Container
 If you are going to put TelnetmanWF too, follow the installation manual of TelnetmanWF's page.  
 https://github.com/takahiro-eno/TelnetmanWF  
-This installation manual is for those who use Telnetman2 only.
+This installation manual is available for those who use Telnetman2 only.
 
 1. `git clone https://github.com/takahiro-eno/Telnetman2.git`
 1. `cd Telnetman2`
