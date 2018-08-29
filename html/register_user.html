@@ -72,7 +72,7 @@ div#message_zone {
 <script type='text/javascript' charset='UTF-8' src='js/securityImage.js'></script>
 <script type='text/javascript' charset='UTF-8' src='js/controleStorage.js'></script>
 <script type='text/javascript' charset='UTF-8' src='js/layoutFunctions.js'></script>
-<title>Telnetman&nbsp;ユーザー登録</title>
+<title>Telnetman2</title>
 </head>
 <body onload="objSecurityImage.setId('securitu_image_area', 'input_security_code'); objSecurityImage.getSecurityImage(); objLayoutFunctions.setUpdateSessionStatus(); objRegisterUser.getGroupList();">
 
@@ -98,10 +98,10 @@ div#message_zone {
 <section>
 <div id='user_info_area'>
 <table>
-<tr><td><span>ユーザーID</span></td><td><input type='text' name='user_id' id='user_id' value='' size='24' spellcheck='false' onkeyup="objRegisterUser.check(this.id);" onblur="objRegisterUser.check(this.id);"></td></tr>
-<tr><td><span>パスワード</span></td><td><input type='password' name='user_password' id='user_password' value='' size='24' onkeyup="objRegisterUser.check(this.id);" onblur="objRegisterUser.check(this.id);"></td></tr>
-<tr><td><span>お名前</span></td><td><input type='text' name='user_name' id='user_name' value='' size='16' spellcheck='false' onkeyup="objRegisterUser.check(this.id);" onblur="objRegisterUser.check(this.id);"></td></tr>
-<tr><td><span>メールアドレス</span></td><td><input type='text' name='user_mail_address' id='user_mail_address' value='' size='32' spellcheck='false' onkeyup="objRegisterUser.check(this.id);" onblur="objRegisterUser.check(this.id);"></td></tr>
+<tr><td><span>ユーザーID</span></td><td><input type='text' id='user_id' value='' size='24' spellcheck='false' autocomplete='off' onkeyup="objRegisterUser.check(this.id);" onblur="objRegisterUser.check(this.id);"></td></tr>
+<tr><td><span>パスワード</span></td><td><input type='password' id='user_password' value='' size='24' onkeyup="objRegisterUser.check(this.id);" onblur="objRegisterUser.check(this.id);"></td></tr>
+<tr><td><span>お名前</span></td><td><input type='text' id='user_name' value='' size='16' spellcheck='false' autocomplete='off' onkeyup="objRegisterUser.check(this.id);" onblur="objRegisterUser.check(this.id);"></td></tr>
+<tr><td><span>メールアドレス</span></td><td><input type='text' id='user_mail_address' value='' size='32' spellcheck='false' autocomplete='off' onkeyup="objRegisterUser.check(this.id);" onblur="objRegisterUser.check(this.id);"></td></tr>
 <tr><td><span>グループ</span></td><td><select id='user_group' size='5' multiple></select></td></tr>
 </table>
 </div>
@@ -109,7 +109,7 @@ div#message_zone {
 <div id='captcha_area'>
 <table>
 <tr><td><span>右の画像の文字</span></td><td id='securitu_image_area' rowspan='3'></td></tr>
-<tr><td><input type='text' name='input_security_code' id='input_security_code' value='' size='8' onblur="objSecurityImage.toHalfSize();"></td></tr>
+<tr><td><input type='text' spellcheck='false' autocomplete='off' id='input_security_code' value='' size='8' onblur="objSecurityImage.toHalfSize();"></td></tr>
 <tr><td><button class='enable' onclick='objSecurityImage.getSecurityImage();'>画像再取得</button></td></tr>
 </table>
 </div>

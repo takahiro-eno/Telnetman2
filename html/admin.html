@@ -22,7 +22,7 @@
  var storageS = sessionStorage;
 -->
 </script>
-<title>Telnetman&nbsp;ユーザー承認</title>
+<title>Telnetman2</title>
 </head>
 <body onload="objUserGroup.get(); objAuthorizeUser.get();">
 
@@ -47,7 +47,7 @@
 <div id='section_zone'>
 <section class='telnetman_admin_zone'>
 <h1>グループ管理</h1>
-<p><span>グループ名</span><input type='text' spellcheck='false' size='24' id='telnetman_group_new_group_name' value=''><button class='enable' id='telnetman_group_new_group_button' onclick='objUserGroup.add();'>新規作成</button></p>
+<p><span>グループ名</span><input type='text' spellcheck='false' autocomplete='off' size='24' id='telnetman_group_new_group_name' value=''><button class='enable' id='telnetman_group_new_group_button' onclick='objUserGroup.add();'>新規作成</button></p>
 <div>
 <table class='basic_summary' id='telnetman_group_list'>
 <tr><th>グループ名</th><th>-</th><th>-</th></tr>
@@ -57,7 +57,7 @@
 
 <section class='telnetman_admin_zone'>
 <h1>ユーザー&nbsp;-&nbsp;グループ関連付け</h1>
-<p><span>ユーザーID</span><input type='text' spellcheck='false' size='16' id='telnetman_group_user_id' value=''><button class='enable' id='telnetman_group_get_button' onclick='objUserGroup.search();'>取得</button></p>
+<p><span>ユーザーID</span><input type='text' spellcheck='false' autocomplete='off' size='16' id='telnetman_group_user_id' value=''><button class='enable' id='telnetman_group_get_button' onclick='objUserGroup.search();'>取得</button></p>
 <div class='telnetman_user_group_area'>
 <div class='telnetman_user_group_zone'>
 <table class='basic_summary'>
@@ -83,7 +83,7 @@
 
 <section class='telnetman_admin_zone'>
 <h1>ユーザー情報</h1>
-<p><span>ユーザーID,&nbsp;名前</span><input type='text' spellcheck='false' size='24' id='telnetman_user_search_word' value='' placeholder='部分一致'><button class='enable' id='telnetman_user_search_button' onclick='objUserInfo.search();'>検索</button></p>
+<p><span>ユーザーID,&nbsp;名前</span><input type='text' spellcheck='false' autocomplete='off' size='24' id='telnetman_user_search_word' value='' placeholder='部分一致'><button class='enable' id='telnetman_user_search_button' onclick='objUserInfo.search();'>検索</button></p>
 <table class='basic_summary' id='telnetman_user_list'>
 <tr><th>ユーザーID</th><th>ユーザー名</th><th>メールアドレス</th><th>パスワード</th><th>登録日時</th><th>最終アクセス日時</th><th>-</th><th>-</th></tr>
 </table>

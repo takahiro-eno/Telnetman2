@@ -141,7 +141,7 @@ function userInfo () {
   
   elInput2.onblur = new Function("objUserInfo.readUserName('" + userId + "');");
   elInput3.onblur = new Function("objUserInfo.readUserMail('" + userId + "');");
-  elInput4.onblur = new Function("objUserInfo.readUserPasssword('" + userId + "');");
+  elInput4.onblur = new Function("objUserInfo.readUserPassword('" + userId + "');");
   elButton7.onclick = new Function("objUserInfo.update('" + userId + "');");
   
   elTd1.appendChild(elSpan1);
