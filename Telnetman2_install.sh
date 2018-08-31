@@ -116,8 +116,7 @@ mv ./install/Telnetman2.logrotate.txt /etc/logrotate.d/Telnetman2
 
 
 # Firewalld
-firewall-cmd --zone=public --add-service=https --permanent
-firewall-cmd --zone=public --remove-service=dhcpv6-client --permanent
+firewall-cmd --add-service=https --permanent
 
 
 # Disable SELinux

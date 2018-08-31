@@ -76,8 +76,7 @@ RUN sed -i -e 's/Options Indexes FollowSymLinks/Options MultiViews/' /etc/httpd/
     sed -i -e 's/Options None/Options ExecCGI/' /etc/httpd/conf/httpd.conf && \
     sed -i -e 's/#AddHandler cgi-script \.cgi/AddHandler cgi-script \.cgi/' /etc/httpd/conf/httpd.conf && \
     sed -i -e 's/DirectoryIndex index\.html/DirectoryIndex index.html index\.cgi/' /etc/httpd/conf/httpd.conf && \
-    sed -i -e '/ErrorDocument 403/s/^/#/' /etc/httpd/conf.d/welcome.conf && \
-    sed -i -e 's/443/8443/' /etc/httpd/conf.d/ssl.conf
+    sed -i -e '/ErrorDocument 403/s/^/#/' /etc/httpd/conf.d/welcome.conf
 
 
 # SSL
@@ -142,7 +141,7 @@ RUN chmod 644 /etc/cron.d/Telnetman2.cron
 ADD ./install/Telnetman2.logrotate.txt /etc/logrotate.d/Telnetman2
 
 
-EXPOSE 8443
+EXPOSE 443
 
 
 CMD ["/sbin/start.sh"]

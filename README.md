@@ -20,19 +20,19 @@ This is a tool to create telnet or ssh tools.
 1. `rm -rf Telnetman2`
 1. `sudo reboot`
 
-https&#58;//server address/Telnetman2/
+https&#58;//server address/Telnetman2/  
 
 ### Docker Container
 If you are going to put TelnetmanWF too, follow the installation manual of TelnetmanWF's page.  
 https://github.com/takahiro-eno/TelnetmanWF  
-This installation manual is available for those who use Telnetman2 only.
+This installation manual is available for those who use Telnetman2 only.  
 
 1. `git clone https://github.com/takahiro-eno/Telnetman2.git`
 1. `cd Telnetman2`
 1. `sudo docker build -t telnetman2/telnetman .`
-1. `sudo docker run -i -p 8443:8443 -d telnetman2/telnetman`
+1. `sudo docker run -i -p 8443:443 -d telnetman2/telnetman`
 
-https&#58;//host address:8443/Telnetman2/
+https&#58;//host address:8443/Telnetman2/  
 
 ---
 The default administrator account is admin and the password is tcpport23.  
