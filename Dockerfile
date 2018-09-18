@@ -80,7 +80,8 @@ RUN sed -i -e 's/Options Indexes FollowSymLinks/Options MultiViews/' /etc/httpd/
 
 
 # SSL
-RUN openssl req \
+RUN sed -i -e "\$a[SAN]\nsubjectAltName='DNS:telnetman" /etc/pki/tls/openssl.cnf && \
+    openssl req \
      -newkey rsa:2048 \
      -days 3650 \
      -nodes \
@@ -88,8 +89,7 @@ RUN openssl req \
      -subj "/C=JP/ST=/L=/O=/OU=/CN=telnetman" \
      -extensions SAN \
      -reqexts SAN \
-     -config <( cat /etc/pki/tls/openssl.cnf \
-             <(printf "[SAN]\nsubjectAltName='DNS:telnetman'")) \
+     -config /etc/pki/tls/openssl.cnf \
      -keyout /etc/pki/tls/private/server.key \
      -out /etc/pki/tls/certs/server.crt && \
     chmod 600 /etc/pki/tls/private/server.key && \
