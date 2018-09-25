@@ -152,6 +152,19 @@ RUN chmod 644 /etc/cron.d/Telnetman2.cron
 ADD ./install/Telnetman2.logrotate.txt /etc/logrotate.d/Telnetman2
 
 
+# permissions for root group (for Openshift)
+RUN chgrp -R 0 /var/run && \
+    chmod -R g=u /var/run && \
+    chgrp -R 0 /var/log/mariadb && \
+    chmod -R g=u /var/log/mariadb && \
+    chgrp -R 0 /var/log/httpd && \
+    chmod -R g=u /var/log/httpd && \
+    chgrp -R 0 /var/lib/mysql && \
+    chmod -R g=u /var/lib/mysql && \
+    chgrp -R 0 /var/Telnetman2 && \
+    chmod -R g=u /var/Telnetman2
+
+
 EXPOSE 443
 
 
