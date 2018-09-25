@@ -30,7 +30,7 @@ This installation manual is available for those who use Telnetman2 only.
 1. `git clone https://github.com/takahiro-eno/Telnetman2.git`
 1. `cd Telnetman2`
 1. `sudo docker build -t telnetman2/telnetman .`
-1. `sudo docker run -i -p 8443:443 -d telnetman2/telnetman`
+1. `sudo docker run -i -p 8443:8443 -d telnetman2/telnetman`
 
 https&#58;//host address:8443/Telnetman2/  
 

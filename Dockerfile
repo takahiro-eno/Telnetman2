@@ -76,6 +76,7 @@ RUN sed -i -e 's/Options Indexes FollowSymLinks/Options MultiViews/' /etc/httpd/
     sed -i -e 's/Options None/Options ExecCGI/' /etc/httpd/conf/httpd.conf && \
     sed -i -e 's/#AddHandler cgi-script \.cgi/AddHandler cgi-script \.cgi/' /etc/httpd/conf/httpd.conf && \
     sed -i -e 's/DirectoryIndex index\.html/DirectoryIndex index.html index\.cgi/' /etc/httpd/conf/httpd.conf && \
+    sed -i -e 's/80/8080/g' /etc/httpd/conf/httpd.conf && \
     sed -i -e '/ErrorDocument 403/s/^/#/' /etc/httpd/conf.d/welcome.conf
 
 
@@ -95,7 +96,8 @@ RUN sed -i -e "\$a[SAN]\nsubjectAltName='DNS:telnetman" /etc/pki/tls/openssl.cnf
     chmod 644 /etc/pki/tls/private/server.key && \
     chmod 644 /etc/pki/tls/certs/server.crt && \
     sed -i -e 's/localhost\.key/server.key/' /etc/httpd/conf.d/ssl.conf && \
-    sed -i -e 's/localhost\.crt/server.crt/' /etc/httpd/conf.d/ssl.conf
+    sed -i -e 's/localhost\.crt/server.crt/' /etc/httpd/conf.d/ssl.conf && \
+    sed -i -e 's/443/8443/g' /etc/httpd/conf.d/ssl.conf
 
 
 # Directories & Files
@@ -151,19 +153,19 @@ ADD ./install/Telnetman2.logrotate.txt /etc/logrotate.d/Telnetman2
 
 
 # permissions for root group (for Openshift)
-RUN chgrp -R 0 /run && \
+RUN chgrp -R 0   /run && \
     chmod -R g=u /run && \
-    chgrp -R 0 /var/log/mariadb && \
+    chgrp -R 0   /var/log/mariadb && \
     chmod -R g=u /var/log/mariadb && \
-    chgrp -R 0 /var/log/httpd && \
+    chgrp -R 0   /var/log/httpd && \
     chmod -R g=u /var/log/httpd && \
-    chgrp -R 0 /var/lib/mysql && \
+    chgrp -R 0   /var/lib/mysql && \
     chmod -R g=u /var/lib/mysql && \
-    chgrp -R 0 /var/Telnetman2 && \
+    chgrp -R 0   /var/Telnetman2 && \
     chmod -R g=u /var/Telnetman2
 
 
-EXPOSE 443
+EXPOSE 8443
 
 
 CMD ["/sbin/start.sh"]
