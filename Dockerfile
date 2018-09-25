@@ -68,7 +68,7 @@ RUN sed -i -e 's/\[mysqld\]/\[mysqld\]\ncharacter-set-server = utf8\nskip-charac
     chmod 700 /var/lib/mysql/Telnetman2 && \
     chown mysql:mysql /var/lib/mysql/Telnetman2
 ADD ./install/Telnetman2_Docker.sql /root/Telnetman2_Docker.sql
-VOLUME /var/lib/mysql/Telnetman2
+#VOLUME /var/lib/mysql/Telnetman2
 
 
 # Apache
@@ -92,8 +92,8 @@ RUN sed -i -e "\$a[SAN]\nsubjectAltName='DNS:telnetman" /etc/pki/tls/openssl.cnf
      -config /etc/pki/tls/openssl.cnf \
      -keyout /etc/pki/tls/private/server.key \
      -out /etc/pki/tls/certs/server.crt && \
-    chmod 600 /etc/pki/tls/private/server.key && \
-    chmod 600 /etc/pki/tls/certs/server.crt && \
+    chmod 644 /etc/pki/tls/private/server.key && \
+    chmod 644 /etc/pki/tls/certs/server.crt && \
     sed -i -e 's/localhost\.key/server.key/' /etc/httpd/conf.d/ssl.conf && \
     sed -i -e 's/localhost\.crt/server.crt/' /etc/httpd/conf.d/ssl.conf
 
@@ -128,15 +128,13 @@ ADD ./cgi/*          /var/www/cgi-bin/Telnetman2/
 ADD ./lib/*          /usr/local/Telnetman2/lib/
 ADD ./pl/*           /usr/local/Telnetman2/pl/
 RUN chmod 755 /var/www/cgi-bin/Telnetman2/* && \
-    chown -R apache:apache /var/Telnetman2/conversion_script && \
-    chown -R apache:apache /var/Telnetman2/tmp && \
-    chown -R apache:apache /var/Telnetman2/captcha && \
-    chown -R apache:apache /var/Telnetman2/session && \
-    chown -R apache:apache /var/Telnetman2/archive && \
-    chown -R apache:apache /var/Telnetman2/log
-VOLUME /var/Telnetman2/conversion_script
-VOLUME /var/Telnetman2/session
-VOLUME /var/Telnetman2/auth
+    chown -R apache:apache /usr/local/Telnetman2 && \
+    chown -R apache:apache /var/Telnetman2 && \
+    chown -R apache:apache /var/www/html/Telnetman2 && \
+    chown -R apache:apache /var/www/cgi-bin/Telnetman2
+#VOLUME /var/Telnetman2/conversion_script
+#VOLUME /var/Telnetman2/session
+#VOLUME /var/Telnetman2/auth
 
 
 # Update Source Code
@@ -153,8 +151,8 @@ ADD ./install/Telnetman2.logrotate.txt /etc/logrotate.d/Telnetman2
 
 
 # permissions for root group (for Openshift)
-RUN chgrp -R 0 /var/run && \
-    chmod -R g=u /var/run && \
+RUN chgrp -R 0 /run && \
+    chmod -R g=u /run && \
     chgrp -R 0 /var/log/mariadb && \
     chmod -R g=u /var/log/mariadb && \
     chgrp -R 0 /var/log/httpd && \
