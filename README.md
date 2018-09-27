@@ -28,11 +28,10 @@ https://github.com/takahiro-eno/TelnetmanWF
 This installation manual is available for those who use Telnetman2 only.  
 
 1. `git clone https://github.com/takahiro-eno/Telnetman2.git`
-1. `cd Telnetman2`
-1. `sudo docker build -t telnetman2/telnetman .`
-1. `sudo docker run -i -p 8443:8443 -d telnetman2/telnetman`
+1. `sudo docker build -t telnetman2 -f ./Telnetman2/install/Dockerfile ./Telnetman2`
+1. `sudo docker run -i -p 8443:443 -d telnetman2`
 
-https&#58;//host address:8443/Telnetman2/  
+https&#58;//host address:8443/Telnetman2/ 
 
 ---
 The default administrator account is admin and the password is tcpport23.  

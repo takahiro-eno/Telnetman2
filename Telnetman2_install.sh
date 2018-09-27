@@ -57,11 +57,12 @@ mysql -u root < ./install/Telnetman2.sql
 
 
 # Apache
-sed -i -e 's/Options Indexes FollowSymLinks/Options MultiViews/' /etc/httpd/conf/httpd.conf
+sed -i -e 's/Options Indexes FollowSymLinks/Options MultiViews FollowSymLinks/' /etc/httpd/conf/httpd.conf
 sed -i -e 's/Options None/Options ExecCGI/' /etc/httpd/conf/httpd.conf
-sed -i -e 's/#AddHandler cgi-script \.cgi/AddHandler cgi-script \.cgi/' /etc/httpd/conf/httpd.conf
-sed -i -e 's/DirectoryIndex index\.html/DirectoryIndex index\.html index\.cgi/' /etc/httpd/conf/httpd.conf
+sed -i -e 's/#AddHandler cgi-script \.cgi/AddHandler cgi-script .cgi/' /etc/httpd/conf/httpd.conf
+sed -i -e 's/DirectoryIndex index\.html/DirectoryIndex index.html index.cgi/' /etc/httpd/conf/httpd.conf
 sed -i -e '/ErrorDocument 403/s/^/#/' /etc/httpd/conf.d/welcome.conf
+sed -i -e 's/<Directory "\/var\/www\/html">/<Directory "\/var\/www\/html">\n    RewriteEngine on\n    RewriteBase \/\n    RewriteRule ^$ Telnetman2\/index.html [L]\n    RewriteCond %{REQUEST_FILENAME} !-f\n    RewriteCond %{REQUEST_FILENAME} !-d\n    RewriteRule ^(.+)$ Telnetman2\/$1 [L]\n/' /etc/httpd/conf/httpd.conf
 
 
 # SSL
@@ -77,8 +78,8 @@ openssl req \
  -config /etc/pki/tls/openssl.cnf \
  -keyout /etc/pki/tls/private/server.key \
  -out /etc/pki/tls/certs/server.crt
-chmod 600 /etc/pki/tls/private/server.key
-chmod 600 /etc/pki/tls/certs/server.crt
+chmod 644 /etc/pki/tls/private/server.key
+chmod 644 /etc/pki/tls/certs/server.crt
 sed -i -e 's/localhost\.key/server.key/' /etc/httpd/conf.d/ssl.conf
 sed -i -e 's/localhost\.crt/server.crt/' /etc/httpd/conf.d/ssl.conf
 
@@ -108,12 +109,10 @@ mv ./cgi/*  /var/www/cgi-bin/Telnetman2/
 mv ./lib/*  /usr/local/Telnetman2/lib/
 mv ./pl/*   /usr/local/Telnetman2/pl/
 chmod 755 /var/www/cgi-bin/Telnetman2/*
-chown -R apache:apache /var/Telnetman2/conversion_script
-chown -R apache:apache /var/Telnetman2/tmp
-chown -R apache:apache /var/Telnetman2/captcha
-chown -R apache:apache /var/Telnetman2/session
-chown -R apache:apache /var/Telnetman2/archive
-chown -R apache:apache /var/Telnetman2/log
+chown -R apache:apache /usr/local/Telnetman2
+chown -R apache:apache /var/Telnetman2
+chown -R apache:apache /var/www/html/Telnetman2
+chown -R apache:apache /var/www/cgi-bin/Telnetman2
 
 
 # Cron
