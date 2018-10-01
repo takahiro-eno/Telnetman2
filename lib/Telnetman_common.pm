@@ -5,6 +5,7 @@
 # 更新   : 2017/01/28 include, exclude, begin に対応。
 # 更新   : 2017/09/12 Ver.2 用に修正。ユーザーグループ確認関数を追加。
 # 更新   : 2018/05/16 Begin, End 機能の追加。
+# 更新   : 2018/10/01 作成するディレクトリのパーミッションを775 に変更。
 
 use strict;
 use warnings;
@@ -28,7 +29,8 @@ sub make_session_data_dir {
  my $dir_session = &Common_system::dir_session($session_id);
 
  unless(-d $dir_session){
-  mkdir($dir_session, 0755);
+  umask(0002);
+  mkdir($dir_session, 0775);
  }
 }
 
@@ -49,7 +51,8 @@ sub archive_session_data {
   # バックアップ先ディレクトリを作成する。
   my $dir_archive = &Common_system::dir_archive($user_id);
   unless(-d $dir_archive){
-   mkdir($dir_archive, 0755);
+   umask(0002);
+   mkdir($dir_archive, 0775);
   }
 
   # zip の名前とパスを定義する。
@@ -244,7 +247,8 @@ sub make_telnet_log {
  my $dir_telnet_log = &Common_system::dir_telnet_log($session_id);
 
  unless(-d $dir_telnet_log){
-  mkdir($dir_telnet_log, 0755);
+  umask(0002);
+  mkdir($dir_telnet_log, 0775);
 
   # 実行者がroot だったら所有者をApache にする。
   if($< == 0){
@@ -288,7 +292,8 @@ sub make_optional_log {
  my $dir_telnet_log = &Common_system::dir_telnet_log($session_id);
 
  unless(-d $dir_telnet_log){
-  mkdir($dir_telnet_log, 0755);
+  umask(0002);
+  mkdir($dir_telnet_log, 0775);
 
   # 実行者がroot だったら所有者をApache にする。
   if($< == 0){
@@ -354,7 +359,8 @@ sub make_track_log {
  my $dir_telnet_log = &Common_system::dir_telnet_log($session_id);
 
  unless(-d $dir_telnet_log){
-  mkdir($dir_telnet_log, 0755);
+  umask(0002);
+  mkdir($dir_telnet_log, 0775);
 
   # 実行者がroot だったら所有者をApache にする。
   if($< == 0){
@@ -386,7 +392,8 @@ sub make_diff_log {
  my $dir_telnet_log = &Common_system::dir_telnet_log($session_id);
 
  unless(-d $dir_telnet_log){
-  mkdir($dir_telnet_log, 0755);
+  umask(0002);
+  mkdir($dir_telnet_log, 0775);
 
   # 実行者がroot だったら所有者をApache にする。
   if($< == 0){
@@ -434,7 +441,8 @@ sub make_additional_parameter_sheet {
   my $dir_telnet_log = &Common_system::dir_telnet_log($session_id);
 
   unless(-d $dir_telnet_log){
-   mkdir($dir_telnet_log, 0755);
+   umask(0002);
+   mkdir($dir_telnet_log, 0775);
 
    # 実行者がroot だったら所有者をApache にする。
    if($< == 0){

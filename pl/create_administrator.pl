@@ -3,6 +3,7 @@
 # 作成者 : 江野高広
 # 作成日 : 2014/06/09
 # 更新 : 2016/05/18 Term::ReadKey 導入。
+# 更新 : 2018/10/01 実行ユーザーID ではなくグループID で権限を確認。
 
 use strict;
 use warnings;
@@ -13,7 +14,7 @@ use lib '/usr/local/Telnetman2/lib';
 use Common_sub;
 use Telnetman_auth;
 
-if($< != 0){
+if($( != 0){
  print 'root 権限で実行して下さい。' . "\n";
  exit(0);
 }
@@ -102,7 +103,7 @@ if(($ok_auth == 1) && ($admin_mail == 1)){
 else{
  print '追加できませんでした。' . "\n";
  
- if($< != 0){
+ if($( != 0){
   print 'root 権限で実行してみて下さい。' . "\n";
  }
 }

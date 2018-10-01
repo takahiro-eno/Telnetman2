@@ -1,9 +1,0 @@
-*/1 * * * * apache perl /usr/local/Telnetman2/pl/telnet.pl
-*/1 * * * * apache perl /usr/local/Telnetman2/pl/telnet.pl -w 10
-*/1 * * * * apache perl /usr/local/Telnetman2/pl/telnet.pl -w 20
-*/1 * * * * apache perl /usr/local/Telnetman2/pl/telnet.pl -w 30
-*/1 * * * * apache perl /usr/local/Telnetman2/pl/telnet.pl -w 40
-*/1 * * * * apache perl /usr/local/Telnetman2/pl/telnet.pl -w 50
-30  6 * * * apache perl /usr/local/Telnetman2/pl/delete_session.pl
-#50  6 * * * apache perl /usr/local/Telnetman2/pl/lock.pl
-#*/5 * * * * apache perl  /usr/local/Telnetman2/pl/auto_authorize_user.pl

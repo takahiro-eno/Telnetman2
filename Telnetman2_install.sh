@@ -40,6 +40,8 @@ perl-Data-Dumper-Concise \
 perl-Clone \
 cpan
 
+yum clean all
+
 
 # CPAN
 echo q | /usr/bin/perl -MCPAN -e shell
@@ -123,6 +125,8 @@ chown root:root /etc/cron.d/Telnetman2.cron
 
 # Logrotate 
 mv ./install/Telnetman2.logrotate.txt /etc/logrotate.d/Telnetman2
+chmod 644 /etc/logrotate.d/Telnetman2
+chown root:root /etc/logrotate.d/Telnetman2
 
 
 # Firewalld

@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+ telnetman2-db:
+  build:
+   context: ./
+   dockerfile: Dockerfile-db
+  volumes:
+   - telnetman2-database:/var/lib/mysql/Telnetman2
+ 
+ telnetman2-web:
+  build:
+   context: ./
+   dockerfile: Dockerfile-web
+   args:
+    DBSERVER: telnetman2-db
+  ports:
+   - 8443:8443
+  depends_on:
+   - telnetman2-db
+  volumes:
+   - telnetman2-file:/var/Telnetman2
+ 
+ telnetman2-cron:
+  build:
+   context: ./
+   dockerfile: Dockerfile-cron
+   args:
+    DBSERVER: telnetman2-db
+  depends_on:
+   - telnetman2-web
+  volumes:
+   - telnetman2-file:/var/Telnetman2
+
+volumes:
+  telnetman2-database:
+  telnetman2-file:
