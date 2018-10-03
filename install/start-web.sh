@@ -9,7 +9,6 @@ if [ -z "$(ls /var/Telnetman2)" ]; then
  mkdir /var/Telnetman2/conversion_script
  mkdir /var/Telnetman2/tmp
 
- chown -R telnetman:root /var/Telnetman2/*
  chmod -R g=u /var/Telnetman2/*
 fi
 
