@@ -50,7 +50,6 @@ RUN sed -i -e "s/localhost/$DBSERVER/" /usr/local/Telnetman2/lib/Common_system.p
     chmod -R 775 /var/Telnetman2 && \
     chmod 644 /usr/local/Telnetman2/lib/* && \
     chmod 644 /usr/local/Telnetman2/pl/* && \
-    sed -i -e "s/apache/telnetman/g" /etc/cron.d/Telnetman2.cron && \
     chown root:root /etc/logrotate.d/Telnetman2 && \
     chmod 644 /etc/logrotate.d/Telnetman2
 
