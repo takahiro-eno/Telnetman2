@@ -3,6 +3,7 @@
     dateformat .%Y%m%d
     missingok
     compress
+    copytruncate
     monthly
     rotate 12
 }
