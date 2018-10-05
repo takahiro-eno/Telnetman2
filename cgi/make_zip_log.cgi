@@ -2,6 +2,7 @@
 # 説明   : telnet log をzip 圧縮する。
 # 作成者 : 江野高広
 # 作成日 : 2014/06/16
+# 更新   : 2018/10/05 作成するファイルのパーミッションを664 に変更。
 
 use strict;
 use warnings;
@@ -58,10 +59,10 @@ my $session_id = $telnetman_auth -> get_session_id;
 my $dir_log = &Common_system::dir_telnet_log($session_id);
 unless(-d $dir_log){
  my %result = (
-  'login' => 1,
-  'session' => 1,
-  'result' => 0,
-  'reason' => 'ログが作成されていません。',
+  'login'      => 1,
+  'session'    => 1,
+  'result'     => 0,
+  'reason'     => 'ログが作成されていません。',
   'session_id' => $session_id,
  );
  
@@ -92,10 +93,10 @@ foreach my $log_name (@log_files){
 
 if(scalar(@log_list) == 0){
  my %result = (
-  'login' => 1,
-  'session' => 1,
-  'result' => 0,
-  'reason' => 'ログが作成されていません。',
+  'login'      => 1,
+  'session'    => 1,
+  'result'     => 0,
+  'reason'     => 'ログが作成されていません。',
   'session_id' => $session_id,
  );
  
@@ -120,14 +121,15 @@ foreach my $log_name (@log_list){
 }
 $zip -> writeToFileNamed($file_zip);
 
-
+umask(0002);
+chmod(0664, $file_zip);
 
 $access2db -> close;
 
 my %results = (
- 'login' => 1,
- 'session' => 1,
- 'result' => 1,
+ 'login'      => 1,
+ 'session'    => 1,
+ 'result'     => 1,
  'session_id' => $session_id
 );
 
