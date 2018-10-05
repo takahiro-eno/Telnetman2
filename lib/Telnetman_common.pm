@@ -6,6 +6,7 @@
 # 更新   : 2017/09/12 Ver.2 用に修正。ユーザーグループ確認関数を追加。
 # 更新   : 2018/05/16 Begin, End 機能の追加。
 # 更新   : 2018/10/01 作成するディレクトリのパーミッションを775 に変更。
+# 更新   : 2018/10/05 作成するファイルのパーミッションを664 に変更
 
 use strict;
 use warnings;
@@ -63,6 +64,9 @@ sub archive_session_data {
   my $zip = Archive::Zip -> new();
   $zip -> addTree($dir_session, $archive_name);
   $zip -> writeToFileNamed($file_zip);
+  
+  umask(0002);
+  chmod(0664, $file_zip);
 
   # 元のファイルを削除する。
   &File::Path::rmtree($dir_session);
@@ -157,6 +161,9 @@ sub make_stamp {
  open(STAMP, '>', $file_stamp);
  print STAMP $user_id . "\n" . $time;
  close(STAMP);
+ 
+ umask(0002);
+ chmod(0664, $file_stamp);
 }
 
 
@@ -175,6 +182,9 @@ sub make_session_data {
   open(SDATA, '>', $file_session_data);
   print SDATA $json;
   close(SDATA);
+  
+  umask(0002);
+  chmod(0664, $file_session_data)
  }
 }
 
@@ -260,6 +270,9 @@ sub make_telnet_log {
  open(TLOG, '>', $file_telnet_log);
  print TLOG $log;
  close(TLOG);
+ 
+ umask(0002);
+ chmod(0664, $file_telnet_log);
 
  if($< == 0){
   chown(48, 48, $file_telnet_log);
@@ -273,6 +286,9 @@ sub make_telnet_log {
  open(TLOG, '>', $file_telnet_log_sjis);
  print TLOG $log;
  close(TLOG);
+ 
+ umask(0002);
+ chmod(0664, $file_telnet_log_sjis);
 
  if($< == 0){
   chown(48, 48, $file_telnet_log_sjis);
@@ -318,6 +334,9 @@ sub make_optional_log {
   flock(OLOGU, 2);
   print OLOGU $header . "\n" . $value;
   close(OLOGU);
+  
+  umask(0002);
+  chmod(0664, $file_optional_log);
  }
 
 
@@ -343,6 +362,9 @@ sub make_optional_log {
   flock(OLOGJ, 2);
   print OLOGJ $header . "\r\n" . $value;
   close(OLOGJ);
+  
+  umask(0002);
+  chmod(0664, $file_optional_log_sjis);
  }
 }
 
@@ -373,6 +395,9 @@ sub make_track_log {
  print TRACK $log;
  close(TRACK);
 
+ umask(0002);
+ chmod(0664, $file_track_log);
+ 
  if($< == 0){
   chown(48, 48, $file_track_log);
  }
@@ -405,6 +430,9 @@ sub make_diff_log {
  open(DIFF, '>', $file_diff_log);
  print DIFF $diff_header . "\n\n" . $diff_log;
  close(DIFF);
+ 
+ umask(0002);
+ chmod(0664, $file_diff_log);
 
  if($< == 0){
   chown(48, 48, $file_diff_log);
@@ -419,6 +447,9 @@ sub make_diff_log {
  open(DIFF, '>', $file_diff_log_sjis);
  print DIFF $diff_header . "\r\n\r\n" . $diff_log;
  close(DIFF);
+ 
+ umask(0002);
+ chmod(0664, $file_diff_log_sjis);
 
  if($< == 0){
   chown(48, 48, $file_diff_log_sjis);
@@ -454,6 +485,9 @@ sub make_additional_parameter_sheet {
   open(PSHEET, '>', $file_additional_parameter_sheet);
   print PSHEET $json_additional_parameter_sheet;
   close(PSHEET);
+  
+  umask(0002);
+  chmod(0664, $file_additional_parameter_sheet);
 
   if($< == 0){
    chown(48, 48, $file_additional_parameter_sheet);
