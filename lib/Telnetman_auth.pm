@@ -7,6 +7,7 @@
 # 作成日 : 2014/06/06
 # 作成者 : 江野高広
 # 更新   : 2018/08/23 一度も管理者アカウントが作成されていなければ、初期管理者アカウントとしてadmin/tcpport23 のアクセスを許可する。
+# 更新   : 2018/10/05 作成するファイルのパーミッションを664 に変更。
 
 use strict;
 use warnings;
@@ -328,11 +329,17 @@ sub create_administrator {
  print TELNETMANAUTH $id . ' ' . $encoded_password . "\n";
  close(TELNETMANAUTH);
  
+ umask(0002);
+ chmod(0664, $file_auth);
+ 
  my $file_admin_mail = &Common_system::file_admin_mail();
  open(TELNETMANMAIL, '>>', $file_admin_mail);
  flock(TELNETMANMAIL, 2);
  print TELNETMANMAIL $id . ' ' . $mail . "\n";
  close(TELNETMANMAIL);
+ 
+ umask(0002);
+ chmod(0664, $file_admin_mail);
 }
 
 #
