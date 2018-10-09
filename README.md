@@ -85,7 +85,7 @@ EOF
 - Build config  
 Set triggers arbitrarily.  
 ```
-cat <<EOF > Telnetman2-build.yml
+cat <<EOF > telnetman2-build.yml
 apiVersion: "v1"
 kind: "List"
 items:
@@ -194,7 +194,7 @@ EOF
 \<Project Name\> : Youer project name.  
 \<openshift_master_default_subdomain\> : A value defined in inventory file.  
 ```
-cat <<EOF > Telnetman2-deploy.yml
+cat <<EOF > telnetman2-deploy.yml
 apiVersion: "v1"
 kind: "List"
 items:
@@ -323,7 +323,7 @@ EOF
 - CronJob Config  
 \<Project Name\> : Youer project name.  
 ```
-cat <<EOF > Telnetman-cron.yml
+cat <<EOF > telnetman2-cron.yml
 apiVersion: "v1"
 kind: "List"
 items:
