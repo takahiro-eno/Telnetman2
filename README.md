@@ -11,7 +11,7 @@ This is a tool to create telnet or ssh tools.
 ![Demo](https://github.com/takahiro-eno/Telnetman2/blob/demo/Telnetman_demo.gif)
 
 ## Install
-### VM or Bare Metal
+### A. VM or Bare Metal
 1. install minimal CentOS7
 1. `git clone https://github.com/takahiro-eno/Telnetman2.git`
 1. `cd Telnetman2`
@@ -20,9 +20,15 @@ This is a tool to create telnet or ssh tools.
 1. `rm -rf Telnetman2`
 1. `sudo reboot`
 
-https&#58;//server address/ 
+https&#58;//server address/  
 
-### Docker Container CentOS7
+The default administrator account is admin and the password is tcpport23.  
+You can create new administrator account with the following command on Telnetman2 server.  
+`sudo perl /usr/local/Telnetman2/pl/create_administrator.pl`  
+Then, the default administrator account is invalidated.  
+- - -
+
+### B. Docker Container
 If you are going to put TelnetmanWF too, follow the installation manual of TelnetmanWF's page.  
 https://github.com/takahiro-eno/TelnetmanWF  
 This installation manual is available for those who use Telnetman2 only.  
@@ -32,10 +38,438 @@ This installation manual is available for those who use Telnetman2 only.
 1. `sudo docker-compose build`
 1. `sudo docker-compose up -d`
 
-https&#58;//host address:8443/
+https&#58;//host address:8443/  
 
----
-The default administrator account is admin and the password is tcpport23.  
-You can create new administrator account with the following command on Telnetman2 server.  
+Similarly, you can create new administrator account.  
+`docker exec -it <telnetman2-web CONTAINER ID> bash`  
 `perl /usr/local/Telnetman2/pl/create_administrator.pl`  
-Then, the default administrator account is invalidated.
+- - -
+
+### C. OpenShift Origin v3.9
+Structure  
+![Demo](https://github.com/takahiro-eno/Telnetman2/blob/demo/Telnetman2-Container-Structure.png)
+
+Make config file  
+- PVC Config  
+```
+cat <<EOF > telnetman2-pvc.yml
+apiVersion: "v1"  
+kind: "List"  
+items:  
+
+- apiVersion: "v1"
+  kind: "PersistentVolumeClaim"
+  metadata:
+   name: "telnetman2-database"
+  spec:
+   accessModes:
+    - ReadWriteMany
+   resources:
+     requests:
+          storage: 2Gi
+   storageClassName: "glusterfs-storage"
+
+- apiVersion: "v1"
+  kind: "PersistentVolumeClaim"
+  metadata:
+   name: "telnetman2-file"
+  spec:
+   accessModes:
+    - ReadWriteMany
+   resources:
+     requests:
+          storage: 2Gi
+   storageClassName: "glusterfs-storage"
+EOF
+```
+- Build config  
+Set triggers arbitrarily.  
+```
+cat <<EOF > Telnetman2-build.yml
+apiVersion: "v1"
+kind: "List"
+items:
+
+- apiVersion: "v1"
+  kind: "ImageStream"
+  metadata:
+    name: "telnetman2-db"
+
+- apiVersion: "v1"
+  kind: "ImageStream"
+  metadata:
+    name: "telnetman2-web"
+
+- apiVersion: "v1"
+  kind: "ImageStream"
+  metadata:
+    name: "telnetman2-cron"
+  
+- apiVersion: "v1"
+  kind: "BuildConfig"
+  metadata:
+    name: "telnetman2-db"
+  spec:
+    runPolicy: "Serial"
+    source: 
+      type: "Git"
+      git:
+        uri: "https://github.com/takahiro-eno/Telnetman2"
+        ref: "master"
+      contextDir: "./"
+    strategy: 
+      type: "Docker"
+      dockerStrategy:
+        dockerfilePath: "Dockerfile-db"
+    output: 
+      to:
+        kind: "ImageStreamTag"
+        name: "telnetman2-db:latest"
+    triggers:
+      -
+        type: "GitHub"
+        github:
+          secret: "<SECRET>"
+
+- apiVersion: "v1"
+  kind: "BuildConfig"
+  metadata:
+    name: "telnetman2-web"
+  spec:
+    runPolicy: "Serial"
+    source: 
+      type: "Git"
+      git:
+        uri: "https://github.com/takahiro-eno/Telnetman2"
+        ref: "master"
+      contextDir: "./"
+    strategy: 
+      type: "Docker"
+      dockerStrategy:
+        dockerfilePath: "Dockerfile-web"
+        env:
+          - name: "DBSERVER"
+            value: "telnetman2-db"
+    output: 
+      to:
+        kind: "ImageStreamTag"
+        name: "telnetman2-web:latest"
+    triggers:
+      -
+        type: "GitHub"
+        github:
+          secret: "<SECRET>"
+
+- apiVersion: "v1"
+  kind: "BuildConfig"
+  metadata:
+    name: "telnetman2-cron"
+  spec:
+    runPolicy: "Serial"
+    source: 
+      type: "Git"
+      git:
+        uri: "https://github.com/takahiro-eno/Telnetman2"
+        ref: "master"
+      contextDir: "./"
+    strategy: 
+      type: "Docker"
+      dockerStrategy:
+        dockerfilePath: "Dockerfile-openshift-cron"
+        env:
+          - name: "DBSERVER"
+            value: "telnetman2-db"
+    output: 
+      to:
+        kind: "ImageStreamTag"
+        name: "telnetman2-cron:latest"
+    triggers:
+      -
+        type: "GitHub"
+        github:
+          secret: "<SECRET>"
+EOF
+```
+- Deploy Config  
+\<Project Name\> : Youer project name.  
+\<openshift_master_default_subdomain\> : A value defined in inventory file.  
+```
+cat <<EOF > Telnetman2-deploy.yml
+apiVersion: "v1"
+kind: "List"
+items:
+
+- apiVersion: "v1"
+  kind: "DeploymentConfig"
+  metadata:
+    name: "telnetman2-db"
+  spec:
+    template: 
+      metadata:
+        labels:
+          name: "telnetman2-db"
+      spec:
+        containers:
+          - name: "telnetman2-db-latest"
+            image: "telnetman2-db:latest"
+            ports:
+              - containerPort: 3306
+                protocol: "TCP"
+            volumeMounts:
+              - mountPath: "/var/lib/mysql/Telnetman2"
+                name: "telnetman2-database-dir"
+        volumes:
+          - name: "telnetman2-database-dir"
+            persistentVolumeClaim:
+              claimName: "telnetman2-database"
+    replicas: 1 
+    triggers:
+      - type: "ConfigChange" 
+      - type: "ImageChange" 
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - "telnetman2-db-latest"
+          from:
+            kind: "ImageStreamTag"
+            name: "telnetman2-db:latest"
+    strategy: 
+      type: "Rolling"
+    paused: false 
+    revisionHistoryLimit: 2 
+    minReadySeconds: 0 
+
+- apiVersion: "v1"
+  kind: "DeploymentConfig"
+  metadata:
+    name: "telnetman2-web"
+  spec:
+    template: 
+      metadata:
+        labels:
+          name: "telnetman2-web"
+      spec:
+        containers:
+          - name: "telnetman2-web-latest"
+            image: "telnetman2-web:latest"
+            ports:
+              - containerPort: 8443
+                protocol: "TCP"
+            volumeMounts:
+              - mountPath: "/var/Telnetman2"
+                name: "telnetman2-file-dir"
+        volumes:
+          - name: "telnetman2-file-dir"
+            persistentVolumeClaim:
+              claimName: "telnetman2-file"
+    replicas: 1 
+    triggers:
+      - type: "ConfigChange" 
+      - type: "ImageChange" 
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - "telnetman2-web-latest"
+          from:
+            kind: "ImageStreamTag"
+            name: "telnetman2-web:latest"
+    strategy: 
+      type: "Rolling"
+    paused: false 
+    revisionHistoryLimit: 2 
+    minReadySeconds: 0
+
+- apiVersion: "v1"
+  kind: "Service"
+  metadata:
+    name: "telnetman2-db"
+  spec:
+    ports:
+    - name: "3306-tcp"
+      protocol: "TCP"
+      port: 3306
+      targetPort: 3306
+    selector:
+      deploymentconfig: "telnetman2-db"
+
+- apiVersion: "v1"
+  kind: "Service"
+  metadata:
+    name: "telnetman2-web"
+  spec:
+    ports:
+    - name: "8443-tcp"
+      protocol: "TCP"
+      port: 8443
+      targetPort: 8443
+    selector:
+      deploymentconfig: "telnetman2-web"
+
+- apiVersion: "v1"
+  kind: "Route"
+  metadata:
+    name: "telnetman2-web"
+  spec:
+    host: "telnetman2-web-<Project Name>.<openshift_master_default_subdomain>"
+    port:
+      targetPort: "8443-tcp"
+    tls:
+      termination: "passthrough"
+    to:
+      kind: "Service"
+      name: "telnetman2-web"
+EOF
+```
+- CronJob Config  
+\<Project Name\> : Youer project name.  
+```
+cat <<EOF > Telnetman-cron.yml
+apiVersion: "v1"
+kind: "List"
+items:
+
+- apiVersion: "batch/v2alpha1"
+  kind: "CronJob"
+  metadata:
+    name: "telnetman2-telnet-00"
+  spec:
+    schedule: "*/1 * * * *"  
+    jobTemplate:             
+      spec:
+        template:
+          metadata:
+            labels:          
+              parent: "telnetman2"
+          spec:
+            containers:
+              - name: "telnetman2-telnet-00"
+                image: "docker-registry.default.svc:5000/<Project Name>/telnetman2-cron:latest"
+                command: ["perl", "/usr/local/Telnetman2/pl/telnet.pl"]
+                volumeMounts:
+                  - mountPath: "/var/Telnetman2"
+                    name: "telnetman2-file-dir"
+            volumes:
+              - name: "telnetman2-file-dir"
+                persistentVolumeClaim:
+                  claimName: "telnetman2-file"
+            restartPolicy: "Never"
+
+- apiVersion: "batch/v2alpha1"
+  kind: "CronJob"
+  metadata:
+    name: "telnetman2-telnet-20"
+  spec:
+    schedule: "*/1 * * * *"  
+    jobTemplate:             
+      spec:
+        template:
+          metadata:
+            labels:          
+              parent: "telnetman2"
+          spec:
+            containers:
+              - name: "telnetman2-telnet-20"
+                image: "docker-registry.default.svc:5000/<Project Name>/telnetman2-cron:latest"
+                command: ["perl", "/usr/local/Telnetman2/pl/telnet.pl",  "-w",  "20"]
+                volumeMounts:
+                  - mountPath: "/var/Telnetman2"
+                    name: "telnetman2-file-dir"
+            volumes:
+              - name: "telnetman2-file-dir"
+                persistentVolumeClaim:
+                  claimName: "telnetman2-file"
+            restartPolicy: "Never"
+
+- apiVersion: "batch/v2alpha1"
+  kind: "CronJob"
+  metadata:
+    name: "telnetman2-telnet-40"
+  spec:
+    schedule: "*/1 * * * *"  
+    jobTemplate:             
+      spec:
+        template:
+          metadata:
+            labels:          
+              parent: "telnetman2"
+          spec:
+            containers:
+              - name: "telnetman2-telnet-40"
+                image: "docker-registry.default.svc:5000/<Project Name>/telnetman2-cron:latest"
+                command: ["perl", "/usr/local/Telnetman2/pl/telnet.pl",  "-w",  "40"]
+                volumeMounts:
+                  - mountPath: "/var/Telnetman2"
+                    name: "telnetman2-file-dir"
+            volumes:
+              - name: "telnetman2-file-dir"
+                persistentVolumeClaim:
+                  claimName: "telnetman2-file"
+            restartPolicy: "Never"
+
+- apiVersion: "batch/v2alpha1"
+  kind: "CronJob"
+  metadata:
+    name: "telnetman2-delete-session"
+  spec:
+    schedule: "30 6 * * *"  
+    jobTemplate:             
+      spec:
+        template:
+          metadata:
+            labels:          
+              parent: "telnetman2"
+          spec:
+            containers:
+              - name: "telnetman2-delete-session"
+                image: "docker-registry.default.svc:5000/<Project Name>/telnetman2-cron:latest"
+                command: ["perl", "/usr/local/Telnetman2/pl/delete_session.pl"]
+                volumeMounts:
+                  - mountPath: "/var/Telnetman2"
+                    name: "telnetman2-file-dir"
+            volumes:
+              - name: "telnetman2-file-dir"
+                persistentVolumeClaim:
+                  claimName: "telnetman2-file"
+            restartPolicy: "Never"
+
+- apiVersion: "batch/v2alpha1"
+  kind: "CronJob"
+  metadata:
+    name: "telnetman2-logrotate"
+  spec:
+    schedule: "42 4 1 * *"  
+    jobTemplate:             
+      spec:
+        template:
+          metadata:
+            labels:          
+              parent: "telnetman2"
+          spec:
+            containers:
+              - name: "telnetman2-logrotate"
+                image: "docker-registry.default.svc:5000/<Project Name>/telnetman2-cron:latest"
+                command: ["logrotate", "-s", "/var/Telnetman2/log/logrotate.status", "/etc/logrotate.d/Telnetman2"]
+                volumeMounts:
+                  - mountPath: "/var/Telnetman2"
+                    name: "telnetman2-file-dir"
+            volumes:
+              - name: "telnetman2-file-dir"
+                persistentVolumeClaim:
+                  claimName: "telnetman2-file"
+            restartPolicy: "Never"
+EOF
+```
+1. `oc create -f telnetman2-pvc.yml`
+1. `oc create -f telnetman2-build.yml`
+1. `oc start-build telnetman2-db`  
+`oc start-build telnetman2-web`  
+`oc start-build telnetman2-cron`  
+wait for building
+1. `oc create -f telnetman2-deploy.yml`
+1. `oc create -f telnetman2-cron.yml`
+
+https&#58;//telnetman2-web-\<Project Name\>.\<openshift_master_default_subdomain\>/  
+
+Similarly, you can create new administrator account.  
+`oc exec -it <telnetman2-web-x-xxxx> bash`  
+`perl /usr/local/Telnetman2/pl/create_administrator.pl`
