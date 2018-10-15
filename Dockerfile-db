@@ -5,10 +5,7 @@ RUN yum -y install mariadb-server && \
     \cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     /usr/sbin/adduser -u 2323 -g root telnetman && \
     echo telnetman:tcpport23 | chpasswd && \
-    sed -i -e 's/\[mysqld\]/\[mysqld\]\ncharacter-set-server = utf8\nskip-character-set-client-handshake\nmax_connect_errors=999999999\n\n\[client\]\ndefault-character-set=utf8/' /etc/my.cnf.d/server.cnf && \
-    mkdir /var/lib/mysql/Telnetman2 && \
-    chmod 770 /var/lib/mysql/Telnetman2 && \
-    chown mysql:root /var/lib/mysql/Telnetman2 && \
+    sed -i -e 's/\[mysqld\]/[mysqld]\nsocket=\/run\/mariadb\/mysql.sock\ncharacter-set-server = utf8\nskip-character-set-client-handshake\nmax_connect_errors=999999999\n\n[client]\nsocket=\/run\/mariadb\/mysql.sock\ndefault-character-set=utf8/' /etc/my.cnf.d/server.cnf && \
     chgrp -R 0   /run/mariadb && \
     chmod -R g=u /run/mariadb && \
     chgrp -R 0   /var/log/mariadb && \

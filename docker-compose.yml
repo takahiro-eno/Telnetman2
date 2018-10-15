@@ -6,7 +6,7 @@ services:
    context: ./
    dockerfile: Dockerfile-db
   volumes:
-   - telnetman2-database:/var/lib/mysql/Telnetman2
+   - telnetman2-database:/var/lib/mysql
  
  telnetman2-web:
   build:

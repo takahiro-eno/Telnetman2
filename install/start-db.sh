@@ -1,12 +1,13 @@
 #!/usr/bin/sh
 
-if [ -z "$(ls /var/lib/mysql/Telnetman2)" ]; then
+if [ ! -e "/var/lib/mysql/Telnetman2" ]; then
+ mkdir /var/lib/mysql/Telnetman2
  /usr/bin/mysqld_safe --skip-grant-tables &
  /bin/sleep 5
  /bin/mysql -u root < /root/Telnetman2.sql
  /bin/mysqladmin shutdown
 
- chmod -R g=u /var/lib/mysql/Telnetman2/*
+ chmod -R g=u /var/lib/mysql/*
 fi
 
 exec /usr/bin/mysqld_safe --skip-grant-tables

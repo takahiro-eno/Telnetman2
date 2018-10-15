@@ -210,7 +210,7 @@ items:
           - containerPort: 3306
             protocol: "TCP"
         volumeMounts:
-          - mountPath: "/var/lib/mysql/Telnetman2"
+          - mountPath: "/var/lib/mysql"
             name: "telnetman2-database-dir"
       - name: "telnetman2-web"
         image: "docker-registry.default.svc:5000/<Project Name>/telnetman2-web:latest"
