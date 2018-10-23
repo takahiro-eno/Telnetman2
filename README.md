@@ -187,7 +187,7 @@ items:
           secret: "<SECRET>"
 EOF
 ```
-- Deploy Config  
+- Deployment Config  
 \<Project Name\> : Youer project name.  
 \<openshift_master_default_subdomain\> : A value defined in inventory file.  
 ```
@@ -197,36 +197,63 @@ kind: "List"
 items:
 
 - apiVersion: "v1"
-  kind: "Pod"
+  kind: "DeploymentConfig"
   metadata:
     name: "telnetman2"
-    labels:
-      deploymentconfig: "telnetman2"
   spec:
-    containers:
-      - name: "telnetman2-db"
-        image: "docker-registry.default.svc:5000/<Project Name>/telnetman2-db:latest"
-        ports:
-          - containerPort: 3306
-            protocol: "TCP"
-        volumeMounts:
-          - mountPath: "/var/lib/mysql"
-            name: "telnetman2-database-dir"
-      - name: "telnetman2-web"
-        image: "docker-registry.default.svc:5000/<Project Name>/telnetman2-web:latest"
-        ports:
-          - containerPort: 8443
-            protocol: "TCP"
-        volumeMounts:
-          - mountPath: "/var/Telnetman2"
-            name: "telnetman2-file-dir"
-    volumes:
-      - name: "telnetman2-database-dir"
-        persistentVolumeClaim:
-          claimName: "telnetman2-database"
-      - name: "telnetman2-file-dir"
-        persistentVolumeClaim:
-          claimName: "telnetman2-file"
+    template: 
+      metadata:
+        labels:
+          name: "telnetman2"
+      spec:
+        containers:
+          - name: "telnetman2-web"
+            image: "docker-registry.default.svc:5000/pj-telnetman2/telnetman2-web:latest"
+            ports:
+              - containerPort: 8443
+                protocol: "TCP"
+            volumeMounts:
+              - mountPath: "/var/Telnetman2"
+                name: "telnetman2-file-dir"
+          - name: "telnetman2-db"
+            image: "docker-registry.default.svc:5000/pj-telnetman2/telnetman2-db:latest"
+            ports:
+              - containerPort: 3306
+                protocol: "TCP"
+            volumeMounts:
+              - mountPath: "/var/lib/mysql"
+                name: "telnetman2-database-dir"
+        volumes:
+          - name: "telnetman2-file-dir"
+            persistentVolumeClaim:
+              claimName: "telnetman2-file"
+          - name: "telnetman2-database-dir"
+            persistentVolumeClaim:
+              claimName: "telnetman2-database"
+    replicas: 1
+    triggers:
+      - type: "ConfigChange"
+      - type: "ImageChange"
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - "telnetman2-web"
+          from:
+            kind: "ImageStreamTag"
+            name: "telnetman2-web:latest"
+      - type: "ImageChange"
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - "telnetman2-db"
+          from:
+            kind: "ImageStreamTag"
+            name: "telnetman2-db:latest"
+    strategy: 
+      type: "Rolling"
+    paused: false
+    revisionHistoryLimit: 2 
+    minReadySeconds: 0
 
 - apiVersion: "v1"
   kind: "Service"
