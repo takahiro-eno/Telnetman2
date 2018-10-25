@@ -187,7 +187,7 @@ items:
           secret: "<SECRET>"
 EOF
 ```
-- Deployment Config  
+- Deploymet Config  
 \<Project Name\> : Youer project name.  
 \<openshift_master_default_subdomain\> : A value defined in inventory file.  
 ```
@@ -211,6 +211,8 @@ items:
             image: "docker-registry.default.svc:5000/pj-telnetman2/telnetman2-web:latest"
             ports:
               - containerPort: 8443
+                protocol: "TCP"
+              - containerPort: 8080
                 protocol: "TCP"
             volumeMounts:
               - mountPath: "/var/Telnetman2"
@@ -269,6 +271,10 @@ items:
       protocol: "TCP"
       port: 8443
       targetPort: 8443
+    - name: "8080-tcp"
+      protocol: "TCP"
+      port: 8080
+      targetPort: 8080
     selector:
       deploymentconfig: "telnetman2"
 
@@ -279,9 +285,9 @@ items:
   spec:
     host: "telnetman2-<Project Name>.<openshift_master_default_subdomain>"
     port:
-      targetPort: "8443-tcp"
+      targetPort: "8080-tcp"
     tls:
-      termination: "passthrough"
+      termination: "edge"
     to:
       kind: "Service"
       name: "telnetman2"
