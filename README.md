@@ -381,7 +381,7 @@ items:
             containers:
               - name: "telnetman2-logrotate"
                 image: "docker-registry.default.svc:5000/<Project Name>/telnetman2-cron:latest"
-                command: ["logrotate", "-s", "/var/Telnetman2/log/logrotate.status", "/etc/logrotate.d/Telnetman2"]
+                command: ["sh", "/usr/local/bin/logrotate.sh", "/var/Telnetman2/log/sql_log"]
                 volumeMounts:
                   - mountPath: "/var/Telnetman2"
                     name: "telnetman2-file-dir"
