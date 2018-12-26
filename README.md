@@ -208,7 +208,7 @@ items:
       spec:
         containers:
           - name: "telnetman2-web"
-            image: "docker-registry.default.svc:5000/\<Project Name\>/telnetman2-web:latest"
+            image: "docker-registry.default.svc:5000/<Project Name>/telnetman2-web:latest"
             ports:
               - containerPort: 8443
                 protocol: "TCP"
@@ -218,7 +218,7 @@ items:
               - mountPath: "/var/Telnetman2"
                 name: "telnetman2-file-dir"
           - name: "telnetman2-db"
-            image: "docker-registry.default.svc:5000/\<Project Name\>/telnetman2-db:latest"
+            image: "docker-registry.default.svc:5000/<Project Name>/telnetman2-db:latest"
             ports:
               - containerPort: 3306
                 protocol: "TCP"
