@@ -17,6 +17,7 @@
 #      2018/05/16 : Begin, End 機能の追加。
 #      2018/06/11 : コンソールログインの場合、Escape character is '^]'. で止まるので対応。
 #      2018/06/11 : 個別プロンプト追加。
+#      2019/03/29 : get_complete_command_list で{変数} 変換後に_LF_ を改行に変換できていないのを修正。
 
 use strict;
 use warnings;
@@ -3018,7 +3019,10 @@ sub get_complete_command_list {
   
   $complete_command =~ s/_BLANK_//g;
   $complete_command =~ s/_DUMMY_//g;
-  push(@complete_command_list, $complete_command);
+
+  my @command_list = split(/_LF_/, $complete_command);
+  
+  push(@complete_command_list, @command_list);
  }
  
  return(\@complete_command_list);
