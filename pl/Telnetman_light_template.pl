@@ -3763,7 +3763,10 @@ sub get_complete_command_list {
 
   $complete_command =~ s/_BLANK_//g;
   $complete_command =~ s/_DUMMY_//g;
-  push(@complete_command_list, $complete_command);
+  
+  my @command_list = split(/_LF_/, $complete_command);
+  
+  push(@complete_command_list, @command_list);
  }
 
  return(\@complete_command_list);
