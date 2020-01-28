@@ -1,4 +1,4 @@
-Telnetman (version 2)
+﻿Telnetman (version 2)
 ====
 
 ## Description
@@ -41,7 +41,7 @@ This installation manual is available for those who use Telnetman2 only.
 https&#58;//host address:8443/  
 
 Similarly, you can create new administrator account.  
-`docker exec -it <telnetman2-web CONTAINER ID> bash`  
+`docker-compose exec telnetman2-web bash`  
 `perl /usr/local/Telnetman2/pl/create_administrator.pl`  
 - - -
 

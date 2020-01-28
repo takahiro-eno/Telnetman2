@@ -18,6 +18,7 @@
 #      2018/06/11 : コンソールログインの場合、Escape character is '^]'. で止まるので対応。
 #      2018/06/11 : 個別プロンプト追加。
 #      2019/03/29 : get_complete_command_list で{変数} 変換後に_LF_ を改行に変換できていないのを修正。
+#      2020/01/28 : プロンプト多重確認の回数の上限を無しから10 に設定。
 
 use strict;
 use warnings;
@@ -1926,7 +1927,7 @@ sub command_cisco {
   if($flag_space_20 == 1){
    $telnet -> print($complete_command);
    
-   while(1){
+   while($count_space_20 < 10){
     my ($tmp1_command_return, $tmp1_matched_prompt) = $telnet -> waitfor('/.+$/');
     $tmp1_command_return =~ s/\r//g;
     $tmp1_matched_prompt =~ s/\r//g;
@@ -2033,6 +2034,11 @@ sub command_cisco {
   
   return($command_return, $matched_prompt);
  }
+ elsif($count_space_20 >= 10){
+  my $title = $self -> get_title;
+  $self -> write_error_message('プロンプト検知で失敗しました。' . "\n" . 'コマンド「' . $title . '」のプロンプト多重確認を「しない」に変更するとうまくいく可能性があります。');
+  return(undef, undef);
+ }
  elsif($prompt_ok_error == 0){
   return($complete_command, '');
  }
@@ -2064,7 +2070,7 @@ sub command_junos {
  eval{
   $telnet -> print($complete_command);
   
-  LOOP1 : while(1){
+  LOOP1 : while($count_enter < 10){
    my ($tmp1_command_return, $tmp1_matched_prompt) = $telnet -> waitfor('/.+$/');
    $tmp1_command_return =~ s/\r//g;
    $tmp1_matched_prompt =~ s/\r//g;
@@ -2173,6 +2179,11 @@ sub command_junos {
   }
   
   return($command_return, $matched_prompt);
+ }
+ elsif($count_enter >= 10){
+  my $title = $self -> get_title;
+  $self -> write_error_message('プロンプト検知で失敗しました。' . "\n" . 'コマンド「' . $title . '」のプロンプト多重確認を「しない」に変更するとうまくいく可能性があります。');
+  return(undef, undef);
  }
  elsif($prompt_ok_error == 0){
   return($complete_command, '');
@@ -3019,7 +3030,7 @@ sub get_complete_command_list {
   
   $complete_command =~ s/_BLANK_//g;
   $complete_command =~ s/_DUMMY_//g;
-
+  
   my @command_list = split(/_LF_/, $complete_command);
   
   push(@complete_command_list, @command_list);

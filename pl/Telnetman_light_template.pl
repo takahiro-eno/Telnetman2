@@ -2671,7 +2671,7 @@ sub command_cisco {
   if($flag_space_20 == 1){
    $telnet -> print($complete_command);
 
-   while(1){
+   while($count_space_20 < 10){
     my ($tmp1_command_return, $tmp1_matched_prompt) = $telnet -> waitfor('/.+$/');
     $tmp1_command_return =~ s/\r//g;
     $tmp1_matched_prompt =~ s/\r//g;
@@ -2778,6 +2778,11 @@ sub command_cisco {
 
   return($command_return, $matched_prompt);
  }
+ elsif($count_space_20 >= 10){
+  my $title = $self -> get_title;
+  $self -> write_error_message('プロンプト検知で失敗しました。' . "\n" . 'コマンド「' . $title . '」のプロンプト多重確認を「しない」に変更するとうまくいく可能性があります。');
+  return(undef, undef);
+ }
  elsif($prompt_ok_error == 0){
   return($complete_command, '');
  }
@@ -2809,7 +2814,7 @@ sub command_junos {
  eval{
   $telnet -> print($complete_command);
 
-  LOOP1 : while(1){
+  LOOP1 : while($count_enter < 0){
    my ($tmp1_command_return, $tmp1_matched_prompt) = $telnet -> waitfor('/.+$/');
    $tmp1_command_return =~ s/\r//g;
    $tmp1_matched_prompt =~ s/\r//g;
@@ -2918,6 +2923,11 @@ sub command_junos {
   }
 
   return($command_return, $matched_prompt);
+ }
+ elsif($count_enter >= 10){
+  my $title = $self -> get_title;
+  $self -> write_error_message('プロンプト検知で失敗しました。' . "\n" . 'コマンド「' . $title . '」のプロンプト多重確認を「しない」に変更するとうまくいく可能性があります。');
+  return(undef, undef);
  }
  elsif($prompt_ok_error == 0){
   return($complete_command, '');
