@@ -19,6 +19,7 @@
 #      2018/06/11 : 個別プロンプト追加。
 #      2019/03/29 : get_complete_command_list で{変数} 変換後に_LF_ を改行に変換できていないのを修正。
 #      2020/01/28 : プロンプト多重確認の回数の上限を無しから10 に設定。
+#      2020/06/08 : ssh ログインで不具合が出るためlocal 認証対策をコメントアウト。
 
 use strict;
 use warnings;
@@ -1096,6 +1097,7 @@ sub start_telnet {
    $telnet -> print($password);
   }
    
+=pod
   # local 認証でパスワードを再度聞かれた場合の対処。
   sleep(1);
   $command_return = '';
@@ -1157,6 +1159,7 @@ sub start_telnet {
    
    return(-1, $time);
   }
+=cut
   
   if(defined($enable_command) && (length($enable_command) > 0)){
    $telnet -> print($enable_command);

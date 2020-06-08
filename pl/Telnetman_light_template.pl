@@ -1841,6 +1841,7 @@ sub start_telnet {
    $telnet -> print($password);
   }
 
+=pod
   # local 認証でパスワードを再度聞かれた場合の対処。
   sleep(1);
   $command_return = '';
@@ -1902,6 +1903,7 @@ sub start_telnet {
 
    return(-1, $time);
   }
+=cut
 
   if(defined($enable_command) && (length($enable_command) > 0)){
    $telnet -> print($enable_command);
