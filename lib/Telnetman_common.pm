@@ -7,6 +7,7 @@
 # 更新   : 2018/05/16 Begin, End 機能の追加。
 # 更新   : 2018/10/01 作成するディレクトリのパーミッションを775 に変更。
 # 更新   : 2018/10/05 作成するファイルのパーミッションを664 に変更
+# 更新   : 2020/10/06 ログ置き場のパーミッションが777 でないとDocker でzip ファイルを作成できないので777 で作成されるように修正。
 
 use strict;
 use warnings;
@@ -257,8 +258,8 @@ sub make_telnet_log {
  my $dir_telnet_log = &Common_system::dir_telnet_log($session_id);
 
  unless(-d $dir_telnet_log){
-  umask(0002);
-  mkdir($dir_telnet_log, 0775);
+  umask(0);
+  mkdir($dir_telnet_log, 0777);
 
   # 実行者がroot だったら所有者をApache にする。
   if($< == 0){
@@ -308,8 +309,8 @@ sub make_optional_log {
  my $dir_telnet_log = &Common_system::dir_telnet_log($session_id);
 
  unless(-d $dir_telnet_log){
-  umask(0002);
-  mkdir($dir_telnet_log, 0775);
+  umask(0);
+  mkdir($dir_telnet_log, 0777);
 
   # 実行者がroot だったら所有者をApache にする。
   if($< == 0){
@@ -381,8 +382,8 @@ sub make_track_log {
  my $dir_telnet_log = &Common_system::dir_telnet_log($session_id);
 
  unless(-d $dir_telnet_log){
-  umask(0002);
-  mkdir($dir_telnet_log, 0775);
+  umask(0);
+  mkdir($dir_telnet_log, 0777);
 
   # 実行者がroot だったら所有者をApache にする。
   if($< == 0){
@@ -417,8 +418,8 @@ sub make_diff_log {
  my $dir_telnet_log = &Common_system::dir_telnet_log($session_id);
 
  unless(-d $dir_telnet_log){
-  umask(0002);
-  mkdir($dir_telnet_log, 0775);
+  umask(0);
+  mkdir($dir_telnet_log, 0777);
 
   # 実行者がroot だったら所有者をApache にする。
   if($< == 0){
@@ -472,8 +473,8 @@ sub make_additional_parameter_sheet {
   my $dir_telnet_log = &Common_system::dir_telnet_log($session_id);
 
   unless(-d $dir_telnet_log){
-   umask(0002);
-   mkdir($dir_telnet_log, 0775);
+   umask(0);
+   mkdir($dir_telnet_log, 0777);
 
    # 実行者がroot だったら所有者をApache にする。
    if($< == 0){
